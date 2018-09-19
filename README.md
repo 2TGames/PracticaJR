@@ -50,18 +50,23 @@ El jugador, estando en el menú principal, podrá ir a la pantalla de estadísti
 
 INTERFACES.
 Interfaz del menú principal:
-Nombre de la pantalla: Menú principal.
-Descripción de la pantalla: En esta pantalla el jugador podrá acceder al modo jugar; al listado del códice; y a las estadísticas de su perfil.
-Estados del juego: Abrir el juego; al terminar una partida y salir del Códice y de las Estadísticas.
+	Nombre de la pantalla: Menú principal.
+	Descripción de la pantalla: En esta pantalla el jugador podrá acceder al modo jugar; al listado del códice; y a las estadísticas 	 de su perfil.
+	Estados del juego: Abrir el juego; al terminar una partida y salir del Códice y de las Estadísticas.
 
 Interfaz del Códice:
-Nombre de la pantalla: Códice.
-Descripción de la pantalla: Se irán mostrando fragmentos del lore del juego a medida que el jugador vaya desbloqueando mediante logros (que en principio tenemos pensado que sean únicamente victorias).
-Estados del juego: Al Códice solo se podrá acceder desde el menú principal.
+	Nombre de la pantalla: Códice.
+	Descripción de la pantalla: Se irán mostrando fragmentos del lore del juego a medida que el jugador vaya desbloqueando mediante 	logros (que en principio tenemos pensado que sean únicamente victorias).
+	Estados del juego: Al Códice solo se podrá acceder desde el menú principal.
 
 Interfaz de Estadísticas:
-Nombre de la pantalla: Estadísticas.
-Descripción de la pantalla: El jugador podrá observar su porcentaje de victorias al mismo tiempo que contemplar el número de victorias y derrotas que ha ido almacenando.
+	Nombre de la pantalla: Estadísticas.
+	Descripción de la pantalla: El jugador podrá observar su porcentaje de victorias al mismo tiempo que contemplar el número de 		victorias y derrotas que ha ido almacenando.
+Interfaz del Multijugador:
+	Nombre de la pantalla: Multijugador.
+	Descripción de la pantalla: Además de la acción principal (la partida en sí), se mostrará la runa equipada actualmente (hechizo 	de acceso rápido del jugador), así como dos barras (vida y maná) saliendo de la misma. Esto se localizará en la parte superior 		izquierda de la pantalla, y en la parte superior central, una serie de casillas que representarán el mapa y la posición de los 		jugadores en el mismo.
+	Estados del juego: Al Multijugador solo se podrá acceder desde el menú principal.
+
 
 NIVELES.
 
