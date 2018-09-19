@@ -21,8 +21,6 @@ Licencia: La forma de conseguir objetivos está basada en el videojuego Nidhogg.
 
 Mecánicas: Juego de plataformas con hechizos de lanzamiento tipo proyectil y que alteren el mapa o las estadísticas del jugador. Cada jugador deberá llegar al otro lado de la pantalla en un periodo de 5 seg tras matar al otro jugador. Esta acción deberá repetirse sucesivas veces hasta llegar al objetivo final  (puesto que cada objetivo alcanzado por un jugador le resta objetivos al otro).
 
-Tecnología:
-
 Público: Jugadores habituales de juegos de acción con ciertos elementos de estrategia.
 
 HISTORIAL DE VERSIONES.
