@@ -5,6 +5,7 @@ CONCEPTO.
 Título: MAGIC & RUNES.
 
 Estudio: 2TGames.
+
 Miembros: Luis Sánchez Valencia (Diseñador / Programador) 
  	      Rodrigo Pérez Turel (Game Designer / Programador).
 
@@ -52,6 +53,7 @@ El jugador, estando en el menú principal, podrá ir a la pantalla de estadísti
 
 
 INTERFACES.
+
 Interfaz del menú principal:
 Nombre de la pantalla: Menú principal.
 Descripción de la pantalla: En esta pantalla el jugador podrá acceder al modo jugar; al listado del códice; y a las estadísticas de su perfil.
