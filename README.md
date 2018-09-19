@@ -1,7 +1,8 @@
 MAGIC AND RUNES
+
 CONCEPTO.
 
-Título:: MAGIC & RUNES.
+Título: MAGIC & RUNES.
 
 Estudio: 2TGames.
 Miembros: Luis Sánchez Valencia (Diseñador / Programador) 
