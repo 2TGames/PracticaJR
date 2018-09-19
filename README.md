@@ -12,7 +12,7 @@ Plataforma: PC.
 
 Versión: 0.1.
 
-Sinopsis:
+Sinopsis: 
 
 Categoria(s): Shooter / Estrategia / Plataformas.
 
@@ -25,6 +25,7 @@ Tecnología:
 Público: Jugadores habituales de juegos de acción con ciertos elementos de estrategia.
 
 HISTORIAL DE VERSIONES.
+
 0.1 Concepción de la idea.
 
 VISIÓN GENERAL DEL JUEGO.
@@ -70,25 +71,31 @@ NIVELES.
 El juego dispondrá únicamente de un nivel, dividido en varias pantallas, y los jugadores empezarán en la pantalla central, a partir de la cual habrá una serie de pantallas simétricas a cada lado hasta la pantalla final.
 
 PROGRESO DEL JUEGO.
+
 El progreso del juego consistirá en cada vez que un jugador mate a su oponente deberá avanzar hacia el lado de la pantalla que le corresponda, de tal manera que irá pasando por varias pantallas hasta llegar a la pantalla final donde acabará la partida y se volverá al menú principal.
 
 
 PERSONAJES.
+
 Nombre del personaje: Renegado (azul / rojo)
 Descripción: Hombre de complexión atlética, alto, rubio y con barba corta. Llevará puesta una túnica de color rojo o azul abierta por debajo de la cintura, la cual tendrá una capucha que llevará colocada en la cabeza, así como unos pantalones del mismo color y unas sandalias a modo de calzado.
 Concepto: El mago en cuestión es un renegado, repudiado por el Consejo al ser visto iniciándose en la Magia Negra. Al ser un negado en esa disciplina, y no poseer ningún poder oscuro realmente fuerte, contará con el repertorio de hechizos de los novatos, además del único hechizo de magia negra que pudo aprender (así como la Magia de Trampas, en la que era un estudiante aventajado antes de ser expulsado) para matar al mago rival tantas veces como haga falta para superar la Prueba.
 Armas: vara mágica.
 
 HABILIDADES.
+
 Amplia variedad de hechizos con los que defenderse y atacar.
 
 ARMAS.
+
 Vara mágica: bastón de madera, no muy largo.
 
 LOGROS.
+
 El logro que poseerá el juego será poder ir desbloqueando fragmentos de la historia del juego. Estos fragmentos se irán desbloqueando y almacenandose en el Códice a medida que el jugador va consiguiendo victorias en el juego.
 
 MIEMBROS DEL EQUIPO.
+
 Luis Sánchez Valencia: Rol (Diseñador / Programador). 
 Correo: l.sanchezva.2016@alumnos.urjc.es.
 Rodrigo Pérez Turel: Rol (Game Designer / Programador). 
