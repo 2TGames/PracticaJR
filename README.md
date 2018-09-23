@@ -1,9 +1,7 @@
 MAGIC AND RUNES
 
 
-CONCEPTO.
-
-Título: MAGIC & RUNES.
+CONCEPTO.Título: MAGIC & RUNES.
 
 Estudio: 2TGames.
 
