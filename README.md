@@ -1,4 +1,4 @@
-# MAGIC AND RUNES
+# *MAGIC AND RUNES*
 
 ![Imagen de pantalla inicio](https://github.com/2TGames/PracticaJR/blob/master/Assets/pantalla%20inicio.jpg)
 
