@@ -14,9 +14,7 @@ Plataforma: PC.
 
 Versión: 0.1.
 
-Sinopsis:
-
-Los personajes jugables (por el momento solo uno) serán magos repudiados por la sociedad mágica a la que pertenecen. Para que los vuelvan a aceptar se enfrentarán en un duelo a muerte frente a otro renegado.
+Sinopsis: Los personajes jugables (por el momento solo uno) serán magos repudiados por la sociedad mágica a la que pertenecen. Para que los vuelvan a aceptar se enfrentarán en un duelo a muerte frente a otro renegado.
 
 Categoria(s): Shooter / Estrategia / Plataformas.
 
