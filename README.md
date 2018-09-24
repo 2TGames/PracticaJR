@@ -1,4 +1,4 @@
-# MAGIC AND RUNES
+﻿# MAGIC AND RUNES
 
 ![Imagen de pantalla inicio](https://github.com/2TGames/PracticaJR/blob/master/Assets/pantalla%20inicio.jpg)
 
@@ -110,3 +110,4 @@ Correo: l.sanchezva.2016@alumnos.urjc.es.
 **Rodrigo Pérez Turel**: Rol (Game Designer / Programador). 
 Correo: r.perezt.2016@alumnos.urjc.es
 
+probNDO
