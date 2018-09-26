@@ -45,6 +45,7 @@ Este juego, con una mecánica de avanzar y retroceder con respecto al objetivo (
 	
 *Puntuación*: La puntuación se mostrará en la parte inferior de la pantalla en forma de mapas superados, con un cartel de “VICTORIA” o “DERROTA” al final de la partida.
 *Guardar/Cargar*: Al tratarse de partidas aisladas, el jugador únicamente dispondrá de su porcentaje de victorias, y el número de victorias y derrotas.
+*Reloj*: Habrá un temporizador de 3 minutos, que se reiniciará con cada muerte. Si llega a cero la partida acaba, ganando el que esté más cerca de su objetivo. Además, por cada minuto transcurrido, se le restará una cantidad de maná resultante de la siguiente fórmula "escenarios avanzados desde el inicial * 10% del maná inicial del jugador", y en su defecto, se le restará vida. Esto e hará a fin de evitar juegos estáticos y obligar a los jugadores a avanzar.
 
 ## ESTADOS DEL JUEGO.
 
