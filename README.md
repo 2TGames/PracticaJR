@@ -51,29 +51,53 @@ Este juego, con una mecánica de avanzar y retroceder con respecto al objetivo (
 El jugador, estando en el menú principal, podrá ir a la pantalla de estadísticas, a la del códice, que almacenará los logros completados y por competar (así como pequeños fragmentos del lore o la intrahistoria del videojuego). Por último, podrá acceder al modo de juego “Multijugador Online” (que, por el momento, es el único del que dispone el juego), el cual no tendrá menús de pausa.
 
 ## INTERFACES.
+**HUD**
+![Imagen vida y mana](https://github.com/2TGames/PracticaJR/blob/master/Assets/HUD%20(vida%2C%20mana%20y%20magia).jpg)
+
+Nombre de la pantalla: HUD.
+
+Descripción: En tiempo de juego se mostrará la cantidad de vida y maná del personaje junto con la runa seleccionada para lanzar hechizos.
+
+Estados del juego: Al comenzar la partida.
+
 **Interfaz del menú principal:**
+
+![Imagen menu principal](https://github.com/2TGames/PracticaJR/blob/master/Assets/menu%20inicio.jpg)
+
 Nombre de la pantalla: Menú principal.
+
 Descripción de la pantalla: En esta pantalla el jugador podrá acceder al modo jugar; al listado del códice; y a las estadísticas de su perfil.
+
 Estados del juego: Abrir el juego; al terminar una partida y salir del Códice y de las Estadísticas.
 
 **Interfaz del Códice:**
 Nombre de la pantalla: Códice.
+
 Descripción de la pantalla: Se irán mostrando fragmentos del lore del juego a medida que el jugador vaya desbloqueando mediante logros (que en principio tenemos pensado que sean únicamente victorias).
+
 Estados del juego: Al Códice solo se podrá acceder desde el menú principal.
 
 **Interfaz de Estadísticas:**
 Nombre de la pantalla: Estadísticas.
+
 Descripción de la pantalla: El jugador podrá observar su porcentaje de victorias al mismo tiempo que contemplar el número de victorias y derrotas que ha ido almacenando.
+
 Estados del juego: A las Estadísticas se podrá acceder desde el menú principal.
-Interfaz del Multijugador:
+
+**Interfaz del Multijugador**:
+
 Nombre de la pantalla: Multijugador.
+
 Descripción de la pantalla: Además de la acción principal (la partida en sí), se mostrará la runa equipada actualmente (hechizo de acceso rápido del jugador), así como dos barras (vida y maná) saliendo de la misma. Esto se localizará en la parte superior izquierda de la pantalla, y en la parte superior central, una serie de casillas que representarán el mapa y la posición de los jugadores en el mismo.
+
 Estados del juego: Al Multijugador solo se podrá acceder desde el menú principal.
 
 
 ## NIVELES.
 
 El juego dispondrá únicamente de un nivel, dividido en varias pantallas, y los jugadores empezarán en la pantalla central, a partir de la cual habrá una serie de pantallas simétricas a cada lado hasta la pantalla final.
+
+![Imagen nivel prototipo](https://github.com/2TGames/PracticaJR/blob/master/Assets/Prototipo%20escenario.jpeg)
 
 ## PROGRESO DEL JUEGO.
 
