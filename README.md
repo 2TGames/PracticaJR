@@ -49,7 +49,7 @@ Este juego, con una mecánica de avanzar y retroceder con respecto al objetivo (
 
 ## ESTADOS DEL JUEGO.
 
-El jugador, estando en el menú principal, podrá ir a la pantalla de estadísticas, a la del códice, que almacenará los logros completados y por competar (así como pequeños fragmentos del lore o la intrahistoria del videojuego). Por último, podrá acceder al modo de juego “Multijugador Online” (que, por el momento, es el único del que dispone el juego), el cual no tendrá menús de pausa.
+El jugador, estando en el menú principal, podrá ir a la pantalla de estadísticas, a la del códice, que almacenará los logros completados y por competar (así como pequeños fragmentos del lore o la intrahistoria del videojuego). Por último, podrá acceder al modo de juego “Multijugador Online” (que, por el momento, es el único del que dispone el juego), el cual no tendrá menús de pausa. Una vez que se seleccione este modo de juego se procederá a un proceso de "match making" en el cual se seleccionará a otro jugador con el mismo nivel o experiencia de juego que el jugador para así que ambos jugadores tengan las mismas posibilidades de ganar debido a que el nivel de ambos será el mismo o muy parecido.
 
 ## INTERFACES.
 **HUD**
