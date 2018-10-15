@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="4" nextobjectid="30">
  <tileset firstgid="1" source="Tilesheet 1.tsx"/>
  <layer id="1" name="Capa de Patrones 1" width="80" height="50">
   <data encoding="csv">
@@ -55,4 +55,92 @@
 156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,157,0,0,0,0,0,0,155,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,157,0,0,0,0,155,156,156,156
 </data>
  </layer>
+ <objectgroup id="2" name="Suelo">
+  <object id="1" x="700" y="140">
+   <polygon points="0,0 0,140 -140,140 -140,280 -280,280 -280,420 -420,420 -420,560 -560,560 -560,2100 -140,2100 -140,2240 -560,2240 -560,2520 -700,2520 -700,-140 4900,-140 4900,420 4760,420 4760,280 4620,280 4620,140 4480,140 4480,0"/>
+  </object>
+  <object id="2" x="560" y="1820">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="3" x="1120" y="1540">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="4" x="700" y="2520">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="5" x="1260" y="2240">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="6" x="1960" y="1820">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="7" x="1820" y="980">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="8" x="2240" y="560">
+   <polygon points="0,0 0,140 1260,140 1260,0"/>
+  </object>
+  <object id="9" x="2520" y="1540">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="10" x="3220" y="1540">
+   <polygon points="0,0 0,420 140,420 140,560 280,560 280,700 1820,700 1820,560 1680,560 1680,280 1540,280 1540,140 420,140 420,0"/>
+  </object>
+  <object id="11" x="4060" y="840">
+   <polygon points="0,0 0,140 280,140 280,0"/>
+  </object>
+  <object id="12" x="4060" y="1260">
+   <polygon points="0,0 0,140 700,140 700,0 770,0 840,0 840,-280 420,-280 420,0"/>
+  </object>
+  <object id="13" x="5320" y="980">
+   <polygon points="0,0 0,700 140,700 140,1260 0,1260 0,2520 280,2520 280,0"/>
+  </object>
+  <object id="14" x="5040" y="2520">
+   <polygon points="0,0 0,980 -2660,980 -2660,420 -1960,420 -1960,280 -1820,280 -1820,140 -1680,140 -1680,0"/>
+  </object>
+  <object id="15" x="0" y="2940">
+   <polygon points="0,0 1960,0 1960,560 0,560"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Arenisca">
+  <object id="16" x="5040" y="2520">
+   <polygon points="0,0 280,0 280,140 0,140"/>
+  </object>
+  <object id="17" x="5040" y="2800">
+   <polygon points="0,0 0,140 280,140 280,0"/>
+  </object>
+  <object id="18" x="5040" y="2100">
+   <polygon points="0,0 0,140 280,140 280,0"/>
+  </object>
+  <object id="20" x="4340" y="1400">
+   <polygon points="0,0 140,0 140,280 0,280"/>
+  </object>
+  <object id="21" x="5320" y="1400">
+   <polygon points="0,0 -280,280 0,280"/>
+  </object>
+  <object id="22" x="4900" y="980">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="23" x="4060" y="1400">
+   <polygon points="0,0 0,140 -420,140 -420,0"/>
+  </object>
+  <object id="24" x="3500" y="700">
+   <polygon points="0,0 0,280 280,280"/>
+  </object>
+  <object id="25" x="2240" y="700">
+   <polygon points="0,0 0,280 -280,280"/>
+  </object>
+  <object id="26" x="1540" y="1260">
+   <polygon points="0,0 -280,280 0,280"/>
+  </object>
+  <object id="27" x="1540" y="1960">
+   <polygon points="0,0 0,280 140,280 140,0"/>
+  </object>
+  <object id="28" x="1960" y="2940">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="29" x="560" y="1960">
+   <polygon points="0,0 0,280 -280,280"/>
+  </object>
+ </objectgroup>
 </map>

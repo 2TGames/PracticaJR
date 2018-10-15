@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="4" nextobjectid="24">
  <tileset firstgid="1" source="Tilesheet 1.tsx"/>
  <layer id="1" name="Capa de Patrones 1" width="80" height="50">
   <data encoding="csv">
@@ -55,4 +55,74 @@
 156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,157,0,0,0,0,0,0,0,0,0,0,0,0,0,0,155,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,156,157,0,0,0,0,155,156,156,156,156,156,156,156,156,156
 </data>
  </layer>
+ <objectgroup id="2" name="Suelo">
+  <object id="1" x="0" y="2940">
+   <polygon points="0,0 0,560 1400,560 1400,-420 700,-420 700,-280 560,-280 560,-140 420,-140 420,0"/>
+  </object>
+  <object id="2" x="0" y="2660">
+   <polygon points="0,0 140,0 140,-700 1680,-700 1680,-980 140,-980 140,-1260 420,-1260 420,-1400 140,-1400 140,-2100 280,-2100 280,-2240 420,-2240 420,-2380 560,-2380 560,-2520 5180,-2520 5180,-2380 5320,-2380 5320,-2240 5460,-2240 5460,-2100 5600,-2100 5600,-2660 0,-2660"/>
+  </object>
+  <object id="3" x="2100" y="1680">
+   <polygon points="0,0 2380,0 2380,140 2520,140 2520,280 0,280"/>
+  </object>
+  <object id="4" x="840" y="840">
+   <polygon points="0,0 0,140 -140,140 -140,280 560,280 560,0"/>
+  </object>
+  <object id="5" x="1540" y="560">
+   <polygon points="0,0 0,140 280,140 280,0 70,0"/>
+  </object>
+  <object id="6" x="1960" y="560">
+   <polygon points="0,0 0,140 280,140 280,0 0,0"/>
+  </object>
+  <object id="7" x="2380" y="840">
+   <polygon points="0,0 0,210 0,280 2660,280 2660,420 2800,420 2800,560 2940,560 2940,700 3080,700 3080,1120 2520,1120 2520,1260 3080,1260 3080,1540 2520,1540 2520,2660 3220,2660 3220,0"/>
+  </object>
+  <object id="8" x="2380" y="2520">
+   <polygon points="0,0 0,980 2240,980 2240,-140 1820,-140 1820,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Arenisca">
+  <object id="9" x="840" y="1400">
+   <polygon points="0,0 140,0 140,280 0,280"/>
+  </object>
+  <object id="11" x="1400" y="560">
+   <polygon points="0,0 0,280 -280,280"/>
+  </object>
+  <object id="12" x="2380" y="560">
+   <polygon points="0,0 0,280 280,280"/>
+  </object>
+  <object id="13" x="1400" y="840">
+   <polygon points="0,0 980,0 980,280 0,280"/>
+  </object>
+  <object id="14" x="1680" y="1680">
+   <polygon points="0,0 420,0 420,280 0,280"/>
+  </object>
+  <object id="15" x="1400" y="2240">
+   <polygon points="0,0 -280,280 0,280"/>
+  </object>
+  <object id="16" x="2380" y="2240">
+   <polygon points="0,0 0,280 280,280"/>
+  </object>
+  <object id="17" x="1400" y="2520">
+   <polygon points="0,0 980,0 980,280 0,280"/>
+  </object>
+  <object id="18" x="3360" y="2240">
+   <polygon points="0,0 0,280 140,280 140,0"/>
+  </object>
+  <object id="19" x="2940" y="1400">
+   <polygon points="0,0 0,280 140,280 140,0"/>
+  </object>
+  <object id="20" x="3640" y="560">
+   <polygon points="0,0 -280,280 0,280"/>
+  </object>
+  <object id="21" x="3640" y="420">
+   <polygon points="0,0 0,140 420,140 420,0"/>
+  </object>
+  <object id="22" x="4060" y="560">
+   <polygon points="0,0 0,280 280,280"/>
+  </object>
+  <object id="23" x="4620" y="2380">
+   <polygon points="0,0 0,140 280,140 280,0"/>
+  </object>
+ </objectgroup>
 </map>
