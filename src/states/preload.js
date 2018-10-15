@@ -1,8 +1,8 @@
-CatCatcher.preloadState = function(game) {
+MagicAndRunes.preloadState = function(game) {
 
 }
 
-CatCatcher.preloadState.prototype = {
+MagicAndRunes.preloadState.prototype = {
 
     preload: function() {
         /*game.load.image('bg','C:/Users/Usuario/Desktop/JuegoCatCatcher/assets/images/bg.png');

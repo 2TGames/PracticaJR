@@ -1,16 +1,16 @@
 
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv' );
+var game = new Phaser.Game(800, 590, Phaser.AUTO, 'gameDiv' );
 
 
 
 
 
-game.state.add('bootState', CatCatcher.bootState)
-game.state.add('preloadState', CatCatcher.preloadState)
-game.state.add('menuState', CatCatcher.menuState)
-game.state.add('levelState', CatCatcher.levelState)
-game.state.add('endingState', CatCatcher.endingState)
+game.state.add('bootState', MagicAndRunes.bootState)
+game.state.add('preloadState', MagicAndRunes.preloadState)
+game.state.add('menuState', MagicAndRunes.menuState)
+game.state.add('levelState', MagicAndRunes.levelState)
+game.state.add('endingState', MagicAndRunes.endingState)
 
 
 game.state.start('bootState')
