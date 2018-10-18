@@ -14,6 +14,8 @@ var upKey;
     var mago_derecha_facing='left';
     var flechas;
     var w,a,s,d;
+    var vidaizq,vidadcha;
+    var daño=20;
 
     //Spells variables
     var player;
@@ -33,27 +35,35 @@ var upKey;
     var greenLeft =false;
     var redLeft = true;
 
-    function collisionHandler(catcher,cat){
-    
-        cat.x=game.rnd.integerInRange(50,750);
-        cat.y=game.rnd.integerInRange(50,550);
-        caugth++;
-        score.setText("Score: " + caugth);
+    function collisionHandler(mago_izquierda,spells){
+        
+        vidaizq=new Phaser.Rectangle(25,25,100-daño,20);
+        game.debug.geom(vidaizq,'rgba(250,255,10,1');
+        daño+=20;
+        spell.kill();
+        /*caugth++;
+        score.setText("Score: " + caugth);*/
     }
 
-    function render(){
-        game.debug.text(game.time.suggestedFps,32,32);
+    function collisionHandler2(mago_derecha,hechizos){
+        
+        vidadcha=new Phaser.Rectangle(650,25,100-daño,20);
+        daño+=20;
+        spell.kill();
+        /*caugth++;
+        score.setText("Score: " + caugth);*/
     }
+
 
 MagicAndRunes.levelState.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeon.png');
-        game.load.image('nivel0','assets/images/escenario0.json');
+        //game.load.image('nivel0','assets/images/escenario0.json');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
-        game.load.image('spell', 'assets/spells/black_basic.png');
+        game.load.image('spell', 'assets/images/black_basic.png');
 
     },
 
@@ -65,7 +75,11 @@ MagicAndRunes.levelState.prototype = {
         mago_izquierda=game.add.sprite(100, 400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,400,'mago_derecha');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
-        score=game.add.text(25,25,"Score: " + caugth,{font:"25px Arial", fill:"#E74C3C",align:"center"});
+        //barras de vida
+        vidadcha=new Phaser.Rectangle(650,25,100,20);
+        vidaizq=new Phaser.Rectangle(25,25,100,20);
+        game.debug.geom(vidaizq,'rgba(0,255,0,1)');
+        game.debug.geom(vidadcha,'rgba(0,255,0,1');
         /*upKey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
         downKey=game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         leftKey=game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -85,6 +99,7 @@ MagicAndRunes.levelState.prototype = {
         mago_izquierda.body.collideWorldBounds=true;
         mago_izquierda.body.gravity.y=500;
         mago_izquierda.body.bounce.y=0.1;
+        mago_izquierda.body.setSize(30,50);
 
         mago_derecha.body.collideWorldBounds=true;
         mago_derecha.body.gravity.y=500;
@@ -97,7 +112,7 @@ MagicAndRunes.levelState.prototype = {
         spells.physicsBodyType = Phaser.Physics.ARCADE;
         spells.createMultiple(30, 'spell');
         spells.setAll('anchor.x', 1);
-        spells.setAll('anchor.y', 0.5);
+        spells.setAll('anchor.y', 0);
         spells.setAll('outOfBoundsKill', true);
         spells.setAll('checkWorldBounds', true);
 
@@ -107,31 +122,40 @@ MagicAndRunes.levelState.prototype = {
         hechizos.physicsBodyType = Phaser.Physics.ARCADE;
         hechizos.createMultiple(30, 'spell');
         hechizos.setAll('anchor.x', 1);
-        hechizos.setAll('anchor.y', 0.5);
+        hechizos.setAll('anchor.y', 0);
         hechizos.setAll('outOfBoundsKill', true);
         hechizos.setAll('checkWorldBounds', true);
 
         //  And some controls to play the game with
         cursors = game.input.keyboard.createCursorKeys();
-        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.E);
+        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+        fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 
     },
 
+   /*render: function(){
+        game.debug.geom(vidaizq,'rgba(0,255,0,1)');
+        game.debug.geom(vidadcha,'rgba(0,255,0,1');
+    },*/
+
     update: function() {
 
+        
+
+        //funcion de disparo para el mago naranja
         function fireSpell () {
 
-            //  To avoid them being allowed to fire too fast we set a time limit
+           
             if (game.time.now > spellTime)
             {
-                //  Grab the first spell we can from the pool
+               
                 spell = spells.getFirstExists(false);
         
                 if (spell)
                 {
                     //  And fire it
-                    spell.reset(mago_derecha.x, mago_derecha.y + 8);
+                    spell.reset(mago_derecha.x,mago_derecha.y+5);
+
                     if (redLeft){
                         spell.body.velocity.x = -400;
                         spells.setAll('anchor.x', 1);
@@ -140,13 +164,14 @@ MagicAndRunes.levelState.prototype = {
                         spell.body.velocity.x = 400;
                     }
                     
-                    spell.body.velocity.y = -70;
+                    spell.body.velocity.y = 0;
                     spellTime = game.time.now + 200;
                 }
             }
         
         }
 
+        //funcion de disparo para el mago verde
         function fireHechizo () {
 
             //  To avoid them being allowed to fire too fast we set a time limit
@@ -158,7 +183,7 @@ MagicAndRunes.levelState.prototype = {
                 if (hechizo)
                 {
                     //  And fire it
-                    hechizo.reset(mago_izquierda.x, mago_izquierda.y + 8);
+                    hechizo.reset(mago_izquierda.x, mago_izquierda.y + 5);
                     if (greenLeft){
                         hechizo.body.velocity.x = -400;
                         hechizos.setAll('anchor.x', 1);
@@ -174,21 +199,22 @@ MagicAndRunes.levelState.prototype = {
         
         }
 
+        // funciones para eliminar los sprites de los hechizos una vez salgan fuera de la pantalla
         function resetSpell (spell) {
 
-            //  Called if the spell goes out of the screen
+           
             spell.kill();
         
         }
 
         function resetHechizo (hechizo) {
 
-            //  Called if the hechizo goes out of the screen
             hechizo.kill();
         
         }
-
+       
         mago_derecha.body.velocity.x=0;
+        mago_izquierda.body.velocity.x=0;
 
         if(akey.isDown){
             mago_izquierda.body.velocity.x=-150;
@@ -229,12 +255,11 @@ MagicAndRunes.levelState.prototype = {
         {
             fireHechizo();
         }
+        // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
+        game.physics.arcade.collide(mago_izquierda,spells,collisionHandler,null,this);
+        game.physics.arcade.collide(mago_derecha,hechizos,collisionHandler2,null,this);
 
-
-        
-
-        /*game.physics.arcade.collide(catcher,cat,collisionHandler,null,this);
-        if(caugth==3){
+        /*if(caugth==3){
             this.state.start("endingState");
         }*/
     },
