@@ -8,7 +8,7 @@ MagicAndRunes.menuState.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeon.png');
-        game.load.tilemap('nivel0','assets/tiles/escenario_0.json');
+        //game.load.tilemap('nivel0','assets/tiles/escenario_0.json');
         
         game.load.image('tiles','assets/tiles/Tilesheet/medieval_tilesheet.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
@@ -18,12 +18,12 @@ MagicAndRunes.menuState.prototype = {
 
     create: function() {
         
-        nivel=game.add.tilemap('nivel0');
+        /*nivel=game.add.tilemap('nivel0');
         
         nivel.addTilesetImage('medieval_tilesheet','tiles');
         console.log("FALLO");
         layer=nivel.createLayer('Nivel0');
-        
+        */
         //layer.resizeWorld();
         
         var background= game.add.sprite(0,0,'background');

@@ -22,13 +22,13 @@ var upKey;
     var aliens;
     var spells;
     var hechizos;
-    var spellTime = 10;
-    var hechizoTime = 10;
+    var spellTime = 0;
+    var hechizoTime =0;
     var cursors;
     var fireButton;
     var fire2Button;
-    var enemySpell;
-    var firingTimer = 0;
+    var hechizoTempo=0;
+    var spellTempo=0;
     
 
     //Spells directions
@@ -38,9 +38,9 @@ var upKey;
     function collisionHandler(mago_izquierda,spells){
         
         vidaizq=new Phaser.Rectangle(25,25,100-daño,20);
-        game.debug.geom(vidaizq,'rgba(250,255,10,1');
+        //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         daño+=20;
-        spell.kill();
+        spells.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
     }
@@ -49,7 +49,7 @@ var upKey;
         
         vidadcha=new Phaser.Rectangle(650,25,100-daño,20);
         daño+=20;
-        spell.kill();
+        hechizos.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
     }
@@ -63,7 +63,7 @@ MagicAndRunes.levelState.prototype = {
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
-        game.load.image('spell', 'assets/images/black_basic.png');
+        game.load.image('spell', 'assets/spells/black_basic.png');
 
     },
 
@@ -78,8 +78,7 @@ MagicAndRunes.levelState.prototype = {
         //barras de vida
         vidadcha=new Phaser.Rectangle(650,25,100,20);
         vidaizq=new Phaser.Rectangle(25,25,100,20);
-        game.debug.geom(vidaizq,'rgba(0,255,0,1)');
-        game.debug.geom(vidadcha,'rgba(0,255,0,1');
+        
         /*upKey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
         downKey=game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         leftKey=game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -112,7 +111,7 @@ MagicAndRunes.levelState.prototype = {
         spells.physicsBodyType = Phaser.Physics.ARCADE;
         spells.createMultiple(30, 'spell');
         spells.setAll('anchor.x', 1);
-        spells.setAll('anchor.y', 0);
+        spells.setAll('anchor.y', 0.5);
         spells.setAll('outOfBoundsKill', true);
         spells.setAll('checkWorldBounds', true);
 
@@ -122,7 +121,7 @@ MagicAndRunes.levelState.prototype = {
         hechizos.physicsBodyType = Phaser.Physics.ARCADE;
         hechizos.createMultiple(30, 'spell');
         hechizos.setAll('anchor.x', 1);
-        hechizos.setAll('anchor.y', 0);
+        hechizos.setAll('anchor.y', 0.5);
         hechizos.setAll('outOfBoundsKill', true);
         hechizos.setAll('checkWorldBounds', true);
 
@@ -140,7 +139,8 @@ MagicAndRunes.levelState.prototype = {
 
     update: function() {
 
-        
+        game.debug.geom(vidaizq,'rgba(0,255,0,1)');
+        game.debug.geom(vidadcha,'rgba(0,255,0,1');
 
         //funcion de disparo para el mago naranja
         function fireSpell () {
@@ -164,7 +164,7 @@ MagicAndRunes.levelState.prototype = {
                         spell.body.velocity.x = 400;
                     }
                     
-                    spell.body.velocity.y = 0;
+                    spell.body.velocity.y = -70;
                     spellTime = game.time.now + 200;
                 }
             }
@@ -246,18 +246,22 @@ MagicAndRunes.levelState.prototype = {
         }
 
         //  Firing?
-        if (fireButton.isDown)
+        if (fireButton.isDown && spellTempo>3)
         {
             fireSpell();
+            spellTempo=0;
         }
 
-        if (fire2Button.isDown)
+        if (fire2Button.isDown && hechizoTempo>3)
         {
             fireHechizo();
+            hechizoTempo=0;
         }
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
         game.physics.arcade.collide(mago_izquierda,spells,collisionHandler,null,this);
         game.physics.arcade.collide(mago_derecha,hechizos,collisionHandler2,null,this);
+        spellTempo+=0.05;
+        hechizoTempo+=0.05;
 
         /*if(caugth==3){
             this.state.start("endingState");
