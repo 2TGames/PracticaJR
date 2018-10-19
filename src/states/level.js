@@ -205,7 +205,7 @@ MagicAndRunes.levelState.prototype = {
                 {
                     //  And fire it
                     enchantment.reset(mago_derecha.x - 60,mago_derecha.y);
-                    
+                    enchantment.body.allowGravity = false;
                     enchantmentTime = game.time.now + 200;
                 }
             }
