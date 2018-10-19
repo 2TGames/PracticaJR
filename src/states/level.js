@@ -16,10 +16,10 @@ var upKey;
     var w,a,s,d;
     var vidaizq,vidadcha;
     var daño=20;
+    var nivel;
 
     //Spells variables
     var player;
-    var aliens;
     var spells;
     var hechizos;
     var spellTime = 0;
@@ -29,6 +29,11 @@ var upKey;
     var fire2Button;
     var hechizoTempo=0;
     var spellTempo=0;
+
+    //Enchantment variables
+    var enchantment;
+    var enchantmentTime = 0;
+    var enchantmentTempo;
     
 
     //Spells directions
@@ -59,11 +64,14 @@ MagicAndRunes.levelState.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeon.png');
-        //game.load.image('nivel0','assets/images/escenario0.json');
+        //game.load.tilemap('nivel0','assets/images/escenario0.json',null,Phaser.Tilemap.TILED_JSON);
+        //game.load.image('tiles','assets/tiles/Tilesheet/medieval_tilesheet_2X.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
         game.load.image('spell', 'assets/spells/black_basic.png');
+        game.load.image('enchantment', 'assets/spells/black_encantamiento.png');
+
 
     },
 
@@ -79,6 +87,11 @@ MagicAndRunes.levelState.prototype = {
         vidadcha=new Phaser.Rectangle(650,25,100,20);
         vidaizq=new Phaser.Rectangle(25,25,100,20);
         
+        /*nivel = game.add.tilemap('nivel0');
+        nivel.addTilesetImage ('tiles');
+        layer = nivel.createLayer(0);
+        layer.resizeWorld();*/
+
         /*upKey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
         downKey=game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         leftKey=game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -125,10 +138,19 @@ MagicAndRunes.levelState.prototype = {
         hechizos.setAll('outOfBoundsKill', true);
         hechizos.setAll('checkWorldBounds', true);
 
+        //  Our enchantment group
+        enchantments = game.add.group();
+        enchantments.enableBody = true;
+        enchantments.physicsBodyType = Phaser.Physics.ARCADE;
+        enchantments.createMultiple(30, 'enchantment');
+        enchantments.setAll('checkWorldBounds', true);
+
         //  And some controls to play the game with
         cursors = game.input.keyboard.createCursorKeys();
-        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
-        fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.I);
+        fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.V);
+        enchButton = game.input.keyboard.addKey(Phaser.Keyboard.O);
+        ench2Button = game.input.keyboard.addKey(Phaser.Keyboard.B);
 
     },
 
@@ -166,6 +188,25 @@ MagicAndRunes.levelState.prototype = {
                     
                     spell.body.velocity.y = -70;
                     spellTime = game.time.now + 200;
+                }
+            }
+        
+        }
+
+        function fireEnchantment () {
+
+           
+            if (game.time.now > enchantmentTime)
+            {
+               
+                enchantment = enchantments.getFirstExists(false);
+        
+                if (enchantment)
+                {
+                    //  And fire it
+                    enchantment.reset(mago_derecha.x - 60,mago_derecha.y);
+                    
+                    enchantmentTime = game.time.now + 200;
                 }
             }
         
@@ -257,6 +298,19 @@ MagicAndRunes.levelState.prototype = {
             fireHechizo();
             hechizoTempo=0;
         }
+        // Enchanting?
+        if (enchButton.isDown && spellTempo>3)
+        {
+            fireEnchantment();
+            spellTempo=0;
+        }
+
+        if (ench2Button.isDown && hechizoTempo>3)
+        {
+            fireHechizo();
+            hechizoTempo=0;
+        }
+        1
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
         game.physics.arcade.collide(mago_izquierda,spells,collisionHandler,null,this);
         game.physics.arcade.collide(mago_derecha,hechizos,collisionHandler2,null,this);
