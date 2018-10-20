@@ -239,13 +239,13 @@ MagicAndRunes.levelState.prototype = {
             if (game.time.now > enchantmentTime)
             {
                
-                enchantment2 = enchantments.getFirstExists(false);
+                enchantment2 = enchantments2.getFirstExists(false);
         
-                if (enchantment)
+                if (enchantment2)
                 {
                     //  And fire it
-                    enchantment.reset(mago_izquierda.x - 30,mago_derecha.y+20);
-                    enchantment.body.allowGravity=false;
+                    enchantment2.reset(mago_izquierda.x - 30,mago_derecha.y+20);
+                    enchantment2.body.allowGravity=false;
                     enchantmentTime = game.time.now + 200;
                 }
             }
