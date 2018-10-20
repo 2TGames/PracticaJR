@@ -15,7 +15,14 @@ var upKey;
     var flechas;
     var w,a,s,d;
     var vidaizq,vidadcha;
-    var daño=20;
+    var dañoJ1=20;
+    var dañoJ2=20;
+    var vidaJ1=100;
+    var vidaJ2=100;
+    var manaJ1=100;
+    var manaJ2=100;
+    var resto1,resto2;
+    var spellCost=10;
     var nivel;
 
     //Spells variables
@@ -32,6 +39,7 @@ var upKey;
 
     //Enchantment variables
     var enchantment;
+    var enchantment2;
     var enchantmentTime = 0;
     var enchantmentTempo;
     
@@ -41,19 +49,25 @@ var upKey;
     var redLeft = true;
 
     function collisionHandler(mago_izquierda,spells){
-        
-        vidaizq=new Phaser.Rectangle(25,25,100-daño,20);
+        resto1=vidaJ1-dañoJ2;
+        vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
-        daño+=20;
+        if(resto1===0){
+            this.state.start("endingState");
+        }
+        dañoJ2+=20;
         spells.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
     }
 
     function collisionHandler2(mago_derecha,hechizos){
-        
-        vidadcha=new Phaser.Rectangle(650,25,100-daño,20);
-        daño+=20;
+        resto2=vidaJ2-dañoJ1;
+        vidadcha=new Phaser.Rectangle(650,25,vidaJ2-dañoJ1,20);
+        if(resto2===0){
+            this.state.start("endingState");
+        }
+        dañoJ1+=20;
         hechizos.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
@@ -70,7 +84,8 @@ MagicAndRunes.levelState.prototype = {
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
         game.load.image('spell', 'assets/spells/black_basic.png');
-        game.load.image('enchantment', 'assets/spells/black_encantamiento.png');
+        game.load.image('enchantmentJ2', 'assets/spells/encantamiento_naranja.png');
+        game.load.image('enchantmentJ1','assets/spells/encantamiento_verde.png');
 
 
     },
@@ -84,9 +99,11 @@ MagicAndRunes.levelState.prototype = {
         mago_derecha=game.add.sprite(700,400,'mago_derecha');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
         //barras de vida
-        vidadcha=new Phaser.Rectangle(650,25,100,20);
-        vidaizq=new Phaser.Rectangle(25,25,100,20);
-        
+        vidadcha=new Phaser.Rectangle(650,25,vidaJ1,20);
+        vidaizq=new Phaser.Rectangle(25,25,vidaJ2,20);
+        //barras de mana
+        manadcha=new Phaser.Rectangle(650,50,manaJ1,20);
+        manaizq=new Phaser.Rectangle(25,50,manaJ2,20);
         /*nivel = game.add.tilemap('nivel0');
         nivel.addTilesetImage ('tiles');
         layer = nivel.createLayer(0);
@@ -96,17 +113,11 @@ MagicAndRunes.levelState.prototype = {
         downKey=game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         leftKey=game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         rightKey=game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);*/
-        wkey=game.input.keyboard.addKey(Phaser.Keyboard.W);
-        akey=game.input.keyboard.addKey(Phaser.Keyboard.A);
-        skey=game.input.keyboard.addKey(Phaser.Keyboard.S);
-        dkey=game.input.keyboard.addKey(Phaser.Keyboard.D);
         
 
         mago_derecha.animations.add('left',[1,2,3,4,5,6,7,8],15,true);
         //mago_derecha.animations.add('turn',[9],20,true);
        // mago_derecha.animations.add('right',[10,11,12,13,14,15,16,17,18],15,true);
-
-        flechas=game.input.keyboard.createCursorKeys();
 
         mago_izquierda.body.collideWorldBounds=true;
         mago_izquierda.body.gravity.y=500;
@@ -142,27 +153,36 @@ MagicAndRunes.levelState.prototype = {
         enchantments = game.add.group();
         enchantments.enableBody = true;
         enchantments.physicsBodyType = Phaser.Physics.ARCADE;
-        enchantments.createMultiple(30, 'enchantment');
+        enchantments.createMultiple(30, 'enchantmentJ2');
         enchantments.setAll('checkWorldBounds', true);
 
+        enchantments2 = game.add.group();
+        enchantments2.enableBody = true;
+        enchantments2.physicsBodyType = Phaser.Physics.ARCADE;
+        enchantments2.createMultiple(30, 'enchantmentJ1');
+        enchantments2.setAll('checkWorldBounds', true);
         //  And some controls to play the game with
-        cursors = game.input.keyboard.createCursorKeys();
-        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.I);
+            //Controles mago verde
+        wkey=game.input.keyboard.addKey(Phaser.Keyboard.W);
+        akey=game.input.keyboard.addKey(Phaser.Keyboard.A);
+        skey=game.input.keyboard.addKey(Phaser.Keyboard.S);
+        dkey=game.input.keyboard.addKey(Phaser.Keyboard.D);
         fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.V);
-        enchButton = game.input.keyboard.addKey(Phaser.Keyboard.O);
         ench2Button = game.input.keyboard.addKey(Phaser.Keyboard.B);
-
+            //Controles mago naranja
+        flechas=game.input.keyboard.createCursorKeys();
+        fireButton = game.input.keyboard.addKey(Phaser.Keyboard.I);
+        enchButton = game.input.keyboard.addKey(Phaser.Keyboard.O);
+        ench2Button=game.input.keyboard.addKey(Phaser.Keyboard.B);
     },
-
-   /*render: function(){
-        game.debug.geom(vidaizq,'rgba(0,255,0,1)');
-        game.debug.geom(vidadcha,'rgba(0,255,0,1');
-    },*/
 
     update: function() {
 
         game.debug.geom(vidaizq,'rgba(0,255,0,1)');
-        game.debug.geom(vidadcha,'rgba(0,255,0,1');
+        game.debug.geom(vidadcha,'rgba(0,255,0,1)');
+
+        game.debug.geom(manadcha,'rgba(0,0,255,1)');
+        game.debug.geom(manaizq,'rgba(0,0,255,1');
 
         //funcion de disparo para el mago naranja
         function fireSpell () {
@@ -177,22 +197,23 @@ MagicAndRunes.levelState.prototype = {
                 {
                     //  And fire it
                     spell.reset(mago_derecha.x,mago_derecha.y+5);
-
                     if (redLeft){
                         spell.body.velocity.x = -400;
                         spells.setAll('anchor.x', 1);
+                        
                     } else{
                         spells.setAll('anchor.x', -1);
                         spell.body.velocity.x = 400;
                     }
                     
-                    spell.body.velocity.y = -70;
+                    spell.body.velocity.y = -50;
                     spellTime = game.time.now + 200;
                 }
             }
         
         }
 
+        //Encantamiento para mago naranja
         function fireEnchantment () {
 
            
@@ -204,8 +225,27 @@ MagicAndRunes.levelState.prototype = {
                 if (enchantment)
                 {
                     //  And fire it
-                    enchantment.reset(mago_derecha.x - 60,mago_derecha.y);
-                    enchantment.body.allowGravity = false;
+                    enchantment.reset(mago_derecha.x-30,mago_derecha.y+20);
+                    enchantment.body.allowGravity=false;
+                    enchantmentTime = game.time.now + 200;
+                }
+            }
+        
+        }
+
+        function fireEnchantment2 () {
+
+           
+            if (game.time.now > enchantmentTime)
+            {
+               
+                enchantment2 = enchantments.getFirstExists(false);
+        
+                if (enchantment)
+                {
+                    //  And fire it
+                    enchantment.reset(mago_izquierda.x - 30,mago_derecha.y+20);
+                    enchantment.body.allowGravity=false;
                     enchantmentTime = game.time.now + 200;
                 }
             }
@@ -233,7 +273,7 @@ MagicAndRunes.levelState.prototype = {
                         hechizo.body.velocity.x = 400;
                     }
                     
-                    hechizo.body.velocity.y = -70;
+                    hechizo.body.velocity.y = -50;
                     hechizoTime = game.time.now + 200;
                 }
             }
@@ -242,14 +282,11 @@ MagicAndRunes.levelState.prototype = {
 
         // funciones para eliminar los sprites de los hechizos una vez salgan fuera de la pantalla
         function resetSpell (spell) {
-
-           
             spell.kill();
         
         }
 
         function resetHechizo (hechizo) {
-
             hechizo.kill();
         
         }
@@ -291,6 +328,8 @@ MagicAndRunes.levelState.prototype = {
         {
             fireSpell();
             spellTempo=0;
+            manadcha=new Phaser.Rectangle(650,50,manaJ2-spellCost,20);
+            spellCost+=10;
         }
 
         if (fire2Button.isDown && hechizoTempo>3)
@@ -307,7 +346,7 @@ MagicAndRunes.levelState.prototype = {
 
         if (ench2Button.isDown && hechizoTempo>3)
         {
-            fireHechizo();
+            fireEnchantment2();
             hechizoTempo=0;
         }
         1
@@ -317,7 +356,7 @@ MagicAndRunes.levelState.prototype = {
         spellTempo+=0.05;
         hechizoTempo+=0.05;
 
-        /*if(caugth==3){
+        /*if(vidaJ1==0||vidaJ2==0){
             this.state.start("endingState");
         }*/
     },
