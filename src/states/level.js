@@ -27,8 +27,10 @@ var upKey;
 
     //Spells variables
     var player;
-    var spells;
-    var hechizos;
+    var spell,spell2;
+    var hechizo,hechizo2;
+    var spellsDcha, spellsIzq;
+    var hechizosDcha, hechizosIzq;
     var spellTime = 0;
     var hechizoTime =0;
     var cursors;
@@ -45,8 +47,10 @@ var upKey;
     
 
     //Spells directions
-    var greenLeft =false;
-    var redLeft = true;
+    var greenLeft =true;
+    var redLeft = false;
+    var redRight=true;
+    var greenRight=true;
 
     function collisionHandler(mago_izquierda,spells){
         resto1=vidaJ1-dañoJ2;
@@ -73,6 +77,10 @@ var upKey;
         score.setText("Score: " + caugth);*/
     }
 
+    function colisionMagos(mago_derecha,mago_izquierda){
+        
+    }
+
 
 MagicAndRunes.levelState.prototype = {
 
@@ -83,7 +91,10 @@ MagicAndRunes.levelState.prototype = {
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
-        game.load.image('spell', 'assets/spells/black_basic.png');
+        game.load.image('spellDcha', 'assets/spells/basico_naranja_derecha.png');
+        game.load.image('spellIzq','assets/spells/basico_naranja_izq.png');
+        game.load.image('hechizoDcha','assets/spells/basico_verde_derecha.png');
+        game.load.image('hechizoIzq','assets/spells/basico_verde_izquierda.png');
         game.load.image('enchantmentJ2', 'assets/spells/encantamiento_naranja.png');
         game.load.image('enchantmentJ1','assets/spells/encantamiento_verde.png');
 
@@ -129,38 +140,58 @@ MagicAndRunes.levelState.prototype = {
         mago_derecha.body.bounce.y=0.1
         mago_derecha.body.setSize(30,50);
 
-        //  Our spell group
-        spells = game.add.group();
-        spells.enableBody = true;
-        spells.physicsBodyType = Phaser.Physics.ARCADE;
-        spells.createMultiple(30, 'spell');
-        spells.setAll('anchor.x', 1);
-        spells.setAll('anchor.y', 0.5);
-        spells.setAll('outOfBoundsKill', true);
-        spells.setAll('checkWorldBounds', true);
+        //  Hechizos mago naranja
+        spellsDcha = game.add.group();
+        spellsDcha.enableBody = true;
+        spellsDcha.physicsBodyType = Phaser.Physics.ARCADE;
+        spellsDcha.createMultiple(30, 'spellDcha');
+        spellsDcha.setAll('anchor.x', 1);
+        spellsDcha.setAll('anchor.y', 0.5);
+        spellsDcha.setAll('outOfBoundsKill', true);
+        spellsDcha.setAll('checkWorldBounds', true);
 
-        //  Our hechizo group
-        hechizos = game.add.group();
-        hechizos.enableBody = true;
-        hechizos.physicsBodyType = Phaser.Physics.ARCADE;
-        hechizos.createMultiple(30, 'spell');
-        hechizos.setAll('anchor.x', 1);
-        hechizos.setAll('anchor.y', 0.5);
-        hechizos.setAll('outOfBoundsKill', true);
-        hechizos.setAll('checkWorldBounds', true);
+        spellsIzq = game.add.group();
+        spellsIzq.enableBody = true;
+        spellsIzq.physicsBodyType = Phaser.Physics.ARCADE;
+        spellsIzq.createMultiple(30, 'spellIzq');
+        spellsIzq.setAll('anchor.x', 1);
+        spellsIzq.setAll('anchor.y', 0.5);
+        spellsIzq.setAll('outOfBoundsKill', true);
+        spellsIzq.setAll('checkWorldBounds', true);
+
+        //  Hechizos mago verde
+        hechizosDcha = game.add.group();
+        hechizosDcha.enableBody = true;
+        hechizosDcha.physicsBodyType = Phaser.Physics.ARCADE;
+        hechizosDcha.createMultiple(30, 'hechizoDcha');
+        hechizosDcha.setAll('anchor.x', 1);
+        hechizosDcha.setAll('anchor.y', 0.5);
+        hechizosDcha.setAll('outOfBoundsKill', true);
+        hechizosDcha.setAll('checkWorldBounds', true);
+
+        hechizosIzq = game.add.group();
+        hechizosIzq.enableBody = true;
+        hechizosIzq.physicsBodyType = Phaser.Physics.ARCADE;
+        hechizosIzq.createMultiple(30, 'hechizoIzq');
+        hechizosIzq.setAll('anchor.x', 1);
+        hechizosIzq.setAll('anchor.y', 0.5);
+        hechizosIzq.setAll('outOfBoundsKill', true);
+        hechizosIzq.setAll('checkWorldBounds', true);
 
         //  Our enchantment group
+            //Encantamientos mago naranja
         enchantments = game.add.group();
         enchantments.enableBody = true;
         enchantments.physicsBodyType = Phaser.Physics.ARCADE;
         enchantments.createMultiple(30, 'enchantmentJ2');
         enchantments.setAll('checkWorldBounds', true);
-
+            //Encantamientos mago verde
         enchantments2 = game.add.group();
         enchantments2.enableBody = true;
         enchantments2.physicsBodyType = Phaser.Physics.ARCADE;
         enchantments2.createMultiple(30, 'enchantmentJ1');
         enchantments2.setAll('checkWorldBounds', true);
+
         //  And some controls to play the game with
             //Controles mago verde
         wkey=game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -191,23 +222,62 @@ MagicAndRunes.levelState.prototype = {
             if (game.time.now > spellTime)
             {
                
-                spell = spells.getFirstExists(false);
+                spell = spellsIzq.getFirstExists(false);
+                spell2=spellsDcha.getFirstExists(false);
         
-                if (spell)
+                if (spell || spell2)
                 {
                     //  And fire it
                     spell.reset(mago_derecha.x,mago_derecha.y+5);
+                    spell2.reset(mago_derecha.x,mago_derecha.y+5);
                     if (redLeft){
                         spell.body.velocity.x = -400;
-                        spells.setAll('anchor.x', 1);
+                        spellsIzq.setAll('anchor.x', 1);
+                        spell.body.velocity.y = -50;
+                        spell2.kill();
                         
-                    } else{
-                        spells.setAll('anchor.x', -1);
-                        spell.body.velocity.x = 400;
+                    } else if(redRight){
+                        spellsDcha.setAll('anchor.x', -1);
+                        spell2.body.velocity.x = 400;
+                        spell2.body.velocity.y=-50;
+                        spell.kill();
                     }
                     
-                    spell.body.velocity.y = -50;
                     spellTime = game.time.now + 200;
+                }
+            }
+        
+        }
+
+        //funcion de disparo para el mago verde
+        function fireHechizo () {
+
+            //  To avoid them being allowed to fire too fast we set a time limit
+            if (game.time.now > hechizoTime)
+            {
+                //  Grab the first hechizo we can from the pool
+                hechizo = hechizosIzq.getFirstExists(false);
+                hechizo2 = hechizosDcha.getFirstExists(false);
+                if (hechizo || hechizo2)
+                {
+                    //  And fire it
+                    hechizo.reset(mago_izquierda.x, mago_izquierda.y + 5);
+                    hechizo2.reset(mago_izquierda.x, mago_izquierda.y + 5);
+                    if (greenLeft){
+                        hechizo.body.velocity.x = -400;
+                        hechizosIzq.setAll('anchor.x', 1);
+                        hechizo.body.velocity.y = -50;
+                        hechizo2.kill();
+                      
+                    } else if(greenRight){
+                        hechizosDcha.setAll('anchor.x', -1);
+                        hechizo2.body.velocity.x = 400;
+                        hechizo2.body.velocity.y = -50;
+                        hechizo.kill();
+                        
+                    }
+                    
+                    hechizoTime = game.time.now + 200;
                 }
             }
         
@@ -252,33 +322,7 @@ MagicAndRunes.levelState.prototype = {
         
         }
 
-        //funcion de disparo para el mago verde
-        function fireHechizo () {
-
-            //  To avoid them being allowed to fire too fast we set a time limit
-            if (game.time.now > hechizoTime)
-            {
-                //  Grab the first hechizo we can from the pool
-                hechizo = hechizos.getFirstExists(false);
         
-                if (hechizo)
-                {
-                    //  And fire it
-                    hechizo.reset(mago_izquierda.x, mago_izquierda.y + 5);
-                    if (greenLeft){
-                        hechizo.body.velocity.x = -400;
-                        hechizos.setAll('anchor.x', 1);
-                    } else{
-                        hechizos.setAll('anchor.x', -1);
-                        hechizo.body.velocity.x = 400;
-                    }
-                    
-                    hechizo.body.velocity.y = -50;
-                    hechizoTime = game.time.now + 200;
-                }
-            }
-        
-        }
 
         // funciones para eliminar los sprites de los hechizos una vez salgan fuera de la pantalla
         function resetSpell (spell) {
@@ -351,8 +395,11 @@ MagicAndRunes.levelState.prototype = {
         }
         1
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
-        game.physics.arcade.collide(mago_izquierda,spells,collisionHandler,null,this);
-        game.physics.arcade.collide(mago_derecha,hechizos,collisionHandler2,null,this);
+        game.physics.arcade.collide(mago_izquierda,spellsDcha,collisionHandler,null,this);
+        game.physics.arcade.collide(mago_izquierda,spellsIzq,collisionHandler,null,this);
+        game.physics.arcade.collide(mago_derecha,hechizosDcha,collisionHandler2,null,this);
+        game.physics.arcade.collide(mago_derecha,hechizosIzq,collisionHandler2,null,this);
+        game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
         spellTempo+=0.05;
         hechizoTempo+=0.05;
 
