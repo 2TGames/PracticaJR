@@ -97,6 +97,7 @@ MagicAndRunes.levelState.prototype = {
         game.load.image('hechizoIzq','assets/spells/basico_verde_izquierda.png');
         game.load.image('enchantmentJ2', 'assets/spells/encantamiento_naranja.png');
         game.load.image('enchantmentJ1','assets/spells/encantamiento_verde.png');
+        game.load.image('p20x2','assets/Plataformas/Plataforma_20x2.png');
 
 
     },
@@ -108,6 +109,10 @@ MagicAndRunes.levelState.prototype = {
         background= game.add.sprite(0,0,'background');
         mago_izquierda=game.add.sprite(100, 400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,400,'mago_derecha');
+        p20x2=game.add.sprite(0,400,'p20x2');
+        p20x2=game.add.sprite(300,200,'p20x2');
+        p20x2=game.add.sprite(600,400,'p20x2');
+        p20x2=game.add.sprite(300,500,'p20x2');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
         //barras de vida
         vidadcha=new Phaser.Rectangle(650,25,vidaJ1,20);
