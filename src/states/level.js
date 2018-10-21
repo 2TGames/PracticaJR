@@ -110,7 +110,7 @@ MagicAndRunes.levelState.prototype = {
         mago_izquierda=game.add.sprite(100, 400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,400,'mago_derecha');
         p20x2=game.add.sprite(0,400,'p20x2');
-        p20x2=game.add.sprite(300,200,'p20x2');
+        p20x2=game.add.sprite(300,300,'p20x2');
         p20x2=game.add.sprite(600,400,'p20x2');
         p20x2=game.add.sprite(300,500,'p20x2');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
