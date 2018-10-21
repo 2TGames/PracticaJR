@@ -353,7 +353,7 @@ MagicAndRunes.levelState.prototype = {
         }
 
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp){
-            mago_izquierda.body.velocity.y=-250;
+            mago_izquierda.body.velocity.y=-350;
             temp=game.time.now+750;
         }
 
@@ -368,7 +368,7 @@ MagicAndRunes.levelState.prototype = {
         
 
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
-            mago_derecha.body.velocity.y=-250;
+            mago_derecha.body.velocity.y=-350;
             temp=game.time.now+750;
         }
 
