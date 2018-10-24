@@ -42,7 +42,8 @@ MagicAndRunes.levelState = function(game) {
     var enchantment;
     var enchantment2;
     var enchantmentTime = 0;
-    var enchantmentTempo;
+    var enchantmentTempo = 0;
+    var ench2Tempo = 0;
     
 
     //Spells directions
@@ -55,7 +56,7 @@ MagicAndRunes.levelState = function(game) {
         resto1=vidaJ1-dañoJ2;
         vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
-        if(resto1===0){
+        if(resto1<0){
             this.state.start("endingState");
         }
         dañoJ2+=20;
@@ -67,7 +68,7 @@ MagicAndRunes.levelState = function(game) {
     function collisionHandler2(mago_derecha,hechizos){
         resto2=vidaJ2-dañoJ1;
         vidadcha=new Phaser.Rectangle(650,25,vidaJ2-dañoJ1,20);
-        if(resto2===0){
+        if(resto2<0){
             this.state.start("endingState");
         }
         dañoJ1+=20;
@@ -75,6 +76,23 @@ MagicAndRunes.levelState = function(game) {
         /*caugth++;
         score.setText("Score: " + caugth);*/
     }
+
+    function colisionHealingOrange(mago_derecha,enchantments){
+        if (enchantmentTempo>50){
+            resto2=vidaJ2-dañoJ1;
+            
+            if(resto2<100){
+                vidadcha=new Phaser.Rectangle(650,25,vidaJ2-dañoJ1,20);
+            }else if(resto2<200){
+                vidadcha=new Phaser.Rectangle(650,25,100,20);
+            }else if(resto2<0){
+                this.state.start("endingState");
+            }
+            dañoJ1-=0.1;
+        }
+        
+    }
+
 
     function colisionMagos(mago_derecha,mago_izquierda){
         
@@ -395,9 +413,12 @@ MagicAndRunes.levelState.prototype = {
         game.physics.arcade.collide(mago_derecha,hechizosDcha,collisionHandler2,null,this);
         game.physics.arcade.collide(mago_derecha,hechizosIzq,collisionHandler2,null,this);
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
+        game.physics.arcade.collide(mago_derecha,enchantments,colisionHealingOrange,null,this);
 
         spellTempo+=0.05;
         hechizoTempo+=0.05;
+        ench2Tempo+=0.1;
+        enchantmentTempo+=0.1;
 
         /*if(vidaJ1==0||vidaJ2==0){
             this.state.start("endingState");
