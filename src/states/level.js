@@ -92,6 +92,21 @@ MagicAndRunes.levelState = function(game) {
         }
         
     }
+    function colisionHealingGreen(mago_izquierda,enchantments2){
+        if (enchantmentTempo>50){
+            resto2=vidaJ1-dañoJ2;
+            
+            if(resto2<100){
+                vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
+            }else if(resto2<200){
+                vidaizq=new Phaser.Rectangle(25,25,100,20);
+            }else if(resto2<0){
+                this.state.start("endingState");
+            }
+            dañoJ2-=0.1;
+        }
+        
+    }
 
 
     function colisionMagos(mago_derecha,mago_izquierda){
@@ -414,6 +429,7 @@ MagicAndRunes.levelState.prototype = {
         game.physics.arcade.collide(mago_derecha,hechizosIzq,collisionHandler2,null,this);
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
         game.physics.arcade.collide(mago_derecha,enchantments,colisionHealingOrange,null,this);
+        game.physics.arcade.collide(mago_izquierda,enchantments2,colisionHealingGreen,null,this);
 
         spellTempo+=0.05;
         hechizoTempo+=0.05;
