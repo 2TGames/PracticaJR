@@ -1,8 +1,7 @@
 MagicAndRunes.levelState = function(game) {
     
 }
-var upKey;
-    
+    var suelo;
     var mago_derecha;
     var caugth;
     var mago_izquierda;
@@ -86,8 +85,9 @@ MagicAndRunes.levelState.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeon.png');
-        //game.load.tilemap('nivel0','assets/images/escenario0.json',null,Phaser.Tilemap.TILED_JSON);
-        //game.load.image('tiles','assets/tiles/Tilesheet/medieval_tilesheet_2X.png');
+
+        game.load.tilemap('nivel0','assets/tiles/escenario_0_ext.csv');
+        game.load.image('tiles','assets/tiles/Tilesheet/medieval_tilesheet_2X.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
@@ -97,7 +97,6 @@ MagicAndRunes.levelState.prototype = {
         game.load.image('hechizoIzq','assets/spells/basico_verde_izquierda.png');
         game.load.image('enchantmentJ2', 'assets/spells/encantamiento_naranja.png');
         game.load.image('enchantmentJ1','assets/spells/encantamiento_verde.png');
-        game.load.image('p20x2','assets/Plataformas/Plataforma_20x2.png');
 
 
     },
@@ -107,38 +106,24 @@ MagicAndRunes.levelState.prototype = {
 
         caugth=0;
         background= game.add.sprite(0,0,'background');
+        //suelo=game.add.sprite(100,500,'suelo');
+        nivel=this.add.tilemap('nivel0',16,16);
+        nivel.addTilesetImage('tiles');
+        layer=nivel.createLayer(0);
+        layer.resizeWorld();
+
+        nivel.setCollisionBetween(54,83);
+        
         mago_izquierda=game.add.sprite(100, 400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,400,'mago_derecha');
-        //p1=game.add.sprite(0,400,'p20x2');
-        p2=game.add.sprite(300,300,'p20x2');
-        p3=game.add.sprite(600,400,'p20x2');
-        p4=game.add.sprite(300,500,'p20x2');
-        game.physics.enable([ p3, mago_derecha ], Phaser.Physics.ARCADE);
-        p3.body.immovable = true;
-        p3.body.allowGravity = false;
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
-
-        
+        //game.physics.enable(suelo,Phaser.Physics.ARCADE);
         //barras de vida
         vidadcha=new Phaser.Rectangle(650,25,vidaJ1,20);
         vidaizq=new Phaser.Rectangle(25,25,vidaJ2,20);
         //barras de mana
         manadcha=new Phaser.Rectangle(650,50,manaJ1,20);
         manaizq=new Phaser.Rectangle(25,50,manaJ2,20);
-        /*nivel = game.add.tilemap('nivel0');
-        nivel.addTilesetImage ('tiles');
-        layer = nivel.createLayer(0);
-        layer.resizeWorld();*/
-
-        /*upKey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
-        downKey=game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        leftKey=game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        rightKey=game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);*/
-        
-
-        mago_derecha.animations.add('left',[1,2,3,4,5,6,7,8],15,true);
-        //mago_derecha.animations.add('turn',[9],20,true);
-       // mago_derecha.animations.add('right',[10,11,12,13,14,15,16,17,18],15,true);
 
         mago_izquierda.body.collideWorldBounds=true;
         mago_izquierda.body.gravity.y=500;
@@ -150,23 +135,13 @@ MagicAndRunes.levelState.prototype = {
         mago_derecha.body.bounce.y=0.1
         mago_derecha.body.setSize(30,50);
 
-        //plataformas
-
-
-        p1=game.add.sprite(0,400,'p20x2');
-
-        game.physics.enable([ mago_derecha, p1 ], Phaser.Physics.ARCADE);
-
-        
-        p1.body.collideWorldBounds = true;
-        p1.body.immovable = true;
-        p1.body.allowGravity = false;
-
         //  Hechizos mago naranja
         spellsDcha = game.add.group();
         spellsDcha.enableBody = true;
         spellsDcha.physicsBodyType = Phaser.Physics.ARCADE;
         spellsDcha.createMultiple(30, 'spellDcha');
+        spellsDcha.setAll('anchor.x', 1);
+        spellsDcha.setAll('anchor.y', 0.5);
         spellsDcha.setAll('outOfBoundsKill', true);
         spellsDcha.setAll('checkWorldBounds', true);
 
@@ -228,7 +203,6 @@ MagicAndRunes.levelState.prototype = {
     },
 
     update: function() {
-        
 
         game.debug.geom(vidaizq,'rgba(0,255,0,1)');
         game.debug.geom(vidadcha,'rgba(0,255,0,1)');
@@ -343,9 +317,6 @@ MagicAndRunes.levelState.prototype = {
         
         }
 
-        //choque plataformas
-        game.physics.arcade.collide(mago_derecha, p3);
-
         
 
         // funciones para eliminar los sprites de los hechizos una vez salgan fuera de la pantalla
@@ -372,7 +343,7 @@ MagicAndRunes.levelState.prototype = {
         }
 
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp){
-            mago_izquierda.body.velocity.y=-350;
+            mago_izquierda.body.velocity.y=-250;
             temp=game.time.now+750;
         }
 
@@ -387,10 +358,9 @@ MagicAndRunes.levelState.prototype = {
         
 
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
-            mago_derecha.body.velocity.y=-500;
+            mago_derecha.body.velocity.y=-250;
             temp=game.time.now+750;
         }
-        
 
         //  Firing?
         if (fireButton.isDown && spellTempo>3)
@@ -425,6 +395,7 @@ MagicAndRunes.levelState.prototype = {
         game.physics.arcade.collide(mago_derecha,hechizosDcha,collisionHandler2,null,this);
         game.physics.arcade.collide(mago_derecha,hechizosIzq,collisionHandler2,null,this);
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
+
         spellTempo+=0.05;
         hechizoTempo+=0.05;
 
