@@ -24,6 +24,7 @@ MagicAndRunes.levelState = function(game) {
     var spellCost=10;
     var nivel;
     var facing_j1='right',facing_j2='left';
+    var cura;
 
     //Spells variables
     var player;
@@ -43,7 +44,8 @@ MagicAndRunes.levelState = function(game) {
     var enchantment;
     var enchantment2;
     var enchantmentTime = 0;
-    var enchantmentTempo;
+    var enchantmentTempo=0;
+    var ench2Tempo=0;
     
 
     //Spells directions
@@ -94,6 +96,22 @@ MagicAndRunes.levelState = function(game) {
             temp2=game.time.now+750;
         }
     }
+
+    function curacionMagoVerde(mago_izquierda,enchantments2){
+            resto1=vidaJ1;
+            if(resto1<100){
+                vidaizq=new Phaser.Rectangle(25,25,resto1,20);
+            } else if(resto1<200){
+                vidaizq=new Phaser.Rectangle(25,25,100,20);
+            }
+
+            dañoJ2-=0.1;
+            if(dañoJ2==20){
+                enchantments2.kill();
+            }
+        
+    }
+
 
 MagicAndRunes.levelState.prototype = {
 
@@ -317,7 +335,7 @@ MagicAndRunes.levelState.prototype = {
                 if (enchantment)
                 {
                     //  And fire it
-                    enchantment.reset(mago_derecha.x-30,mago_derecha.y+20);
+                    enchantment.reset(mago_derecha.x-30,mago_derecha.y+10);
                     enchantment.body.allowGravity=false;
                     enchantmentTime = game.time.now + 200;
                 }
@@ -336,9 +354,10 @@ MagicAndRunes.levelState.prototype = {
                 if (enchantment2)
                 {
                     //  And fire it
-                    enchantment2.reset(mago_izquierda.x - 30,mago_izquierda.y+20);
+                    enchantment2.reset(mago_izquierda.x - 30,mago_izquierda.y+10);
                     enchantment2.body.allowGravity=false;
                     enchantmentTime = game.time.now + 200;
+                    
                 }
             }
         
@@ -441,9 +460,13 @@ MagicAndRunes.levelState.prototype = {
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
         game.physics.arcade.collide(mago_derecha,layer,colisionMapaMagoNaranja,null,this);
         game.physics.arcade.collide(mago_izquierda,layer,colisionMapaMagoVerde,null,this);
+        game.physics.arcade.collide(mago_izquierda,resto1,curacionMagoVerde,null,this);
+       // game.physics.arcade.collide(mago_izquierda,enchantments,curacionMagoVerde,null,this);
 
         spellTempo+=0.05;
         hechizoTempo+=0.05;
+        enchantmentTempo+=0.1;
+        ench2Tempo+=0.1;
 
         /*if(vidaJ1==0||vidaJ2==0){
             this.state.start("endingState");
