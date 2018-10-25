@@ -100,11 +100,11 @@ MagicAndRunes.levelState.prototype = {
     preload: function() {
         game.load.image('background','assets/images/background_dungeon.png');
 
-        game.load.tilemap('nivel0','assets/tiles/escenario_0_ext.csv');
-        game.load.image('tiles','assets/tiles/Tilesheet/medieval_tilesheet_2X.png');
+        game.load.tilemap('nivel0','assets/scenarios/escenario_0_ext.csv');
+        game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
-        game.load.image('mago_derecha2','assets/images/magoN_perfil_izquierdo.png');
+       // game.load.image('mago_derecha2','assets/images/magoN_perfil_izquierdo.png');
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
         game.load.image('spellDcha', 'assets/spells/basico_naranja_derecha.png');
         game.load.image('spellIzq','assets/spells/basico_naranja_izq.png');
