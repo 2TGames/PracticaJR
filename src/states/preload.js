@@ -8,6 +8,9 @@ MagicAndRunes.preloadState.prototype = {
         /*game.load.image('bg','C:/Users/Usuario/Desktop/JuegoCatCatcher/assets/images/bg.png');
         game.load.image('cat','C:/Users/Usuario/Desktop/JuegoCatCatcher/assets/images/cat.png');
         game.load.image('catcher','C:/Users/Usuario/Desktop/JuegoCatCatcher/assets/images/catcher.png');*/
+
+        game.load.tilemap('nivel0','assets/tiles/escenario_0_ext.csv');
+        game.load.image('tiles','assets/tiles/Tilesheet/medieval_tilesheet_2X.png');
     },
 
     create: function() {
