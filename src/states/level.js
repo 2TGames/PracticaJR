@@ -7,6 +7,7 @@ MagicAndRunes.levelState = function(game) {
     var mago_izquierda;
     var layer;
     var b;
+    var medidor;
     var score;
     var key1;
     var temp=0,temp2=0;
@@ -83,16 +84,24 @@ MagicAndRunes.levelState = function(game) {
         
     }
 
+    function ganaVerde(){
+        this.state.start("level+1");
+    }
+
+    function ganaNaranja(){
+        this.state.start("level-1");
+    }
+
     function colisionMapaMagoNaranja(mago_derecha,layer){
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
-            mago_derecha.body.velocity.y=-250;
+            mago_derecha.body.velocity.y=-350;
             temp=game.time.now+750;
         }
     }
 
     function colisionMapaMagoVerde(mago_izquierda){
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp2){
-            mago_izquierda.body.velocity.y=-250;
+            mago_izquierda.body.velocity.y=-350;
             temp2=game.time.now+750;
         }
     }
@@ -116,9 +125,10 @@ MagicAndRunes.levelState = function(game) {
 MagicAndRunes.levelState.prototype = {
 
     preload: function() {
-        game.load.image('background','assets/images/background_dungeon.png');
+        game.load.image('background','assets/images/background_dungeonv2.png');
 
-        game.load.tilemap('nivel0','assets/scenarios/escenario_0_ext.csv');
+        game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
+        game.load.image('nivAct','assets/medidores/medidor_0.png');
         game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
@@ -143,13 +153,14 @@ MagicAndRunes.levelState.prototype = {
         nivel=this.add.tilemap('nivel0',16,16);
         nivel.addTilesetImage('tiles');
         layer=nivel.createLayer(0);
-
         nivel.setCollisionBetween(1,5302);
+
 
         layer.resizeWorld();
 
-        
-        
+        medidor=game.add.sprite(292,20,'nivAct');
+
+
         mago_izquierda=game.add.sprite(100,400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,400,'mago_derecha');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
@@ -176,7 +187,7 @@ MagicAndRunes.levelState.prototype = {
         mago_derecha.body.collideWorldBounds=true;
         mago_derecha.body.gravity.y=500;
         mago_derecha.body.bounce.y=0.1
-        mago_derecha.body.setSize(42,50);
+        mago_derecha.body.setSize(30,50);
         mago_derecha.anchor.setTo(0.5,0.5);
 
         //  Hechizos mago naranja
@@ -247,6 +258,15 @@ MagicAndRunes.levelState.prototype = {
     },
 
     update: function() {
+
+        if (mago_izquierda.body.x>750){
+            this.state.start("endingState");
+            console.log("yes");
+        }
+        if (mago_derecha.body.x<50){
+            this.state.start("endingState");
+            console.log("yes");
+        }
 
         game.debug.geom(vidaizq,'rgba(0,255,0,1)');
         game.debug.geom(vidadcha,'rgba(0,255,0,1)');
@@ -335,7 +355,7 @@ MagicAndRunes.levelState.prototype = {
                 if (enchantment)
                 {
                     //  And fire it
-                    enchantment.reset(mago_derecha.x-30,mago_derecha.y+10);
+                    enchantment.reset(mago_derecha.x-30,mago_derecha.y);
                     enchantment.body.allowGravity=false;
                     enchantmentTime = game.time.now + 200;
                 }
@@ -354,7 +374,7 @@ MagicAndRunes.levelState.prototype = {
                 if (enchantment2)
                 {
                     //  And fire it
-                    enchantment2.reset(mago_izquierda.x - 30,mago_izquierda.y+10);
+                    enchantment2.reset(mago_izquierda.x - 30,mago_izquierda.y);
                     enchantment2.body.allowGravity=false;
                     enchantmentTime = game.time.now + 200;
                     
@@ -397,7 +417,7 @@ MagicAndRunes.levelState.prototype = {
         }
 
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp2){
-            mago_izquierda.body.velocity.y=-250;
+            mago_izquierda.body.velocity.y=-300;
             temp2=game.time.now+750;
         }
 
@@ -421,7 +441,7 @@ MagicAndRunes.levelState.prototype = {
         
 
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
-            mago_derecha.body.velocity.y=-250;
+            mago_derecha.body.velocity.y=-300;
             temp=game.time.now+750;
         }
 
@@ -467,6 +487,8 @@ MagicAndRunes.levelState.prototype = {
         hechizoTempo+=0.05;
         enchantmentTempo+=0.1;
         ench2Tempo+=0.1;
+
+        
 
         /*if(vidaJ1==0||vidaJ2==0){
             this.state.start("endingState");
