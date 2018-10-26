@@ -127,7 +127,11 @@ MagicAndRunes.levelState.prototype = {
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');
 
-        game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
+        //game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
+        //game.load.tilemap('nivel0','assets/scenarios/prueba+1.csv');
+        game.load.tilemap('nivel0','assets/scenarios/prueba+2.csv');
+        //game.load.tilemap('nivel0','assets/scenarios/prueba-1.csv');
+        //game.load.tilemap('nivel0','assets/scenarios/prueba-2.csv');
         game.load.image('nivAct','assets/medidores/medidor_0.png');
         game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
@@ -259,11 +263,11 @@ MagicAndRunes.levelState.prototype = {
 
     update: function() {
 
-        if (mago_izquierda.body.x>750){
+        if (mago_izquierda.body.x>760){
             this.state.start("endingState");
             console.log("yes");
         }
-        if (mago_derecha.body.x<50){
+        if (mago_derecha.body.x<40){
             this.state.start("endingState");
             console.log("yes");
         }
