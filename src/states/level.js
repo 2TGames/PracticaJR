@@ -263,11 +263,11 @@ MagicAndRunes.levelState.prototype = {
 
     update: function() {
 
-        if (mago_izquierda.body.x>760){
+        if (mago_izquierda.body.x>765){
             this.state.start("endingState");
             console.log("yes");
         }
-        if (mago_derecha.body.x<40){
+        if (mago_derecha.body.x<35){
             this.state.start("endingState");
             console.log("yes");
         }
