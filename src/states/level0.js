@@ -1,4 +1,4 @@
-MagicAndRunes.levelState = function(game) {
+MagicAndRunes.level0State = function(game) {
     
 }
     var suelo;
@@ -122,7 +122,7 @@ MagicAndRunes.levelState = function(game) {
     }
 
 
-MagicAndRunes.levelState.prototype = {
+MagicAndRunes.level0State.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');

@@ -265,7 +265,7 @@ MagicAndRunes.level_dcha1State.prototype = {
             console.log("gana verde");
         }
         if (mago_derecha.body.x<10 && (mago_derecha.body.y>=461 || mago_derecha.body.y<=462)){
-            this.state.start("level0State");
+            this.state.start("levelState");
             console.log("gana naranja");
         }
 

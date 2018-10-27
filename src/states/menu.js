@@ -19,7 +19,7 @@ MagicAndRunes.menuState.prototype = {
 
     update: function() {
        if(this.play.isDown){
-           this.state.start("levelState");
+           this.state.start("level0State");
        }
     }
 }
