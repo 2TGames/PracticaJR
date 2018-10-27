@@ -167,6 +167,12 @@ MagicAndRunes.level_dcha2State.prototype = {
 
         mago_izquierda=game.add.sprite(125,400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,25,'mago_derecha');
+        mago_izquierda.vida=100;
+        mago_izquierda.mana=100;
+        mago_izquierda.dañoHechizo=20;
+        mago_derecha.vida=100;
+        mago_derecha.mana=100;
+        mago_derecha.dañoHechizo=20;
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
         mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 

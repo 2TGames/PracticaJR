@@ -15,12 +15,11 @@ MagicAndRunes.level0State = function(game) {
     var flechas;
     var w,a,s,d;
     var vidaizq,vidadcha;
-    var dañoJ1=20;
-    var dañoJ2=20;
-    var vidaJ1=100;
+    
+    /*var vidaJ1=100;
     var vidaJ2=100;
     var manaJ1=100;
-    var manaJ2=100;
+    var manaJ2=100;*/
     var resto1,resto2;
     var spellCost=10;
     var nivel;
@@ -56,25 +55,23 @@ MagicAndRunes.level0State = function(game) {
     var greenRight=true;
 
     function collisionHandler(mago_izquierda,spells){
-        resto1=vidaJ1-dañoJ2;
-        vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
+        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida-20,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         if(resto1===0){
             this.state.start("endingState");
         }
-        dañoJ2+=20;
+        //dañoJ2+=20;
         spells.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
     }
 
     function collisionHandler2(mago_derecha,hechizos){
-        resto2=vidaJ2-dañoJ1;
-        vidadcha=new Phaser.Rectangle(650,25,vidaJ2-dañoJ1,20);
+        vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida-20,20);
         if(resto2===0){
             this.state.start("endingState");
         }
-        dañoJ1+=20;
+        //dañoJ1+=20;
         hechizos.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
@@ -168,16 +165,22 @@ MagicAndRunes.level0State.prototype = {
         mago_izquierda=game.add.sprite(100,400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,400,'mago_derecha');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
+        mago_izquierda.vida=100;
+        mago_izquierda.mana=100;
+        mago_izquierda.dañoHechizo=20;
+        mago_derecha.vida=100;
+        mago_derecha.mana=100;
+        mago_derecha.dañoHechizo=20;
         mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 
         
         //game.physics.enable(suelo,Phaser.Physics.ARCADE);
         //barras de vida
-        vidadcha=new Phaser.Rectangle(650,25,vidaJ1,20);
-        vidaizq=new Phaser.Rectangle(25,25,vidaJ2,20);
+        vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida,20);
+        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida,20);
         //barras de mana
-        manadcha=new Phaser.Rectangle(650,50,manaJ1,20);
-        manaizq=new Phaser.Rectangle(25,50,manaJ2,20);
+        manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana,20);
+        manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana,20);
 
         mago_izquierda.body.collideWorldBounds=true;
         mago_izquierda.body.gravity.y=500;
@@ -200,6 +203,7 @@ MagicAndRunes.level0State.prototype = {
         spellsDcha.setAll('anchor.y', 0.5);
         spellsDcha.setAll('outOfBoundsKill', true);
         spellsDcha.setAll('checkWorldBounds', true);
+        
 
         spellsIzq = game.add.group();
         spellsIzq.enableBody = true;
@@ -209,6 +213,7 @@ MagicAndRunes.level0State.prototype = {
         spellsIzq.setAll('anchor.y', 0.5);
         spellsIzq.setAll('outOfBoundsKill', true);
         spellsIzq.setAll('checkWorldBounds', true);
+        
 
         //  Hechizos mago verde
         hechizosDcha = game.add.group();
@@ -219,6 +224,7 @@ MagicAndRunes.level0State.prototype = {
         hechizosDcha.setAll('anchor.y', 0.5);
         hechizosDcha.setAll('outOfBoundsKill', true);
         hechizosDcha.setAll('checkWorldBounds', true);
+        
 
         hechizosIzq = game.add.group();
         hechizosIzq.enableBody = true;
@@ -228,6 +234,7 @@ MagicAndRunes.level0State.prototype = {
         hechizosIzq.setAll('anchor.y', 0.5);
         hechizosIzq.setAll('outOfBoundsKill', true);
         hechizosIzq.setAll('checkWorldBounds', true);
+        
 
         //  Our enchantment group
             //Encantamientos mago naranja
@@ -459,13 +466,14 @@ MagicAndRunes.level0State.prototype = {
         {
             fireSpell();
             spellTempo=0;
-            manadcha=new Phaser.Rectangle(650,50,manaJ2-spellCost,20);
+            manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana-spellCost,20);
             spellCost+=10;
         }
 
         if (fire2Button.isDown && hechizoTempo>3)
         {
             fireHechizo();
+            manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-spellCost,20)
             hechizoTempo=0;
         }
         // Enchanting?

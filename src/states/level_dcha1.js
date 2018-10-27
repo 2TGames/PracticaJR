@@ -56,25 +56,23 @@ MagicAndRunes.level_dcha1State = function(game) {
     var greenRight=true;
 
     function collisionHandler(mago_izquierda,spells){
-        resto1=vidaJ1-dañoJ2;
-        vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
+        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida-20,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         if(resto1===0){
             this.state.start("endingState");
         }
-        dañoJ2+=20;
+        //dañoJ2+=20;
         spells.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
     }
 
     function collisionHandler2(mago_derecha,hechizos){
-        resto2=vidaJ2-dañoJ1;
-        vidadcha=new Phaser.Rectangle(650,25,vidaJ2-dañoJ1,20);
+        vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida-20,20);
         if(resto2===0){
             this.state.start("endingState");
         }
-        dañoJ1+=20;
+        //dañoJ1+=20;
         hechizos.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
@@ -167,6 +165,12 @@ MagicAndRunes.level_dcha1State.prototype = {
 
         mago_izquierda=game.add.sprite(10,510,'mago_izquierda');
         mago_derecha=game.add.sprite(700,100,'mago_derecha');
+        mago_izquierda.vida=100;
+        mago_izquierda.mana=100;
+        mago_izquierda.dañoHechizo=20;
+        mago_derecha.vida=100;
+        mago_derecha.mana=100;
+        mago_derecha.dañoHechizo=20;
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
         mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 
@@ -489,8 +493,7 @@ MagicAndRunes.level_dcha1State.prototype = {
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
         game.physics.arcade.collide(mago_derecha,layer,colisionMapaMagoNaranja,null,this);
         game.physics.arcade.collide(mago_izquierda,layer,colisionMapaMagoVerde,null,this);
-        game.physics.arcade.collide(mago_izquierda,resto1,curacionMagoVerde,null,this);
-       // game.physics.arcade.collide(mago_izquierda,enchantments,curacionMagoVerde,null,this);
+        game.physics.arcade.collide(mago_izquierda,enchantments,null,this);
 
         spellTempo+=0.05;
         hechizoTempo+=0.05;
