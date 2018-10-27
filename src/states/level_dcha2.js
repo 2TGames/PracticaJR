@@ -268,6 +268,14 @@ MagicAndRunes.level_dcha2State.prototype = {
             this.state.start("level_dcha1State");
             console.log("gana naranja");
         }
+        if (mago_derecha.body.y>540){
+            this.state.start("endingState");
+            console.log("gana verde");
+        }
+        if (mago_izquierda.body.y>540){
+            this.state.start("level_dcha1State");
+            console.log("gana naranja");
+        }
 
         game.debug.geom(vidaizq,'rgba(0,255,0,1)');
         game.debug.geom(vidadcha,'rgba(0,255,0,1)');

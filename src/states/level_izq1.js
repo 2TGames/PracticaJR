@@ -263,12 +263,20 @@ MagicAndRunes.level_izq1State.prototype = {
     update: function() {
 
         if (mago_izquierda.body.x>790 && (mago_izquierda.body.y>=510 || mago_izquierda.body.y<=511)){
-            this.state.start("endingState");
+            this.state.start("level0State");
             console.log("yes");
         }
         if (mago_derecha.body.x<10 && (mago_derecha.body.y>=29 || mago_derecha.body.y<=30)){
             this.state.start("level_izq2State");
             console.log("yes");
+        }
+        if (mago_derecha.body.y>540){
+            this.state.start("level0State");
+            console.log("gana verde");
+        }
+        if (mago_izquierda.body.y>540){
+            this.state.start("level_izq2State");
+            console.log("gana naranja");
         }
 
         game.debug.geom(vidaizq,'rgba(0,255,0,1)');
