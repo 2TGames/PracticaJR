@@ -1,4 +1,4 @@
-MagicAndRunes.level_izq1State = function(game) {
+MagicAndRunes.level_izq2State = function(game) {
     
 }
     var suelo;
@@ -121,7 +121,7 @@ MagicAndRunes.level_izq1State = function(game) {
     }
 
 
-MagicAndRunes.level_izq1State.prototype = {
+MagicAndRunes.level_izq2State.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');
@@ -129,9 +129,9 @@ MagicAndRunes.level_izq1State.prototype = {
         //game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba+1.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba+2.csv');
-        game.load.tilemap('nivel0','assets/scenarios/prueba-1.csv');
-        //game.load.tilemap('nivel0','assets/scenarios/prueba-2.csv');
-        game.load.image('nivAct','assets/medidores/medidor_-1.png');
+        //game.load.tilemap('nivel0','assets/scenarios/prueba-1.csv');
+        game.load.tilemap('nivel0','assets/scenarios/prueba-2.csv');
+        game.load.image('nivAct','assets/medidores/medidor_-2.png');
         game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
@@ -165,7 +165,7 @@ MagicAndRunes.level_izq1State.prototype = {
 
 
         mago_izquierda=game.add.sprite(125,25,'mago_izquierda');
-        mago_derecha=game.add.sprite(740,510,'mago_derecha');
+        mago_derecha=game.add.sprite(740,400,'mago_derecha');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
 
         
@@ -262,12 +262,12 @@ MagicAndRunes.level_izq1State.prototype = {
 
     update: function() {
 
-        if (mago_izquierda.body.x>790 && (mago_izquierda.body.y>=510 || mago_izquierda.body.y<=511)){
-            this.state.start("endingState");
+        if (mago_izquierda.body.x>790 && mago_izquierda.body.y==462){
+            this.state.start("level_izq1State");
             console.log("yes");
         }
-        if (mago_derecha.body.x<10 && (mago_derecha.body.y>=29 || mago_derecha.body.y<=30)){
-            this.state.start("level_izq2State");
+        if (mago_derecha.body.x<10 && (mago_derecha.body.y>=45 || mago_derecha.body.y<=46)){
+            this.state.start("endingState");
             console.log("yes");
         }
 

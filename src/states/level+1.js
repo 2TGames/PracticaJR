@@ -1,4 +1,4 @@
-MagicAndRunes.level_izq1State = function(game) {
+MagicAndRunes.level_dcha1State = function(game) {
     
 }
     var suelo;
@@ -60,7 +60,7 @@ MagicAndRunes.level_izq1State = function(game) {
         vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         if(resto1===0){
-            mago_izquierda.kill();
+            this.state.start("endingState");
         }
         dañoJ2+=20;
         spells.kill();
@@ -72,7 +72,7 @@ MagicAndRunes.level_izq1State = function(game) {
         resto2=vidaJ2-dañoJ1;
         vidadcha=new Phaser.Rectangle(650,25,vidaJ2-dañoJ1,20);
         if(resto2===0){
-            mago_derecha.kill();
+            this.state.start("endingState");
         }
         dañoJ1+=20;
         hechizos.kill();
@@ -90,6 +90,7 @@ MagicAndRunes.level_izq1State = function(game) {
             temp=game.time.now+750;
         }
     }
+
 
     function colisionMapaMagoNaranja(mago_derecha,layer){
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
@@ -121,17 +122,17 @@ MagicAndRunes.level_izq1State = function(game) {
     }
 
 
-MagicAndRunes.level_izq1State.prototype = {
+MagicAndRunes.level_dcha1State.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');
 
         //game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
-        //game.load.tilemap('nivel0','assets/scenarios/prueba+1.csv');
+        game.load.tilemap('nivel0','assets/scenarios/prueba+1.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba+2.csv');
-        game.load.tilemap('nivel0','assets/scenarios/prueba-1.csv');
+        //game.load.tilemap('nivel0','assets/scenarios/prueba-1.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba-2.csv');
-        game.load.image('nivAct','assets/medidores/medidor_-1.png');
+        game.load.image('nivAct','assets/medidores/medidor_1.png');
         game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
@@ -164,12 +165,9 @@ MagicAndRunes.level_izq1State.prototype = {
         medidor=game.add.sprite(292,20,'nivAct');
 
 
-        mago_izquierda=game.add.sprite(125,25,'mago_izquierda');
-        mago_derecha=game.add.sprite(740,510,'mago_derecha');
+        mago_izquierda=game.add.sprite(10,510,'mago_izquierda');
+        mago_derecha=game.add.sprite(700,100,'mago_derecha');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
-
-        
-
         mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 
         
@@ -262,13 +260,13 @@ MagicAndRunes.level_izq1State.prototype = {
 
     update: function() {
 
-        if (mago_izquierda.body.x>790 && (mago_izquierda.body.y>=510 || mago_izquierda.body.y<=511)){
-            this.state.start("endingState");
-            console.log("yes");
+        if (mago_izquierda.body.x>768 && (mago_izquierda.body.y>=29 || mago_izquierda.body.y<=30)){
+            this.state.start("level_dcha2State");
+            console.log("gana verde");
         }
-        if (mago_derecha.body.x<10 && (mago_derecha.body.y>=29 || mago_derecha.body.y<=30)){
-            this.state.start("level_izq2State");
-            console.log("yes");
+        if (mago_derecha.body.x<10 && (mago_derecha.body.y>=461 || mago_derecha.body.y<=462)){
+            this.state.start("level0State");
+            console.log("gana naranja");
         }
 
         game.debug.geom(vidaizq,'rgba(0,255,0,1)');

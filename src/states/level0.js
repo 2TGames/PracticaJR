@@ -81,16 +81,16 @@ MagicAndRunes.levelState = function(game) {
     }
 
     function colisionMagos(mago_derecha,mago_izquierda){
-        
+        if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
+            mago_derecha.body.velocity.y=-350;
+            temp=game.time.now+750;
+        }
+        if(flechas.up.isDown && mago_izquierda.body.onFloor() && game.time.now > temp){
+            mago_izquierda.body.velocity.y=-350;
+            temp=game.time.now+750;
+        }
     }
 
-    function ganaVerde(){
-        this.state.start("level+1");
-    }
-
-    function ganaNaranja(){
-        this.state.start("level_izq1State");
-    }
 
     function colisionMapaMagoNaranja(mago_derecha,layer){
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
@@ -127,9 +127,9 @@ MagicAndRunes.levelState.prototype = {
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');
 
-        //game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
+        game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba+1.csv');
-        game.load.tilemap('nivel0','assets/scenarios/prueba+2.csv');
+        //game.load.tilemap('nivel0','assets/scenarios/prueba+2.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba-1.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba-2.csv');
         game.load.image('nivAct','assets/medidores/medidor_0.png');
@@ -166,11 +166,8 @@ MagicAndRunes.levelState.prototype = {
 
 
         mago_izquierda=game.add.sprite(100,400,'mago_izquierda');
-        mago_derecha=game.add.sprite(700,25,'mago_derecha');
+        mago_derecha=game.add.sprite(700,400,'mago_derecha');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
-
-        
-
         mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 
         
@@ -263,11 +260,11 @@ MagicAndRunes.levelState.prototype = {
 
     update: function() {
 
-        if (mago_izquierda.body.x>760 && (mago_izquierda.body.y>=43 || mago_izquierda.body.y<=46)){
-            this.state.start("endingState");
+        if (mago_izquierda.body.x>765 && (mago_izquierda.body.y>=461 || mago_izquierda.body.y<=462)){
+            this.state.start("level_dcha1State");
             console.log("gana verde");
         }
-        if (mago_derecha.body.x<20 && (mago_derecha.body.y>=461 || mago_derecha.body.y<=462)){
+        if (mago_derecha.body.x<10 && (mago_derecha.body.y>=461 || mago_derecha.body.y<=462)){
             this.state.start("level_izq1State");
             console.log("gana naranja");
         }
