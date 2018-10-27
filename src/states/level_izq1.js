@@ -56,25 +56,23 @@ MagicAndRunes.level_izq1State = function(game) {
     var greenRight=true;
 
     function collisionHandler(mago_izquierda,spells){
-        resto1=vidaJ1-dañoJ2;
-        vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
+        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida-20,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         if(resto1===0){
-            mago_izquierda.kill();
+            this.state.start("level_izq2State");
         }
-        dañoJ2+=20;
+        //dañoJ2+=20;
         spells.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/
     }
 
     function collisionHandler2(mago_derecha,hechizos){
-        resto2=vidaJ2-dañoJ1;
-        vidadcha=new Phaser.Rectangle(650,25,vidaJ2-dañoJ1,20);
+        vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida-20,20);
         if(resto2===0){
-            mago_derecha.kill();
+            this.state.start("level0State");
         }
-        dañoJ1+=20;
+        //dañoJ1+=20;
         hechizos.kill();
         /*caugth++;
         score.setText("Score: " + caugth);*/

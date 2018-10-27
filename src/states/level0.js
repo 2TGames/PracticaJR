@@ -58,7 +58,7 @@ MagicAndRunes.level0State = function(game) {
         vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida-20,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         if(resto1===0){
-            this.state.start("endingState");
+            this.state.start("level_izq1State");
         }
         //dañoJ2+=20;
         spells.kill();
@@ -69,7 +69,7 @@ MagicAndRunes.level0State = function(game) {
     function collisionHandler2(mago_derecha,hechizos){
         vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida-20,20);
         if(resto2===0){
-            this.state.start("endingState");
+            this.state.start("level_dcha1State");
         }
         //dañoJ1+=20;
         hechizos.kill();
@@ -474,6 +474,7 @@ MagicAndRunes.level0State.prototype = {
         {
             fireHechizo();
             manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-spellCost,20)
+            spellCost+=10;
             hechizoTempo=0;
         }
         // Enchanting?

@@ -14,13 +14,13 @@ MagicAndRunes.level_dcha1State = function(game) {
     var mago_derecha_facing='left';
     var flechas;
     var w,a,s,d;
-    var vidaizq,vidadcha;
+    var vidaizqNivelD1,vidadchaNivelD1;
     var dañoJ1=20;
     var dañoJ2=20;
-    var vidaJ1=100;
+    /*var vidaJ1=100;
     var vidaJ2=100;
     var manaJ1=100;
-    var manaJ2=100;
+    var manaJ2=100;*/
     var resto1,resto2;
     var spellCost=10;
     var nivel;
@@ -56,10 +56,10 @@ MagicAndRunes.level_dcha1State = function(game) {
     var greenRight=true;
 
     function collisionHandler(mago_izquierda,spells){
-        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida-20,20);
+        vidaizqNivelD1=new Phaser.Rectangle(25,25,mago_izquierda.vidaNvD1-mago_derecha.dañoHechizo,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         if(resto1===0){
-            this.state.start("endingState");
+            this.state.start("level0State");
         }
         //dañoJ2+=20;
         spells.kill();
@@ -68,9 +68,9 @@ MagicAndRunes.level_dcha1State = function(game) {
     }
 
     function collisionHandler2(mago_derecha,hechizos){
-        vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida-20,20);
+        vidadchaNivelD1=new Phaser.Rectangle(650,25,mago_derecha.vidaNvD1-mago_izquierda.dañoHechizo,20);
         if(resto2===0){
-            this.state.start("endingState");
+            this.state.start("level_dcha2State");
         }
         //dañoJ1+=20;
         hechizos.kill();
@@ -165,11 +165,11 @@ MagicAndRunes.level_dcha1State.prototype = {
 
         mago_izquierda=game.add.sprite(10,510,'mago_izquierda');
         mago_derecha=game.add.sprite(700,100,'mago_derecha');
-        mago_izquierda.vida=100;
-        mago_izquierda.mana=100;
+        mago_izquierda.vidaNvD1=100;
+        mago_izquierda.manaNvD1=100;
         mago_izquierda.dañoHechizo=20;
-        mago_derecha.vida=100;
-        mago_derecha.mana=100;
+        mago_derecha.vidaNvD1=100;
+        mago_derecha.manaNvD1=100;
         mago_derecha.dañoHechizo=20;
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
         mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
@@ -177,11 +177,11 @@ MagicAndRunes.level_dcha1State.prototype = {
         
         //game.physics.enable(suelo,Phaser.Physics.ARCADE);
         //barras de vida
-        vidadcha=new Phaser.Rectangle(650,25,vidaJ1,20);
-        vidaizq=new Phaser.Rectangle(25,25,vidaJ2,20);
+        vidadchaNivelD1=new Phaser.Rectangle(650,25,mago_derecha.vidaNvD1,20);
+        vidaizqNivelD1=new Phaser.Rectangle(25,25,mago_izquierda.vidaNvD1,20);
         //barras de mana
-        manadcha=new Phaser.Rectangle(650,50,manaJ1,20);
-        manaizq=new Phaser.Rectangle(25,50,manaJ2,20);
+        manadchaNivelD1=new Phaser.Rectangle(650,50,mago_derecha.manaNvD1,20);
+        manaizqNivelD1=new Phaser.Rectangle(25,50,mago_izquierda.manaNvD1,20);
 
         mago_izquierda.body.collideWorldBounds=true;
         mago_izquierda.body.gravity.y=500;
@@ -253,13 +253,13 @@ MagicAndRunes.level_dcha1State.prototype = {
         akey=game.input.keyboard.addKey(Phaser.Keyboard.A);
         skey=game.input.keyboard.addKey(Phaser.Keyboard.S);
         dkey=game.input.keyboard.addKey(Phaser.Keyboard.D);
-        fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.V);
-        ench2Button = game.input.keyboard.addKey(Phaser.Keyboard.B);
+        
             //Controles mago naranja
         flechas=game.input.keyboard.createCursorKeys();
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.I);
         enchButton = game.input.keyboard.addKey(Phaser.Keyboard.O);
-        ench2Button=game.input.keyboard.addKey(Phaser.Keyboard.B);
+        fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.V);
+        ench2Button = game.input.keyboard.addKey(Phaser.Keyboard.B);
     },
 
     update: function() {
@@ -281,11 +281,11 @@ MagicAndRunes.level_dcha1State.prototype = {
             console.log("gana naranja");
         }
 
-        game.debug.geom(vidaizq,'rgba(0,255,0,1)');
-        game.debug.geom(vidadcha,'rgba(0,255,0,1)');
+        game.debug.geom(vidaizqNivelD1,'rgba(0,255,0,1)');
+        game.debug.geom(vidadchaNivelD1,'rgba(0,255,0,1)');
 
-        game.debug.geom(manadcha,'rgba(0,0,255,1)');
-        game.debug.geom(manaizq,'rgba(0,0,255,1');
+        game.debug.geom(manadchaNivelD1,'rgba(0,0,255,1)');
+        game.debug.geom(manaizqNivelD1,'rgba(0,0,255,1');
 
 
         //funcion de disparo para el mago naranja
@@ -463,7 +463,7 @@ MagicAndRunes.level_dcha1State.prototype = {
         {
             fireSpell();
             spellTempo=0;
-            manadcha=new Phaser.Rectangle(650,50,manaJ2-spellCost,20);
+            manadchaNivelD1=new Phaser.Rectangle(650,50,mago_derecha.manaNvD1-spellCost,20);
             spellCost+=10;
         }
 
@@ -471,6 +471,8 @@ MagicAndRunes.level_dcha1State.prototype = {
         {
             fireHechizo();
             hechizoTempo=0;
+            manaizqNivelD1=new Phaser.Rectangle(25,50,mago_izquierda.manaNvD1-spellCost,20);
+            spellCost+=10;
         }
         // Enchanting?
         if (enchButton.isDown && spellTempo>3)

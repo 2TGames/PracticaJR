@@ -60,7 +60,7 @@ MagicAndRunes.level_dcha2State = function(game) {
         vidaizq=new Phaser.Rectangle(25,25,vidaJ1-dañoJ2,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
         if(resto1===0){
-            this.state.start("endingState");
+            this.state.start("level_dcha1State");
         }
         dañoJ2+=20;
         spells.kill();
