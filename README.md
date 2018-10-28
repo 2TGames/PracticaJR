@@ -121,7 +121,7 @@ Armas: vara mágica.
 
 ![Imagen mago naranja](https://github.com/2TGames/PracticaJR/blob/master/assets/images/mago_perfil_derecho.png)
 
-![Imagen mago verde(https://github.com/2TGames/PracticaJR/blob/master/assets/images/mago_perfil_izq.png)
+![Imagen mago verde](https://github.com/2TGames/PracticaJR/blob/master/assets/images/mago_perfil_izq.png)
 
 ## HABILIDADES.
 
