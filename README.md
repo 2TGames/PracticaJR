@@ -86,6 +86,11 @@ Nombre de la pantalla: Multijugador.
 
 Descripción de la pantalla: Además de la acción principal (la partida en sí), se mostrarán dos barras (vida y maná) en las esquinas superiores. En la parte superior central se encontrarán una serie de casillas que representarán el mapa y la posición de los jugadores en el mismo.
 
+Ejemplo medidor:
+
+![Imagen medidor](https://github.com/2TGames/PracticaJR/blob/master/assets/Medidores/medidor_0.png)
+
+
 Estados del juego: Al Multijugador solo se podrá acceder desde el menú principal.
 
 
@@ -93,7 +98,34 @@ Estados del juego: Al Multijugador solo se podrá acceder desde el menú princip
 
 El juego dispondrá únicamente de un nivel, dividido en 5 pantallas, y los jugadores empezarán en la pantalla central, a partir de la cual habrá una serie de pantallas simétricas a cada lado hasta la pantalla final.
 
-![Imagen nivel prototipo](https://github.com/2TGames/PracticaJR/blob/master/Assets/Prototipo%20escenario.jpeg)
+Nivel 0:
+
+![Imagen nivel 0](https://github.com/2TGames/PracticaJR/blob/master/Assets/scenarios/level0.png)
+
+Nivel 1:
+
+![Imagen nivel 1](https://github.com/2TGames/PracticaJR/blob/master/Assets/scenarios/level1.png)
+
+Nivel 2: 
+
+![Imagen nivel 2](https://github.com/2TGames/PracticaJR/blob/master/Assets/scenarios/level2.png)
+
+Victoria J2:
+
+![Imagen nivel victoria J2](https://github.com/2TGames/PracticaJR/blob/master/Assets/scenarios/victoriaVerde.png)
+
+Nivel -1:
+
+![Imagen nivel -1](https://github.com/2TGames/PracticaJR/blob/master/Assets/scenarios/level-1.png)
+
+Nivel -2:
+
+![Imagen nivel -2](https://github.com/2TGames/PracticaJR/blob/master/Assets/scenarios/level-2.png)
+
+Victoria J1:
+
+![Imagen nivel victoria J1](https://github.com/2TGames/PracticaJR/blob/master/Assets/scenarios/victoriaNaranja.png)
+
 
 ## PROGRESO DEL JUEGO.
 
