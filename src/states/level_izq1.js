@@ -6,7 +6,7 @@ MagicAndRunes.level_izq1State = function(game) {
         console.log("si");
         vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida-20,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
-        if(mago_izquierda.vida==0){
+        if(mago_izquierda.vida<=0){
             mago_izquierda.vida=100;
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
@@ -22,7 +22,7 @@ MagicAndRunes.level_izq1State = function(game) {
     function miColisionIzq12(mago_derecha,hechizos){
         console.log("no");
         vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida-20,20);
-        if(mago_derecha.vida==0){
+        if(mago_derecha.vida<=0){
             mago_izquierda.vida=100;
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
@@ -61,20 +61,44 @@ MagicAndRunes.level_izq1State = function(game) {
         }
     }
 
-    function curacionMagoVerde(mago_izquierda,enchantments2){
-            resto1=vidaJ1;
-            if(resto1<100){
-                vidaizq=new Phaser.Rectangle(25,25,resto1,20);
-            } else if(resto1<200){
-                vidaizq=new Phaser.Rectangle(25,25,100,20);
-            }
-
-            dañoJ2-=0.1;
-            if(dañoJ2==20){
-                enchantments2.kill();
-            }
+    function trampaNaranjaIzda1(mago_izquierda,enchantments){
+        console.log("yes");
+        mago_izquierda.vida-=40;
+        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida,20);
+        //game.debug.geom(vidaizq,'rgba(250,255,10,1');
+        if(mago_izquierda.vida<=0){
+            mago_izquierda.vida=100;
+            mago_derecha.mana=100;
+            mago_izquierda.mana=100;
+            mago_derecha.vida=100;
+            game.state.start("level_izq2State");
+        }
+        //dañoJ2+=20;
         
+        enchantments.kill();
+        /*caugth++;
+        score.setText("Score: " + caugth);*/
     }
+
+    function trampaVerdeIzda1(mago_derecha,enchantments2){
+        console.log("yes");
+        mago_derecha.vida-=40;
+        vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida,20);
+        //game.debug.geom(vidaizq,'rgba(250,255,10,1');
+        if(mago_derecha.vida<=0){
+            mago_izquierda.vida=100;
+            mago_derecha.mana=100;
+            mago_izquierda.mana=100;
+            mago_derecha.vida=100;
+            game.state.start("level0State");
+        }
+        //dañoJ2+=20;
+        
+        enchantments2.kill();
+        /*caugth++;
+        score.setText("Score: " + caugth);*/
+    }
+
 
 
 MagicAndRunes.level_izq1State.prototype = {
@@ -472,11 +496,13 @@ MagicAndRunes.level_izq1State.prototype = {
         game.physics.arcade.collide(mago_izquierda,spellsIzq,miColisionIzq1,null,this);
         game.physics.arcade.collide(mago_derecha,hechizosDcha,miColisionIzq12,null,this);
         game.physics.arcade.collide(mago_derecha,hechizosIzq,miColisionIzq12,null,this);
+        
+        game.physics.arcade.collide(mago_derecha,enchantments2,trampaVerdeIzda1,null,this);
+        game.physics.arcade.collide(mago_izquierda,enchantments,trampaNaranjaIzda1,null,this);
+
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
         game.physics.arcade.collide(mago_derecha,layer,colisionMapaMagoNaranja,null,this);
         game.physics.arcade.collide(mago_izquierda,layer,colisionMapaMagoVerde,null,this);
-        game.physics.arcade.collide(mago_izquierda,resto1,curacionMagoVerde,null,this);
-       // game.physics.arcade.collide(mago_izquierda,enchantments,curacionMagoVerde,null,this);
 
         spellTempo+=0.05;
         hechizoTempo+=0.05;
