@@ -461,34 +461,46 @@ MagicAndRunes.level_izq1State.prototype = {
         //  Firing?
         if (fireButton.isDown && spellTempo>3)
         {
+            
             spellTempo=0;
             if(mago_derecha.mana>0){
                 fireSpell();
                 manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana-spellCost,20);
                 mago_derecha.mana-=spellCost;
             }
+            
         }
 
         if (fire2Button.isDown && hechizoTempo>3)
         {
+            hechizoTempo=0;
             if(mago_izquierda.mana>0){
                 fireHechizo();
                 manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-spellCost,20);
                 mago_izquierda.mana-=spellCost;
             }
-            hechizoTempo=0;
+            
         }
         // Enchanting?
         if (enchButton.isDown && spellTempo>3)
         {
-            fireEnchantment();
+            
             spellTempo=0;
+            if(mago_derecha.mana>29){
+                fireEnchantment();
+                manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana-enchantCost,20);
+                mago_derecha.mana-=enchantCost;
+            }
         }
 
         if (ench2Button.isDown && hechizoTempo>3)
         {
-            fireEnchantment2();
             hechizoTempo=0;
+            if(mago_izquierda.mana>29){
+                fireEnchantment2();
+                manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-enchantCost,20);
+                mago_izquierda.mana-=enchantCost;
+            }
         }
         1
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos

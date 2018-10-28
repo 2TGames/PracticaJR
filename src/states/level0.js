@@ -21,7 +21,8 @@ MagicAndRunes.level0State = function(game) {
     var manaJ1=100;
     var manaJ2=100;*/
     var resto1,resto2;
-    var spellCost=10;
+    var spellCost=2;
+    var enchantCost=30;
     var nivel;
     var facing_j1='right',facing_j2='left';
     var cura;
@@ -530,7 +531,7 @@ MagicAndRunes.level0State.prototype = {
         if (fire2Button.isDown && hechizoTempo>3)
         {
             hechizoTempo=0;
-            if(mago_derecha.mana>0){
+            if(mago_izquierda.mana>0){
                 fireHechizo();
                 manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-spellCost,20);
                 mago_izquierda.mana-=spellCost;
@@ -540,14 +541,23 @@ MagicAndRunes.level0State.prototype = {
         // Enchanting?
         if (enchButton.isDown && spellTempo>3)
         {
-            fireEnchantment();
+            
             spellTempo=0;
+            if(mago_derecha.mana>29){
+                fireEnchantment();
+                manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana-enchantCost,20);
+                mago_derecha.mana-=enchantCost;
+            }
         }
 
         if (ench2Button.isDown && hechizoTempo>3)
         {
-            fireEnchantment2();
             hechizoTempo=0;
+            if(mago_izquierda.mana>29){
+                fireEnchantment2();
+                manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-enchantCost,20);
+                mago_izquierda.mana-=enchantCost;
+            }
         }
         1
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
@@ -563,7 +573,7 @@ MagicAndRunes.level0State.prototype = {
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
         game.physics.arcade.collide(mago_derecha,layer,colisionMapaMagoNaranja,null,this);
         game.physics.arcade.collide(mago_izquierda,layer,colisionMapaMagoVerde,null,this);
-        
+
         spellTempo+=0.05;
         hechizoTempo+=0.05;
         enchantmentTempo+=0.1;
