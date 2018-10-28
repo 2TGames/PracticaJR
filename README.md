@@ -1,6 +1,6 @@
 ﻿# MAGIC AND RUNES
 
-![Imagen de pantalla inicio](https://github.com/2TGames/PracticaJR/blob/master/Assets/pantalla%20inicio.jpg)
+![Imagen de pantalla inicio](https://github.com/2TGames/PracticaJR/blob/master/Assets/images/pantalla%20inicio.png)
 
 ## CONCEPTO.
 
@@ -53,13 +53,13 @@ El jugador, estando en el menú principal, podrá ir a la pantalla de estadísti
 
 ## INTERFACES.
 
-![Imagen diagrama estados](https://github.com/2TGames/PracticaJR/blob/master/Dise%C3%B1os%20niveles/diagrama%20de%20estados.png)
+![Imagen diagrama estados](https://github.com/2TGames/PracticaJR/blob/master/Assets/images/diagrama%20de%20estados.png)
 
 
 **HUD**
 
 
-![Imagen vida y mana](https://github.com/2TGames/PracticaJR/blob/master/Assets/HUD%20(vida%2C%20mana%20y%20magia).jpg)
+![Imagen vida y mana](https://github.com/2TGames/PracticaJR/blob/master/Assets/images/HUD%20(vida%2C%20mana%20y%20magia).jpg)
 
 Nombre de la pantalla: HUD.
 
@@ -69,7 +69,7 @@ Estados del juego: Al comenzar la partida.
 
 **Interfaz del menú principal:**
 
-![Imagen menu principal](https://github.com/2TGames/PracticaJR/blob/master/Assets/menu%20inicio.jpg)
+![Imagen menu principal](https://github.com/2TGames/PracticaJR/blob/master/Assets/images/menu%20principal.png)
 
 Nombre de la pantalla: Menú principal.
 
@@ -119,7 +119,9 @@ Descripción: Hombre de complexión atlética, alto, rubio y con barba corta. Ll
 Concepto: El mago en cuestión es un renegado, repudiado por el Consejo al ser visto iniciándose en la Magia Negra. Al ser un negado en esa disciplina, y no poseer ningún poder oscuro realmente fuerte, contará con el repertorio de hechizos de los novatos, además del único hechizo de magia negra que pudo aprender (así como la Magia de Trampas, en la que era un estudiante aventajado antes de ser expulsado) para matar al mago rival tantas veces como haga falta para superar la Prueba.
 Armas: vara mágica.
 
-![Imagen del personaje](https://github.com/2TGames/PracticaJR/blob/master/Assets/personaje.png)
+![Imagen mago naranja](https://github.com/2TGames/PracticaJR/blob/master/assets/images/mago_perfil_derecho.png)
+
+![Imagen mago verde(https://github.com/2TGames/PracticaJR/blob/master/assets/images/mago_perfil_izq.png)
 
 ## HABILIDADES.
 
