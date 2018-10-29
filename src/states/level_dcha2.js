@@ -12,6 +12,10 @@ function miColisionDcha2(mago_izquierda,spells){
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_derecha.vida=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
         this.state.start("level_dcha1State");
     }
     //dañoJ2+=20;
@@ -29,6 +33,10 @@ function miColisionDcha22(mago_derecha,hechizos){
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_derecha.vida=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
         this.state.start("endingMagoVerdeState");
     }
     //dañoJ1+=20;
@@ -73,6 +81,10 @@ function miColisionDcha22(mago_derecha,hechizos){
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_derecha.vida=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
             game.state.start("level_dcha1State");
         }
         //dañoJ2+=20;
@@ -92,6 +104,10 @@ function miColisionDcha22(mago_derecha,hechizos){
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_derecha.vida=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
             game.state.start("endingMagoVerdeState");
         }
         //dañoJ2+=20;
@@ -251,6 +267,10 @@ MagicAndRunes.level_dcha2State.prototype = {
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_izquierda.mana=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
             console.log("gana verde");
         }
         if (mago_derecha.body.x<20 && (mago_derecha.body.y>=461 || mago_derecha.body.y<=462)){
@@ -259,6 +279,10 @@ MagicAndRunes.level_dcha2State.prototype = {
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_izquierda.mana=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
             this.state.start("level_dcha1State");
             console.log("gana naranja");
         }
@@ -268,6 +292,10 @@ MagicAndRunes.level_dcha2State.prototype = {
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_izquierda.mana=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
             console.log("gana verde");
         }
         if (mago_izquierda.body.y>540){
@@ -276,6 +304,10 @@ MagicAndRunes.level_dcha2State.prototype = {
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
             mago_izquierda.mana=100;
+            facing_j1='right';
+            facing_j2='left';
+            mago_derecha.scale.x=1;
+            mago_izquierda.scale.x=1;
             this.state.start("level_dcha1State");
             console.log("gana naranja");
         }
@@ -413,7 +445,7 @@ MagicAndRunes.level_dcha2State.prototype = {
 
         if(akey.isDown){
             if(facing_j1!='left'){
-                mago_izquierda.scale.x*=-1;
+                mago_izquierda.scale.x=-1;
                 facing_j1='left';
             }
             mago_izquierda.body.velocity.x=-150;
@@ -421,7 +453,7 @@ MagicAndRunes.level_dcha2State.prototype = {
         }
          if(dkey.isDown){
             if(facing_j1!='right'){
-                mago_izquierda.scale.x*=-1;
+                mago_izquierda.scale.x=1;
                 facing_j1='right';
             }
             mago_izquierda.body.velocity.x=150;
@@ -435,7 +467,7 @@ MagicAndRunes.level_dcha2State.prototype = {
 
         if(flechas.left.isDown){
             if(facing_j2!='left'){
-            mago_derecha.scale.x*=-1;
+            mago_derecha.scale.x=1;
             facing_j2='left';
             }
             mago_derecha.body.velocity.x=-150;
@@ -444,7 +476,7 @@ MagicAndRunes.level_dcha2State.prototype = {
         }
         if(flechas.right.isDown){
             if(facing_j2!='right'){
-            mago_derecha.scale.x*=-1;
+            mago_derecha.scale.x=-1;
             facing_j2='right';
             }
             mago_derecha.body.velocity.x=150;
