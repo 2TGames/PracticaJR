@@ -177,6 +177,7 @@ MagicAndRunes.level0State.prototype = {
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');
+        game.load.spritesheet('nube', 'assets/spells/nube_naranja.png', 180, 60);
 
         game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
         //game.load.tilemap('nivel0','assets/scenarios/prueba+1.csv');
@@ -215,6 +216,8 @@ MagicAndRunes.level0State.prototype = {
 
         medidor=game.add.sprite(292,20,'nivAct');
 
+        nube = this.game.add.sprite(15, 30, 'nube');
+        nube.frame = 3;
 
         mago_izquierda=game.add.sprite(100,400,'mago_izquierda');
         mago_derecha=game.add.sprite(700,400,'mago');
@@ -295,7 +298,7 @@ MagicAndRunes.level0State.prototype = {
         enchantments = game.add.group();
         enchantments.enableBody = true;
         enchantments.physicsBodyType = Phaser.Physics.ARCADE;
-        enchantments.createMultiple(30, 'enchantmentJ2');
+        enchantments.animations.add('anim',[0,1],10,true);
         enchantments.setAll('checkWorldBounds', true);
             //Encantamientos mago verde
         enchantments2 = game.add.group();
