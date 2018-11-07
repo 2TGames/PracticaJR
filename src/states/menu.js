@@ -5,7 +5,6 @@ MagicAndRunes.menuState = function(game) {
 MagicAndRunes.menuState.prototype = {
 
     preload: function() {
-        
         game.load.image('fondo','assets/images/fondo magico.png');
     },
 
