@@ -6,6 +6,11 @@ function jugar() {
     this.state.start("level0State");
 
 }
+function ayu() {
+
+    this.state.start("ayudaState");
+
+}
 function err() {
 
     this.state.start("errorState");
@@ -51,7 +56,7 @@ MagicAndRunes.menuState.prototype = {
 
 
         buttonBlack = game.add.button(340,80, 'halo_negro', jugar, this, 0);
-        buttonGreen = game.add.button(170,204, 'halo_verde', err, this, 0);
+        buttonGreen = game.add.button(170,204, 'halo_verde', ayu, this, 0);
         buttonRed = game.add.button(520,204, 'halo_rojo', err, this, 0);
         buttonBlue = game.add.button(230,404, 'halo_azul', err, this, 0);
         buttonOrange = game.add.button(455,404, 'halo_naranja', err, this, 0);
