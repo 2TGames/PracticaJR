@@ -188,7 +188,7 @@ MagicAndRunes.level0State.prototype = {
         game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
         //game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
        // game.load.image('mago_derecha2','assets/images/magoN_perfil_izquierdo.png');
-        game.load.spritesheet('mago','assets/images/walk_prueba.png',24,49);
+        game.load.spritesheet('mago','assets/images/walk_naranja.png',27,49);
         game.load.image('spellDcha', 'assets/spells/basico_naranja_derecha.png');
         game.load.image('spellIzq','assets/spells/basico_naranja_izq.png');
         game.load.image('hechizoDcha','assets/spells/basico_verde_derecha.png');
@@ -526,12 +526,12 @@ MagicAndRunes.level0State.prototype = {
 
         if(flechas.left.isDown){
             
-            mago_derecha.animations.play('left');
-            /*mago_derecha.body.velocity.x=-150;
+            //mago_derecha.animations.play('left');
+            //mago_derecha.body.velocity.x=-150;
                 if(facing_j2!='left'){
                     mago_derecha.animations.play('left');
                     facing_j2='left';
-                }*/
+                }
                 /*mago_derecha.scale.x=1;
                 facing_j2='left';*/
                 
@@ -539,7 +539,7 @@ MagicAndRunes.level0State.prototype = {
                 //redLeft=true;
         }else if(flechas.right.isDown){
             
-            mago_derecha.body.velocity.x=150;
+            //mago_derecha.body.velocity.x=150;
             if(facing_j2!='right'){
                 mago_derecha.animations.play('right');
             //mago_derecha.scale.x=-1;
