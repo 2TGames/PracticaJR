@@ -196,12 +196,23 @@ MagicAndRunes.level0State.prototype = {
         game.load.image('enchantmentJ2', 'assets/spells/encantamiento_naranja.png');
         game.load.image('enchantmentJ1','assets/spells/encantamiento_verde.png');
         //game.load.spritesheet('walk','assets/images/andando_izq.png',60,54);
+        
+        game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
 
     },
 
     create: function() {
          //game.time.desiredFps=30;
+         music.destroy();
+         game.cache.removeSound('NoN');
 
+
+         // *true* param enables looping
+         music = game.add.audio('ATA');
+         music.loopFull()
+
+        music.play();
+         
         caugth=0;
         background= game.add.sprite(0,0,'background');
         //suelo=game.add.sprite(100,500,'suelo');

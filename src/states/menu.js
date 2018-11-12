@@ -1,6 +1,9 @@
 MagicAndRunes.menuState = function(game) {
 
 }
+
+var music;
+
 function jugar() {
 
     this.state.start("level0State");
@@ -17,6 +20,7 @@ function err() {
 
 }
 var temporizador_runa=0;
+
 
 MagicAndRunes.menuState.prototype = {
 
@@ -36,6 +40,8 @@ MagicAndRunes.menuState.prototype = {
         game.load.image('runa_7','assets/runas/runas_separadas/runa_7.png');
         game.load.image('runa_8','assets/runas/runas_separadas/runa_8.png');
         game.load.image('runa_9','assets/runas/runas_separadas/runa_9.png');
+
+        game.load.audio('NoN', 'assets/music/now-or-never.mp3');
         //game.load.image('fondo','assets/images/fondo magico.png');
     },
 
@@ -60,7 +66,12 @@ MagicAndRunes.menuState.prototype = {
         buttonRed = game.add.button(520,204, 'halo_rojo', err, this, 0);
         buttonBlue = game.add.button(230,404, 'halo_azul', err, this, 0);
         buttonOrange = game.add.button(455,404, 'halo_naranja', err, this, 0);
+
+
         
+        music = game.add.audio('NoN');
+        music.play();
+
 
     },
 

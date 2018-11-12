@@ -16,6 +16,10 @@ MagicAndRunes.ayudaState.prototype = {
     },
 
     create: function() {
+
+        music.destroy();
+        game.cache.removeSound('NoN');
+        
         var fondo=game.add.image(0,0,'fondo');
 
         /*var halo_negro=game.add.image(340,80,'halo_negro');
