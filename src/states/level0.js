@@ -185,9 +185,11 @@ MagicAndRunes.level0State.prototype = {
         //game.load.tilemap('nivel0','assets/scenarios/prueba-2.csv');
         game.load.image('nivAct','assets/medidores/medidor_0.png');
         game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
-        game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
-        game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
+        //game.load.image('mago_izquierda','assets/images/mago_perfil_izq.png');
+        //game.load.image('mago_derecha','assets/images/mago_perfil_derecho.png');
        // game.load.image('mago_derecha2','assets/images/magoN_perfil_izquierdo.png');
+        game.load.spritesheet('mago_naranja','assets/images/walk_naranja.png',27,49);
+        game.load.spritesheet('mago_verde','assets/images/walk_verde.png',27,49);
         //game.load.spritesheet('mago','assets/images/andando_izq.png',30,50);
         game.load.image('spellDcha', 'assets/spells/basico_naranja_derecha.png');
         game.load.image('spellIzq','assets/spells/basico_naranja_izq.png');
@@ -227,16 +229,24 @@ MagicAndRunes.level0State.prototype = {
         medidor=game.add.sprite(292,20,'nivAct');
 
 
-        mago_izquierda=game.add.sprite(100,400,'mago_izquierda');
-        mago_derecha=game.add.sprite(700,400,'mago_derecha');
+        mago_izquierda=game.add.sprite(100,400,'mago_verde');
+        mago_derecha=game.add.sprite(700,400,'mago_naranja');
         game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
+        //Atributos mago verde
         mago_izquierda.vida=100;
         mago_izquierda.mana=100;
         mago_izquierda.dañoHechizo=20;
+        //Atributos mago naranja
         mago_derecha.vida=100;
         mago_derecha.mana=100;
         mago_derecha.dañoHechizo=20;
+        //Animaciones personajes
         mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
+        mago_derecha.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+        mago_derecha.frame=0;
+        mago_izquierda.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
+        mago_izquierda.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+        mago_izquierda.frame=9;
 
         
         //game.physics.enable(suelo,Phaser.Physics.ARCADE);
@@ -512,21 +522,32 @@ MagicAndRunes.level0State.prototype = {
         mago_derecha.body.velocity.x=0;
         mago_izquierda.body.velocity.x=0;
 
+        //Movimiento mago verde
         if(akey.isDown){
+            
+            mago_izquierda.body.velocity.x=-150;
             if(facing_j1!='left'){
-                mago_izquierda.scale.x=-1;
+                mago_izquierda.animations.play('left');
                 facing_j1='left';
             }
-            mago_izquierda.body.velocity.x=-150;
-            greenLeft = true;
-        }
-         if(dkey.isDown){
+            //greenLeft = true;
+        }else if(dkey.isDown){
+             
+            mago_izquierda.body.velocity.x=150;
             if(facing_j1!='right'){
-                mago_izquierda.scale.x=1;
+                mago_izquierda.animations.play('right');
                 facing_j1='right';
             }
-            mago_izquierda.body.velocity.x=150;
-            greenLeft = false;
+            //greenLeft = false;
+        }else{
+            if(facing_j1!='idle'){
+                mago_izquierda.animations.stop();
+                if(facing_j1=='right'){
+                    mago_izquierda.frame=9;
+                }else{
+                    mago_izquierda.frame=0;
+                }
+            }
         }
 
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp2){
@@ -534,23 +555,42 @@ MagicAndRunes.level0State.prototype = {
             temp2=game.time.now+750;
         }
 
+        //Movimiento mago naranja
         if(flechas.left.isDown){
-            if(facing_j2!='left'){
-            mago_derecha.scale.x=1;
-            facing_j2='left';
-            }
             mago_derecha.body.velocity.x=-150;
-           
-            redLeft=true;
-        }
-        if(flechas.right.isDown){
-            if(facing_j2!='right'){
-            mago_derecha.scale.x=-1;
-            facing_j2='right';
-            }
+                if(facing_j2!='left'){
+                    mago_derecha.animations.play('left');
+                    facing_j2='left';
+                }
+                /*mago_derecha.scale.x=1;
+                facing_j2='left';*/
+                
+               
+                //redLeft=true;
+        }else if(flechas.right.isDown){
+            
+            //mago_derecha.body.velocity.x=1;
+            
             mago_derecha.body.velocity.x=150;
-            redLeft=false;
+            if(facing_j2!='right'){
+                mago_derecha.animations.play('right');
+                facing_j2='right';
+            }
+           
+            //redLeft=true;
+        }else {
+            if(facing_j2!='idle'){
+                mago_derecha.animations.stop();
+                if(facing_j2=="left"){
+                    mago_derecha.frame=0;
+                }
+                else {
+                    mago_derecha.frame=9;
+                }
+                facing_j2="idle";
+            }
         }
+        
         
 
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
