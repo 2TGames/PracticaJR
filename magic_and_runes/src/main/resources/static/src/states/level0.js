@@ -539,7 +539,7 @@ MagicAndRunes.level0State.prototype = {
                 mago_izquierda.animations.play('left');
                 facing_j1='left';
             }
-            //greenLeft = true;
+            greenLeft = true;
         }else if(dkey.isDown){
              
             mago_izquierda.body.velocity.x=150;
@@ -547,7 +547,7 @@ MagicAndRunes.level0State.prototype = {
                 mago_izquierda.animations.play('right');
                 facing_j1='right';
             }
-            //greenLeft = false;
+            greenLeft = false;
         }else{
             if(facing_j1!='idle'){
                 mago_izquierda.animations.stop();
@@ -575,7 +575,7 @@ MagicAndRunes.level0State.prototype = {
                 facing_j2='left';*/
                 
                
-                //redLeft=true;
+                redLeft=true;
         }else if(flechas.right.isDown){
             
             //mago_derecha.body.velocity.x=1;
@@ -586,7 +586,7 @@ MagicAndRunes.level0State.prototype = {
                 facing_j2='right';
             }
            
-            //redLeft=true;
+            redLeft=true;
         }else {
             if(facing_j2!='idle'){
                 mago_derecha.animations.stop();
