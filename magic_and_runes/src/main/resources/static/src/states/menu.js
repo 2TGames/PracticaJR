@@ -25,7 +25,8 @@ var temporizador_runa=0;
 MagicAndRunes.menuState.prototype = {
 
     init: function(){
-        $.ajax({
+        if(game.player1!=null){
+            $.ajax({
             method: "DELETE",
             url: 'http://localhost/game/' + game.player1.id,
             processData: false,
@@ -34,7 +35,8 @@ MagicAndRunes.menuState.prototype = {
             }
         }).done(function(data){
             console.log("Jugador eliminado: " + JSON.stringify(data));
-        })
+            })
+        }
     },
 
     preload: function() {

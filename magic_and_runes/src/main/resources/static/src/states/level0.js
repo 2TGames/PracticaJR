@@ -2,6 +2,7 @@ MagicAndRunes.level0State = function(game) {
     
 }
     var suelo;
+    var mago;
     var mago_derecha;
     var caugth;
     var mago_izquierda;
@@ -175,6 +176,14 @@ MagicAndRunes.level0State = function(game) {
 
 MagicAndRunes.level0State.prototype = {
 
+    init: function(){
+        if(game.player1.id==1){
+            game.player2.id=2;
+        }else{
+            game.player2.id=1;
+        }
+    },
+    
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');
 
@@ -201,18 +210,13 @@ MagicAndRunes.level0State.prototype = {
         
         game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
 
+        console.log(JSON.stringify(game.player1));
+
     },
 
     create: function() {
          //game.time.desiredFps=30;
-    	MagicAndRunes.jugador1={
-    			id:0
-    	}
     	
-    	crearJugador(function(playerId){
-    		MagicAndRunes.jugador1.id = playerId;
-    	},
-    	MagicAndRunes.jugador1);
     	
          music.destroy();
          game.cache.removeSound('NoN');
@@ -237,10 +241,19 @@ MagicAndRunes.level0State.prototype = {
 
         medidor=game.add.sprite(292,20,'nivAct');
 
+        //Añadimos el mago del jugador local
+        mago=game.add.sprite(game.player1.x,game.player1.y,'mago_verde');
+        game.physics.enable(mago,Phaser.Physics.ARCADE);
+        //Pintamos el mago del rival.
+        this.getJugador(function(player2Data){
+            game.player2 = JSON.parse(JSON.stringify(player2Data));
+            mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
+            console.log(JSON.stringify(game.player2));
+        })
 
-        mago_izquierda=game.add.sprite(100,400,'mago_verde');
+        /*mago_izquierda=game.add.sprite(100,400,'mago_verde');
         mago_derecha=game.add.sprite(700,400,'mago_naranja');
-        game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
+        game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);*/
         //Atributos mago verde
         mago_izquierda.vida=100;
         mago_izquierda.mana=100;
@@ -534,45 +547,45 @@ MagicAndRunes.level0State.prototype = {
         //Movimiento mago verde
         if(akey.isDown){
             
-            mago_izquierda.body.velocity.x=-150;
+            mago.body.velocity.x=-150;
             if(facing_j1!='left'){
-                mago_izquierda.animations.play('left');
+                mago.animations.play('left');
                 facing_j1='left';
             }
             greenLeft = true;
         }else if(dkey.isDown){
              
-            mago_izquierda.body.velocity.x=150;
+            mago.body.velocity.x=150;
             if(facing_j1!='right'){
-                mago_izquierda.animations.play('right');
+                mago.animations.play('right');
                 facing_j1='right';
             }
             greenLeft = false;
         }else{
             if(facing_j1!='idle'){
-                mago_izquierda.animations.stop();
+                mago.animations.stop();
                 if(facing_j1=='right'){
-                    mago_izquierda.frame=9;
+                    mago.frame=9;
                 }else{
-                    mago_izquierda.frame=0;
+                    mago.frame=0;
                 }
             }
         }
 
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp2){
-            mago_izquierda.body.velocity.y=-300;
+            mago.body.velocity.y=-300;
             temp2=game.time.now+750;
         }
 
         //Movimiento mago naranja
-        if(flechas.left.isDown){
+        /*if(flechas.left.isDown){
             mago_derecha.body.velocity.x=-150;
                 if(facing_j2!='left'){
                     mago_derecha.animations.play('left');
                     facing_j2='left';
                 }
                 /*mago_derecha.scale.x=1;
-                facing_j2='left';*/
+                facing_j2='left';
                 
                
                 redLeft=true;
@@ -605,7 +618,7 @@ MagicAndRunes.level0State.prototype = {
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
             mago_derecha.body.velocity.y=-300;
             temp=game.time.now+750;
-        }
+        }*/
 
         //  Firing?
         if (fireButton.isDown && spellTempo>3)
@@ -678,6 +691,37 @@ MagicAndRunes.level0State.prototype = {
         }*/
     },
 
+    //Recuperamos la información del oponente
+    getPlayer(callback){
+        $.ajax({
+            method:"GET",
+            url:'http://localhost:8080/game/'+game.player2.id,
+            processData: false,
+            headers:{
+                "Content-Type":"application/json"
+            }
+        }).done(function(data){
+            game.player2=JSON.pase(JSON.stringify(data));
+            callback(data);
+        })
+    },
+
+    //Actualizamos la información del oponente.
+    putPlayer(){
+        game.player1.x=mago.x;
+        game.player1.y=mago.y;
+        $.ajax({
+            method:"PUT",
+            url:'http://localhost:8080/game/'+game.player1.id,
+            data:JSON.stringify(game.player1.id),
+            processData:false,
+            headers:{
+                "Content-Type":"application/json"
+            }
+        }).done(function(data){
+            console.log("Actualizada posicion jugador 1: "+JSON.stringify(data));
+        })
+    },
 
     
 }
