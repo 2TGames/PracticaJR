@@ -18,7 +18,7 @@ CatCatcher.preloadState.prototype = {
     },
 
     create: function() {
-        game.state.start('menuState');
+        game.state.start('pantalla_cargaState');
     },
 
     update: function() {

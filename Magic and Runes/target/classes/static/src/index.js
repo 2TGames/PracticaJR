@@ -11,6 +11,7 @@ game.global = {
 
 game.state.add('bootState', CatCatcher.bootState)
 game.state.add('preloadState', CatCatcher.preloadState)
+game.state.add('pantalla_cargaState', CatCatcher.pantalla_cargaState)
 game.state.add('menuState', CatCatcher.menuState)
 game.state.add('matchmakingState', CatCatcher.matchmakingState)
 game.state.add('level0State', CatCatcher.level0State)
