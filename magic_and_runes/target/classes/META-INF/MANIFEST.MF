@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: magic_and_runes
-Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Usuario
-Implementation-Vendor-Id: es.2tgames
-Build-Jdk: 1.8.0_191
-Implementation-URL: http://maven.apache.org
-Created-By: Maven Integration for Eclipse
-
