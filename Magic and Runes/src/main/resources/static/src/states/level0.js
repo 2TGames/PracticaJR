@@ -177,9 +177,9 @@ CatCatcher.level0State = function(game) {
     CatCatcher.level0State.prototype = {
         init() {
             if(game.player1.id==1){
-                game.player2.id=2;
+                game.player2 = {id:2};
             }else{
-                game.player2.id=1;
+                game.player2 = {id: 1};
             }
         },
 
@@ -248,34 +248,36 @@ CatCatcher.level0State = function(game) {
             console.log(JSON.stringify(game.player2));
         })
 
-        mago_derecha=game.add.sprite(700,400,'mago_naranja');
+        //mago_derecha=game.add.sprite(700,400,'mago_naranja');
         //game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
         //Atributos mago verde
-        mago_izquierda.vida=100;
+        /*mago_izquierda.vida=100;
         mago_izquierda.mana=100;
         mago_izquierda.dañoHechizo=20;
         //Atributos mago naranja
         mago_derecha.vida=100;
         mago_derecha.mana=100;
-        mago_derecha.dañoHechizo=20;
+        mago_derecha.dañoHechizo=20;*/
         //Animaciones personajes
-        mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
+        /*mago_derecha.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
         mago_derecha.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
-        mago_derecha.frame=0;
-        mago_izquierda.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
-        mago_izquierda.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
-        mago_izquierda.frame=9;
+        mago_derecha.frame=0;*/
+        mago.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
+        mago.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+        mago.frame=9;
 
         
         //game.physics.enable(suelo,Phaser.Physics.ARCADE);
         //barras de vida
-        vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida,20);
-        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida,20);
+        //vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida,20);
+        vidaizq=new Phaser.Rectangle(25,25,mago.vida,20);
         //barras de mana
-        manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana,20);
-        manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana,20);
+        //manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana,20);
+        manaizq=new Phaser.Rectangle(25,50,mago.mana,20);
 
-        mago_izquierda.body.collideWorldBounds=true;
+        mago.body.gravity.y=500;
+        mago.body.bounce.y=0.1;
+        /*mago_izquierda.body.collideWorldBounds=true;
         mago_izquierda.body.gravity.y=500;
         mago_izquierda.body.bounce.y=0.1;
         mago_izquierda.body.setSize(30,50);
@@ -285,7 +287,7 @@ CatCatcher.level0State = function(game) {
         mago_derecha.body.gravity.y=500;
         mago_derecha.body.bounce.y=0.1
         mago_derecha.body.setSize(30,50);
-        mago_derecha.anchor.setTo(0.5,0.5);
+        mago_derecha.anchor.setTo(0.5,0.5);*/
 
         //  Hechizos mago naranja
         spellsDcha = game.add.group();
@@ -344,7 +346,7 @@ CatCatcher.level0State = function(game) {
         enchantments2.setAll('checkWorldBounds', true);
 
         //  And some controls to play the game with
-            //Controles mago verde
+            //Controles jugador 1
         wkey=game.input.keyboard.addKey(Phaser.Keyboard.W);
         akey=game.input.keyboard.addKey(Phaser.Keyboard.A);
         skey=game.input.keyboard.addKey(Phaser.Keyboard.S);
@@ -352,15 +354,15 @@ CatCatcher.level0State = function(game) {
         fire2Button = game.input.keyboard.addKey(Phaser.Keyboard.V);
         ench2Button = game.input.keyboard.addKey(Phaser.Keyboard.B);
             //Controles mago naranja
-        flechas=game.input.keyboard.createCursorKeys();
+        /*flechas=game.input.keyboard.createCursorKeys();
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.I);
         enchButton = game.input.keyboard.addKey(Phaser.Keyboard.O);
-        ench2Button=game.input.keyboard.addKey(Phaser.Keyboard.B);
+        ench2Button=game.input.keyboard.addKey(Phaser.Keyboard.B);*/
     },
 
     update: function() {
 
-        if (mago_izquierda.body.x>765 && (mago_izquierda.body.y>=461 || mago_izquierda.body.y<=462)){
+        /*if (mago_izquierda.body.x>765 && (mago_izquierda.body.y>=461 || mago_izquierda.body.y<=462)){
             mago_izquierda.vida=100;
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
@@ -407,17 +409,17 @@ CatCatcher.level0State = function(game) {
             mago_derecha.scale.x=1;
             mago_izquierda.scale.x=1;
             console.log("gana naranja");
-        }
+        }*/
 
-        game.debug.geom(vidaizq,'rgba(0,255,0,1)');
+        /*game.debug.geom(vidaizq,'rgba(0,255,0,1)');
         game.debug.geom(vidadcha,'rgba(0,255,0,1)');
 
         game.debug.geom(manadcha,'rgba(0,0,255,1)');
-        game.debug.geom(manaizq,'rgba(0,0,255,1');
+        game.debug.geom(manaizq,'rgba(0,0,255,1');*/
 
 
         //funcion de disparo para el mago naranja
-        function fireSpell () {
+        /*function fireSpell () {
 
            
             if (game.time.now > spellTime)
@@ -538,14 +540,14 @@ CatCatcher.level0State = function(game) {
         }
        
         mago_derecha.body.velocity.x=0;
-        mago_izquierda.body.velocity.x=0;
+        mago_izquierda.body.velocity.x=0;*/
 
         //Movimiento mago verde
         if(akey.isDown){
             
             mago.body.velocity.x=-150;
             if(facing_j1!='left'){
-                mago_izquierda.animations.play('left');
+                mago.animations.play('left');
                 facing_j1='left';
             }
             greenLeft = true;
@@ -574,14 +576,14 @@ CatCatcher.level0State = function(game) {
         }
 
         //Movimiento mago naranja
-        if(flechas.left.isDown){
+        /*if(flechas.left.isDown){
             mago_derecha.body.velocity.x=-150;
                 if(facing_j2!='left'){
                     mago_derecha.animations.play('left');
                     facing_j2='left';
                 }
                 /*mago_derecha.scale.x=1;
-                facing_j2='left';*/
+                facing_j2='left';
                 
                
                 redLeft=true;
@@ -614,10 +616,10 @@ CatCatcher.level0State = function(game) {
         if(flechas.up.isDown && mago_derecha.body.onFloor() && game.time.now > temp){
             mago_derecha.body.velocity.y=-300;
             temp=game.time.now+750;
-        }
+        }*/
 
         //  Firing?
-        if (fireButton.isDown && spellTempo>3)
+        /*if (fireButton.isDown && spellTempo>3)
         {
             
             spellTempo=0;
@@ -659,18 +661,19 @@ CatCatcher.level0State = function(game) {
                 manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-enchantCost,20);
                 mago_izquierda.mana-=enchantCost;
             }
-        }
+        }*/
+
         this.putPlayer();
 
         this.getPlayer(function(updatePlayer2){
             game.player2 = JSON.parse(JSON.stringify(updatePlayer2));
             mago2.x =game.player2.x;
             mago2.y=game.player2.y;
-
+            console.log("Posicion de player 2: " +JSON.stringify(game.player2)  + " actualizada");
         })
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
     
-        game.physics.arcade.collide(mago_izquierda,spellsDcha,micolision);
+        /*game.physics.arcade.collide(mago_izquierda,spellsDcha,micolision);
         game.physics.arcade.collide(mago_izquierda,spellsIzq,micolision);
         game.physics.arcade.collide(mago_derecha,hechizosDcha,micolision2);
         game.physics.arcade.collide(mago_derecha,hechizosIzq,micolision2);
@@ -680,7 +683,7 @@ CatCatcher.level0State = function(game) {
 
         game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
         game.physics.arcade.collide(mago_derecha,layer,colisionMapaMagoNaranja,null,this);
-        game.physics.arcade.collide(mago_izquierda,layer,colisionMapaMagoVerde,null,this);
+        game.physics.arcade.collide(mago_izquierda,layer,colisionMapaMagoVerde,null,this);*/
 
         spellTempo+=0.05;
         hechizoTempo+=0.05;
@@ -709,8 +712,8 @@ CatCatcher.level0State = function(game) {
     },
 
     putPlayer(){
-        mago.x=game.player1.x;
-        mago.y=game.player1.y;
+        game.player1.x=mago.x;
+        game.player1.y=mago.y;
         $.ajax({
             method:"PUT",
             url:'http://192.168.1.138:8080/game/'+game.player1.id,
