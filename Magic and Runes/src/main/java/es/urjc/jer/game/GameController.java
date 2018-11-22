@@ -38,8 +38,13 @@ public class GameController {
 		Player player = new Player();
 		long id = nextId.incrementAndGet();
 		player.setId(id);
-		player.setX(rnd.nextInt(700));
-		player.setY(rnd.nextInt(500));
+		if(player.getId()==1) {
+			player.setX(100);
+			player.setY(400);
+		}else if(player.getId()==2) {
+			player.setX(700);
+			player.setY(400);
+		}
 		players.put(player.getId(), player);
 		return player;
 	}

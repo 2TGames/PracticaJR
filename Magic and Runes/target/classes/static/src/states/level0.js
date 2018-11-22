@@ -2,6 +2,7 @@ CatCatcher.level0State = function(game) {
     
 }
     var suelo;
+    var mago;
     var mago_derecha;
     var caugth;
     var mago_izquierda;
@@ -174,6 +175,13 @@ CatCatcher.level0State = function(game) {
 
 
     CatCatcher.level0State.prototype = {
+        init() {
+            if(game.player1.id==1){
+                game.player2.id=2;
+            }else{
+                game.player2.id=1;
+            }
+        },
 
     preload: function() {
         game.load.image('background','assets/images/background_dungeonv2.png');
@@ -201,6 +209,8 @@ CatCatcher.level0State = function(game) {
         
         game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
 
+        console.log(JSON.stringify(game.player1));
+
     },
 
     create: function() {
@@ -227,11 +237,19 @@ CatCatcher.level0State = function(game) {
         layer.resizeWorld();
 
         medidor=game.add.sprite(292,20,'nivAct');
+        //Añadimos el personaje del jugador 1
+        mago=game.add.sprite(game.player1.x,game.player1.y,'mago_verde');
+        game.physics.enable(mago,Phaser.Physics.ARCADE);
+        //mago_izquierda=game.add.sprite(100,400,'mago_verde');
+        //Añadimos el personaje del rival
+        this.getPlayer(function(player2Data){
+            game.player2 = JSON.parse(JSON.stringify(player2Data));
+            mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
+            console.log(JSON.stringify(game.player2));
+        })
 
-
-        mago_izquierda=game.add.sprite(100,400,'mago_verde');
         mago_derecha=game.add.sprite(700,400,'mago_naranja');
-        game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
+        //game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
         //Atributos mago verde
         mago_izquierda.vida=100;
         mago_izquierda.mana=100;
@@ -525,7 +543,7 @@ CatCatcher.level0State = function(game) {
         //Movimiento mago verde
         if(akey.isDown){
             
-            mago_izquierda.body.velocity.x=-150;
+            mago.body.velocity.x=-150;
             if(facing_j1!='left'){
                 mago_izquierda.animations.play('left');
                 facing_j1='left';
@@ -533,25 +551,25 @@ CatCatcher.level0State = function(game) {
             greenLeft = true;
         }else if(dkey.isDown){
              
-            mago_izquierda.body.velocity.x=150;
+            mago.body.velocity.x=150;
             if(facing_j1!='right'){
-                mago_izquierda.animations.play('right');
+                mago.animations.play('right');
                 facing_j1='right';
             }
             greenLeft = false;
         }else{
             if(facing_j1!='idle'){
-                mago_izquierda.animations.stop();
+                mago.animations.stop();
                 if(facing_j1=='right'){
-                    mago_izquierda.frame=9;
+                    mago.frame=9;
                 }else{
-                    mago_izquierda.frame=0;
+                    mago.frame=0;
                 }
             }
         }
 
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp2){
-            mago_izquierda.body.velocity.y=-300;
+            mago.body.velocity.y=-300;
             temp2=game.time.now+750;
         }
 
@@ -642,7 +660,14 @@ CatCatcher.level0State = function(game) {
                 mago_izquierda.mana-=enchantCost;
             }
         }
-        1
+        this.putPlayer();
+
+        this.getPlayer(function(updatePlayer2){
+            game.player2 = JSON.parse(JSON.stringify(updatePlayer2));
+            mago2.x =game.player2.x;
+            mago2.y=game.player2.y;
+
+        })
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
     
         game.physics.arcade.collide(mago_izquierda,spellsDcha,micolision);
@@ -669,6 +694,34 @@ CatCatcher.level0State = function(game) {
         }*/
     },
 
+    getPlayer(callback){
+        $.ajax({
+            method:"GET",
+            url:'http://192.168.1.138:8080/game/' + game.player2.id,
+            processData:false,
+            headers:{
+                "Content-Type":"application/json"
+            }
+        }).done(function(data){
+            game.player2= JSON.parse(JSON.stringify(data));
+            callback(data);
+        })
+    },
 
+    putPlayer(){
+        mago.x=game.player1.x;
+        mago.y=game.player1.y;
+        $.ajax({
+            method:"PUT",
+            url:'http://192.168.1.138:8080/game/'+game.player1.id,
+            data:JSON.stringify(game.player1),
+            processData:false,
+            headers:{
+                "Content-Type":"application/json"
+            }
+        }).done(function(data){
+            console.log("Actualizada posicion jugador 1: "+JSON.stringify(data));
+        })
+    }
     
 }
