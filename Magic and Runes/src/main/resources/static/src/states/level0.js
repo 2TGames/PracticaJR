@@ -226,6 +226,20 @@ CatCatcher.level0State = function(game) {
 
         music.play();
          
+         
+         if(game.player1.id==1){
+        	 vidaizq=new Phaser.Rectangle(25,25,/*game.player1.vida*/100,20);
+        	 vidadcha=new Phaser.Rectangle(650,25,/*game.player2.vida*/100,20);
+        	 manaizq=new Phaser.Rectangle(25,50,/*game.player1.mana*/100,20);
+        	 manadcha=new Phaser.Rectangle(650,50,/*game.player2.mana*/100,20);
+         }else{
+        	 vidaizq=new Phaser.Rectangle(25,25,/*game.player2.vida*/100,20);
+        	 vidadcha=new Phaser.Rectangle(650,25,/*game.player1.vida*/100,20);
+        	 manadcha=new Phaser.Rectangle(25,50,/*game.player1.mana*/100,20);
+        	 manaizq=new Phaser.Rectangle(650,50,/*game.player2.mana*/100,20);
+         }
+
+         
         caugth=0;
         background= game.add.sprite(0,0,'background');
         //suelo=game.add.sprite(100,500,'suelo');
@@ -271,10 +285,10 @@ CatCatcher.level0State = function(game) {
         //game.physics.enable(suelo,Phaser.Physics.ARCADE);
         //barras de vida
         //vidadcha=new Phaser.Rectangle(650,25,mago_derecha.vida,20);
-        vidaizq=new Phaser.Rectangle(25,25,mago.vida,20);
+        //vidaizq=new Phaser.Rectangle(25,25,mago.vida,20);
         //barras de mana
         //manadcha=new Phaser.Rectangle(650,50,mago_derecha.mana,20);
-        manaizq=new Phaser.Rectangle(25,50,mago.mana,20);
+        //manaizq=new Phaser.Rectangle(25,50,mago.mana,20);
 
         mago.body.gravity.y=500;
         mago.body.bounce.y=0.1;
@@ -541,6 +555,15 @@ CatCatcher.level0State = function(game) {
         }
        
         mago_derecha.body.velocity.x=0;*/
+    	
+
+    	game.debug.geom(vidaizq,'rgba(0,255,0,1)');
+        game.debug.geom(vidadcha,'rgba(0,255,0,1)');
+        
+        game.debug.geom(manadcha,'rgba(0,0,255,1)');
+        game.debug.geom(manaizq,'rgba(0,0,255,1');
+    	
+    	
         mago.body.velocity.x=0;
 
         //Movimiento mago verde
