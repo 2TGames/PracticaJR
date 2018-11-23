@@ -3,6 +3,7 @@ CatCatcher.level0State = function(game) {
 }
     var suelo;
     var mago;
+    var mago2;
     var mago_derecha;
     var caugth;
     var mago_izquierda;
@@ -539,8 +540,8 @@ CatCatcher.level0State = function(game) {
         
         }
        
-        mago_derecha.body.velocity.x=0;
-        mago_izquierda.body.velocity.x=0;*/
+        mago_derecha.body.velocity.x=0;*/
+        mago.body.velocity.x=0;
 
         //Movimiento mago verde
         if(akey.isDown){
@@ -681,9 +682,8 @@ CatCatcher.level0State = function(game) {
         game.physics.arcade.collide(mago_derecha,enchantments2,trampaVerde,null,this);
         game.physics.arcade.collide(mago_izquierda,enchantments,trampaNaranja,null,this);
 
-        game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);
-        game.physics.arcade.collide(mago_derecha,layer,colisionMapaMagoNaranja,null,this);
-        game.physics.arcade.collide(mago_izquierda,layer,colisionMapaMagoVerde,null,this);*/
+        game.physics.arcade.collide(mago_derecha,mago_izquierda,colisionMagos,null,this);*/
+        game.physics.arcade.collide(mago,layer,colisionMapaMagoVerde,null,this);
 
         spellTempo+=0.05;
         hechizoTempo+=0.05;
@@ -700,7 +700,7 @@ CatCatcher.level0State = function(game) {
     getPlayer(callback){
         $.ajax({
             method:"GET",
-            url:'http://192.168.1.138:8080/game/' + game.player2.id,
+            url:'http://192.168.1.137:8080/game/' + game.player2.id,
             processData:false,
             headers:{
                 "Content-Type":"application/json"
@@ -712,13 +712,11 @@ CatCatcher.level0State = function(game) {
     },
 
     putPlayer(){
-        /*mago.x=game.player1.x;
-        mago.y=game.player1.y;*/
         game.player1.x=mago.x;
         game.player1.y=mago.y;
         $.ajax({
             method:"PUT",
-            url:'http://192.168.1.138:8080/game/'+game.player1.id,
+            url:'http://192.168.1.137:8080/game/'+game.player1.id,
             data:JSON.stringify(game.player1),
             processData:false,
             headers:{
