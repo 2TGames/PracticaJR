@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameController {
 
 	Map<Long, Player> players = new ConcurrentHashMap<>();
+	Map<Long,Hechizo> hechizos = new ConcurrentHashMap<>();
 	AtomicLong nextId = new AtomicLong(0);
 	Random rnd = new Random();
 	Cat cat = new Cat();
@@ -29,6 +30,12 @@ public class GameController {
 	@GetMapping(value = "/game")
 	public Collection<Player> getPlayers() {
 		return players.values();
+	}
+	
+	// Con este GET recuperamos los hechizos 
+	@GetMapping(value = "/game")
+	public Collection<Hechizo> getHechizos(){
+		return hechizos.values();
 	}
 
 	// Con POST creamos un nuevo jugador
@@ -47,6 +54,17 @@ public class GameController {
 		}
 		players.put(player.getId(), player);
 		return player;
+	}
+	
+	//Con este POST creamos los hechizos
+	@PostMapping("/game")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Hechizo newHechizo() {
+		Hechizo hechizo = new Hechizo();
+		long id = nextId.incrementAndGet();
+		hechizo.setId(id);
+		hechizos.put(hechizo.getId(),hechizo);
+		return hechizo;
 	}
 
 	// Con este GET, podemos recuperar la información particular de cada uno de los
@@ -72,6 +90,17 @@ public class GameController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	// Con este PUT actualizamos la información del hechizo del jugador con su respectiva id
+	@PutMapping(value="/game/{id}")
+	public ResponseEntity<Hechizo> updateHechizo(@PathVariable long id, @RequestBody Hechizo hechizo){
+		Hechizo savedHechizo = hechizos.get(hechizo.getId());
+		if(savedHechizo!=null) {
+			return new ResponseEntity<>(hechizo,HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	// Con este DELETE borramos el jugador con ID = id
 	@DeleteMapping(value = "/game/{id}")
@@ -81,6 +110,18 @@ public class GameController {
 			players.remove(savedPlayer.getId());
 			return new ResponseEntity<>(savedPlayer, HttpStatus.OK);
 		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	// Con este DELETE borramos el hechizo con ID = x
+	@DeleteMapping(value="/game/{id}")
+	public ResponseEntity<Hechizo> borraHechizo(@PathVariable long id){
+		Hechizo savedHechizo = hechizos.get(id);
+		if(savedHechizo != null) {
+			hechizos.remove(savedHechizo.getId());
+			return new ResponseEntity<>(savedHechizo, HttpStatus.OK);
+		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
