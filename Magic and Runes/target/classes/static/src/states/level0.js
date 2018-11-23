@@ -571,7 +571,7 @@ CatCatcher.level0State = function(game) {
             }
         }
 
-        if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp2){
+        if(wkey.isDown && mago.body.onFloor() && game.time.now > temp2){
             mago.body.velocity.y=-300;
             temp2=game.time.now+750;
         }
