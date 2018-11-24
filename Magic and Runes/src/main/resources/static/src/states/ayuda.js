@@ -1,6 +1,9 @@
 CatCatcher.ayudaState = function(game) {
 
 }
+
+//Creamos una función que lleve a menuState, que se activará una vez se pulse
+//el botón verde de vuelta al menú principal
 function men() {
 
     this.state.start("menuState");
@@ -11,29 +14,25 @@ CatCatcher.ayudaState.prototype = {
 
     preload: function() {
         game.load.image('fondo','assets/ayuda/fondo.png');
-        game.load.image('halo_verde','assets/images/menu_principal/halo_verde.png');
-        //game.load.image('fondo','assets/images/fondo magico.png');
+        game.load.image('halo_verde','assets/images/menu_principal/halo_verde.png');	
     },
 
     create: function() {
-
+    	
+    	//------------MUSICA------------------------------------------------------//
+    	//Destruimos la canción del menú principal (NoN). 
+    	//Esto se hace para no acumular la canción repitiéndose cada vez que vayamos 
+    	//de la ayuda al menú principal, ya que se inicia una nueva canción sin que 
+    	//se elimine la anterior.
         music.destroy();
         game.cache.removeSound('NoN');
         
+        //-----------------------FONDO--------------------------------------------//        
         var fondo=game.add.image(0,0,'fondo');
-
-        /*var halo_negro=game.add.image(340,80,'halo_negro');
-        var halo_rojo=game.add.image(520,204,'halo_rojo');
-        var halo_verde=game.add.image(170,204,'halo_verde');
-        var halo_azul=game.add.image(230,404,'halo_azul');
-        var halo_naranja=game.add.image(455,404,'halo_naranja');*/
         
-        //var texto = game.add.text(300,250,"1 Para jugar",{font:"30px Arial", fill:"#FFE400",align:"center"});
-        /*var texto2 = game.add.text(300,300,"2 Controles",{font:"30px Arial", fill:"#FFE400",align:"center"});
-        var texto = game.add.text(300,350,"3 Códice",{font:"30px Arial", fill:"#FFE400",align:"center"});*/
-        //this.play=game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-
-
+        //-----------------------------BOTÓN VERDE--------------------------------//
+        //En la posición (710, 195), y empleando la imagen 'halo_verde', creamos 
+        //un botón que al pulsarlo ejecute la función "men", expuesta arriba.
         buttonGreen = game.add.button(710,195, 'halo_verde', men, this, 0);
         
 

@@ -20,15 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GameController {
 
-	Map<Long, Player> players = new ConcurrentHashMap<>();
-	Map<Long,Hechizo> hechizos = new ConcurrentHashMap<>();
-	AtomicLong nextId = new AtomicLong(0);
-	AtomicLong nextIdHechizo= new AtomicLong(0);
+	Map<Long, Player> players = new ConcurrentHashMap<>();			//mapa de jugadores
+	Map<Long,Hechizo> hechizos = new ConcurrentHashMap<>();			//mapa de hechizos
+	AtomicLong nextId = new AtomicLong(0);							//suma de IDs de jugadores
+	AtomicLong nextIdHechizo= new AtomicLong(0);					//suma de IDs de hechizos
 	//Hechizo hechizo = new Hechizo();
-	Random rnd = new Random();
-	Cat cat = new Cat();
-
-	// Con GET recuperamos el número de jugadores
+	
+	// Con este GET recuperamos el número de jugadores
 	@GetMapping(value = "/game")
 	public Collection<Player> getPlayers() {
 		return players.values();
@@ -40,7 +38,7 @@ public class GameController {
 		return hechizos.values();
 	}
 
-	// Con POST creamos un nuevo jugador
+	// Con este POST creamos un nuevo jugador
 	@PostMapping(value = "/game")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Player newPlayer() {
@@ -128,20 +126,6 @@ public class GameController {
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}
-	
-	// Con POST creamos un nuevo jugador
-	@PostMapping(value = "/cat")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Cat randomizeCat() {
-		cat = new Cat();
-		return cat;
-	}
-	
-	// Con GET recuperamos el número de jugadores
-	@GetMapping(value = "/cat")
-	public Cat getCat() {
-		return cat;
 	}
 	
 }
