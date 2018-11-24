@@ -45,7 +45,7 @@ CatCatcher.matchmakingState.prototype = {
     
     getNumPlayers: function (callback) {
         $.ajax({
-            url: 'http://192.168.1.137:8080/game',
+            url: 'http://192.168.1.134:8080/game',
         }).done(function (data) {
             callback(data);
         })
@@ -54,7 +54,7 @@ CatCatcher.matchmakingState.prototype = {
     createPlayer: function () {
         $.ajax({
             method: "POST",
-            url: 'http://192.168.1.137:8080/game',
+            url: 'http://192.168.1.134:8080/game',
             processData: false,
             headers: {
                 "Content-Type": "application/json"

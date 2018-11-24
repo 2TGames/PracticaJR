@@ -23,6 +23,8 @@ public class GameController {
 	Map<Long, Player> players = new ConcurrentHashMap<>();
 	Map<Long,Hechizo> hechizos = new ConcurrentHashMap<>();
 	AtomicLong nextId = new AtomicLong(0);
+	AtomicLong nextIdHechizo= new AtomicLong(0);
+	//Hechizo hechizo = new Hechizo();
 	Random rnd = new Random();
 	Cat cat = new Cat();
 
@@ -33,7 +35,7 @@ public class GameController {
 	}
 	
 	// Con este GET recuperamos los hechizos 
-	@GetMapping(value = "/game")
+	@GetMapping(value = "/hechizo")
 	public Collection<Hechizo> getHechizos(){
 		return hechizos.values();
 	}
@@ -57,12 +59,14 @@ public class GameController {
 	}
 	
 	//Con este POST creamos los hechizos
-	@PostMapping("/game")
+	@PostMapping("/hechizo")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Hechizo newHechizo() {
 		Hechizo hechizo = new Hechizo();
-		long id = nextId.incrementAndGet();
+		long id = nextIdHechizo.incrementAndGet();
 		hechizo.setId(id);
+		hechizo.setX(100);
+		hechizo.setY(400);
 		hechizos.put(hechizo.getId(),hechizo);
 		return hechizo;
 	}
@@ -92,7 +96,7 @@ public class GameController {
 	}
 	
 	// Con este PUT actualizamos la información del hechizo del jugador con su respectiva id
-	@PutMapping(value="/game/{id}")
+	@PutMapping(value="/hechizo/{id}")
 	public ResponseEntity<Hechizo> updateHechizo(@PathVariable long id, @RequestBody Hechizo hechizo){
 		Hechizo savedHechizo = hechizos.get(hechizo.getId());
 		if(savedHechizo!=null) {
@@ -115,7 +119,7 @@ public class GameController {
 	}
 	
 	// Con este DELETE borramos el hechizo con ID = x
-	@DeleteMapping(value="/game/{id}")
+	@DeleteMapping(value="/hechizo/{id}")
 	public ResponseEntity<Hechizo> borraHechizo(@PathVariable long id){
 		Hechizo savedHechizo = hechizos.get(id);
 		if(savedHechizo != null) {
@@ -139,4 +143,5 @@ public class GameController {
 	public Cat getCat() {
 		return cat;
 	}
+	
 }

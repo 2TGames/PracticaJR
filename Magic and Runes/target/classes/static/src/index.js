@@ -5,6 +5,8 @@ var odioJS;
 game.global = {
 	player1: null,
 	player2: null,
+	hechizo1:null,
+	hechizo2:null,
 	cat: null,
 	numPlayers: 0
 }
