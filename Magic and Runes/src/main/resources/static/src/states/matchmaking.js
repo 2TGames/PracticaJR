@@ -28,6 +28,7 @@ CatCatcher.matchmakingState.prototype = {
     // sigue con la ejecución de PRELOAD y de CREATE. ¡¡¡ Esa es una de las claves.!!!
     create: function () {
     	this.createPlayer();
+    	this.createHechizo();
     },
 
     // Una vez hay suficientes jugadores, se pasa a levelState. El problema de no hacer en INIT
@@ -63,5 +64,19 @@ CatCatcher.matchmakingState.prototype = {
             console.log("Player created: " + JSON.stringify(data));
             game.player1 = data
         })
-    }
+    },
+    
+    createHechizo(){
+    	$.ajax({
+    		method:"POST",
+        	url:'http://192.168.1.134:8080/hechizo',
+        	processData:false,
+        	headers:{
+        		"Content-Type":"application/json"
+        	}
+    	}).done(function(data){
+    		console.log("Hechizo creado: " + JSON.stringify(data));
+    		game.hechizo1 = data;
+    	})
+    },
 }
