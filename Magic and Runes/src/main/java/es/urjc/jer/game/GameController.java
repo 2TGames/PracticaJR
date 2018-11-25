@@ -151,7 +151,7 @@ public class GameController {
 		public ResponseEntity<Niebla> updateNiebla(@PathVariable long id, @RequestBody Niebla niebla){
 			Niebla savedNiebla = nieblas.get(niebla.getId());
 			if(savedNiebla!=null) {
-				niebla.put(id, niebla);
+				nieblas.put(id, niebla);
 				return new ResponseEntity<>(niebla,HttpStatus.OK);
 			}else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
