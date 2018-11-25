@@ -5,9 +5,18 @@ public class Player {
 	private long id;
 	private int x, y;
 	private int score;
+	private String facing="idle";
 	
 	Player() {
 		this.score = 0;
+	}
+
+	public String getFacing() {
+		return facing;
+	}
+
+	public void setFacing(String facing) {
+		this.facing = facing;
 	}
 
 	public long getId() {

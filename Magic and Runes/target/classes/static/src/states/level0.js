@@ -34,6 +34,7 @@ CatCatcher.level0State = function(game) {
     var player;
     var spell,spell2;
     var hechizo,hechizo2;
+    var hechizoI,hechizoD;
     var spellsDcha, spellsIzq;
     var hechizosDcha, hechizos;
     var spellTime = 0;
@@ -53,7 +54,7 @@ CatCatcher.level0State = function(game) {
     
 
     //Spells directions
-    var direccionIzq =true;
+    var direccionIzq =false;
     /*var redLeft = false;
     var redRight=true;
     var greenRight=true;*/
@@ -179,9 +180,11 @@ CatCatcher.level0State = function(game) {
     CatCatcher.level0State.prototype = {
         init() {
             if(game.player1.id==1){
-                game.player2 = {id:2};
+                game.player2 = {id:2,
+                				facing:"right"};
             }else{
-                game.player2 = {id: 1};
+                game.player2 = {id: 1,
+                				facing:"left"};
             }
             
             if(game.hechizo1.id==1){
@@ -261,21 +264,48 @@ CatCatcher.level0State = function(game) {
 
         medidor=game.add.sprite(292,20,'nivAct');
         //Añadimos el personaje del jugador 1
-        mago=game.add.sprite(game.player1.x,game.player1.y,'mago_verde');
+        if(game.player1.id==1){
+        	mago=game.add.sprite(game.player1.x,game.player1.y,'mago_verde');
+        	//mago.scale.x*=-1;
+        }else if(game.player1.id==2){
+        	mago=game.add.sprite(game.player1.x,game.player1.y,'mago_naranja');
+        	mago.scale.x*=-1;
+        }
+        
         game.physics.enable(mago,Phaser.Physics.ARCADE);
         //mago_izquierda=game.add.sprite(100,400,'mago_verde');
         //Añadimos el personaje del rival
         this.getPlayer(function(player2Data){
             game.player2 = JSON.parse(JSON.stringify(player2Data));
-            mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
+            if(game.player2.id==1){
+            	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_verde');
+            	//mago2.scale.x*=-1;
+            }else if(game.player2.id==2){
+            	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
+            	//mago2.scale.x*=-1;
+            }
+            
             //console.log(JSON.stringify(game.player2));
         })
         
-    	
-        this.getHechizo(function(hechizo2Data){
-        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2Data));
-        	hechizo2=game.add.sprite(game.player2.x,game.player2.y,'spellIzq');
-        	hechizo2.visible=false;
+    	hechizoI=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoIzq');
+    	game.physics.enable(hechizoI,Phaser.Physics.ARCADE);
+    	hechizoI.visible=false;
+    	hechizoD=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoDcha');
+		game.physics.enable(hechizoD,Phaser.Physics.ARCADE);
+		hechizoD.visible=false;
+		
+        this.getHechizoI(function(hechizo2IData){
+        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2IData));
+        	hechizo2I=game.add.sprite(game.player2.x,game.player2.y,'spellDcha');
+        	hechizo2I.visible=false;
+        	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
+        })
+        
+        this.getHechizoD(function(hechizo2DData){
+        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2DData));
+        	hechizo2D=game.add.sprite(game.player2.x,game.player2.y,'spellDcha');
+        	hechizo2D.visible=false;
         	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
         })
         //hechizo=game.add.sprite(game.hechizo1.x,game.hechizo1.y,'hechizoDcha');
@@ -495,16 +525,18 @@ CatCatcher.level0State = function(game) {
     		
     		if(direccionIzq==true){
     			lanzamiento=true;
-    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoIzq');
-    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
-    			hechizo.body.velocity.x=-400;
+    			hechizoI=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoIzq');
+    			game.physics.enable(hechizoI,Phaser.Physics.ARCADE);
+    			hechizoI.visible=true;
+    			hechizoI.body.velocity.x=-400;
     			//hechizo.body.velocity.y=50;
     		}else if(direccionIzq==false){
     			lanzamiento=true;
     			console.log("Direccion derecha");
-    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoDcha');
-    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
-    			hechizo.body.velocity.x=400;
+    			hechizoD=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoDcha');
+    			game.physics.enable(hechizoD,Phaser.Physics.ARCADE);
+    			hechizoD.visible=true;
+    			hechizoD.body.velocity.x=400;
     			//hechizo.body.velocity.y=50;
     		}
     			
@@ -647,7 +679,9 @@ CatCatcher.level0State = function(game) {
         if(akey.isDown){
             
             mago.body.velocity.x=-150;
+            //mago.scale.x*=-1;
             direccionIzq=true;
+            game.player1.facing="left";
 			//hechizo.scale.x*=-1;
             if(facing_j1!='left'){
                 mago.animations.play('left');
@@ -657,7 +691,9 @@ CatCatcher.level0State = function(game) {
         }else if(dkey.isDown){
              
             mago.body.velocity.x=150;
+            //mago.scale.x*=-1;
             direccionIzq=false;
+            game.player1.facing="right";
 			//hechizo.scale.x*=-1;
             if(facing_j1!='right'){
                 mago.animations.play('right');
@@ -775,24 +811,51 @@ CatCatcher.level0State = function(game) {
             game.player2 = JSON.parse(JSON.stringify(updatePlayer2));
             mago2.x =game.player2.x;
             mago2.y=game.player2.y;
+            if(game.player2.id==1){
+            	mago2.scale.x=-1;
+            }
+            //mago2.scale.x=-1;
             //console.log("Posicion de player 2: " +JSON.stringify(game.player2)  + " actualizada");
         })
         
         if(lanzamiento==true){
-        	this.putHechizo();
+        	if(direccionIzq==true){
+        		this.putHechizoI();
+        	}else if(direccionIzq==false){
+        		this.putHechizoD();
+        	}
         	
         }
         
-        	this.getHechizo(function(updateHechizo2){
-        		console.log("Entra en la funcion getHechizo");
-        		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2));
-        		hechizo2.visible=true;
-            		hechizo2.x=game.hechizo2.x;
-            		hechizo2.y=game.hechizo2.y;
-            		hechizo2.visible=true;
+        if(direccionIzq==true){
+        	this.getHechizoI(function(updateHechizo2I){
+        		console.log("Entra en la funcion getHechizoIzquierda");
+        		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2I));
+        		//hechizo2I.scale.x*=-1;
+        		hechizo2I.visible=true;
+            		hechizo2I.x=game.hechizo2.x;
+            		hechizo2I.y=game.hechizo2.y;
+            		hechizo2I.visible=true;
         		
         		//console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
         	});
+        }else if(direccionIzq==false){
+        	this.getHechizoD(function(updateHechizo2D){
+        		console.log("Entra en la funcion getHechizoDerecha");
+        		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2D));
+        		//hechizo2D.scale.x*=-1;
+        		hechizo2D.visible=true;
+            		hechizo2D.x=game.hechizo2.x;
+            		hechizo2D.y=game.hechizo2.y;
+            		hechizo2D.visible=true;
+        		
+        		//console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
+        	});
+        }
+        	
+        
+        
+        	
         
         
         
@@ -825,7 +888,7 @@ CatCatcher.level0State = function(game) {
     getPlayer(callback){
         $.ajax({
             method:"GET",
-            url:'http://192.168.1.134:8080/game/' + game.player2.id,
+            url:'http://192.168.1.140:8080/game/' + game.player2.id,
             processData:false,
             headers:{
                 "Content-Type":"application/json"
@@ -837,10 +900,24 @@ CatCatcher.level0State = function(game) {
     },
     
     //Recuperamos la información del hechizo del enemigo
-    getHechizo(callback){
+    getHechizoI(callback){
     	$.ajax({
     		method:"GET",
-    		url:'http://192.168.1.134:8080/hechizo/' + game.hechizo2.id,
+    		url:'http://192.168.1.140:8080/hechizo/' + game.hechizo2.id,
+    		processData:false,
+    		headers:{
+    			"Content-Type":"application/json"
+    		}
+    	}).done(function(data){
+    		game.hechizo2 = JSON.parse(JSON.stringify(data));
+    		callback(data);
+    	})
+    },
+    
+    getHechizoD(callback){
+    	$.ajax({
+    		method:"GET",
+    		url:'http://192.168.1.140:8080/hechizo/' + game.hechizo2.id,
     		processData:false,
     		headers:{
     			"Content-Type":"application/json"
@@ -854,9 +931,10 @@ CatCatcher.level0State = function(game) {
     putPlayer(){
         game.player1.x=mago.x;
         game.player1.y=mago.y;
+        game.player1.facing;
         $.ajax({
             method:"PUT",
-            url:'http://192.168.1.134:8080/game/'+game.player1.id,
+            url:'http://192.168.1.140:8080/game/'+game.player1.id,
             data:JSON.stringify(game.player1),
             processData:false,
             headers:{
@@ -868,12 +946,12 @@ CatCatcher.level0State = function(game) {
     },
     
     //Actualizamos la informacion de nuestro hechizo
-    putHechizo(){
-    	game.hechizo1.x=hechizo.x;
-    	game.hechizo1.y=hechizo.y;
+    putHechizoI(){
+    	game.hechizo1.x=hechizoI.x;
+    	game.hechizo1.y=hechizoI.y;
     	$.ajax({
     		method:"PUT",
-    		url:'http://192.168.1.134:8080/hechizo/'+game.hechizo1.id,
+    		url:'http://192.168.1.140:8080/hechizo/'+game.hechizo1.id,
     		data:JSON.stringify(game.hechizo1),
     		processData:false,
     		headers:{
@@ -884,6 +962,21 @@ CatCatcher.level0State = function(game) {
     	})
     },
     
+    putHechizoD(){
+    	game.hechizo1.x=hechizoD.x;
+    	game.hechizo1.y=hechizoD.y;
+    	$.ajax({
+    		method:"PUT",
+    		url:'http://192.168.1.140:8080/hechizo/'+game.hechizo1.id,
+    		data:JSON.stringify(game.hechizo1),
+    		processData:false,
+    		headers:{
+    			"Content-Type":"application/json"
+    		}
+    	}).done(function(data){
+    		//console.log("Actualizada posicion hechizo: " + JSON.stringify(data));
+    	})
+    },
     
     
 }

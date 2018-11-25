@@ -48,9 +48,11 @@ public class GameController {
 		if(player.getId()==1) {
 			player.setX(100);
 			player.setY(400);
+			player.setFacing("right");
 		}else if(player.getId()==2) {
 			player.setX(700);
 			player.setY(400);
+			player.setFacing("left");
 		}
 		players.put(player.getId(), player);
 		return player;
@@ -89,6 +91,8 @@ public class GameController {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 		}
+		
+		
 
 	// Con este PUT actualizamos la información del jugador con ID = id
 	@PutMapping(value = "/game/{id}")
