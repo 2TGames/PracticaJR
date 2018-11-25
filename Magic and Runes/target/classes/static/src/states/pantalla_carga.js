@@ -1,10 +1,10 @@
-CatCatcher.pantalla_cargaState = function(game) {
+MagicAndRunes.pantalla_cargaState = function(game) {
 
 }
 var play;																			//Creamos una variable play que igualada a true nos
 																					//lleve al estado "menuState" 
 
-CatCatcher.pantalla_cargaState.prototype = {
+MagicAndRunes.pantalla_cargaState.prototype = {
 
     preload: function() {
         game.load.image('inicio','assets/images/pantalla_inicio.png');
@@ -17,7 +17,7 @@ CatCatcher.pantalla_cargaState.prototype = {
         //-----------------TEXTO--------------------------------------------------//
         //Creamos el texto "Pulsa espacio para continuar" en amarillo en la parte inferior de la pantalla
         //play será el identificador de la barra espaciadora.
-        var texto = game.add.text(240,500,"Pulsa espacio para continuar",{font:"25px Arial", fill:"#FFE400",align:"center"});
+        var texto = game.add.text(240,500,"Pulsa espacio para continuar",{font:"25px Arial", fill:"#FFBF00",align:"center"});
         this.play=game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     },
 

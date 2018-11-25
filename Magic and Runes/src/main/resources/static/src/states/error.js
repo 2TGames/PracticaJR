@@ -1,10 +1,10 @@
-CatCatcher.errorState = function(game) {
+MagicAndRunes.errorState = function(game) {
 
 }
 var play;																			//Creamos una variable play que igualada a true nos
 																					//lleve al estado "menuState" 
 
-CatCatcher.errorState.prototype = {
+MagicAndRunes.errorState.prototype = {
 
     preload: function() {
         game.load.image('fondo','assets/images/menu_principal/fondo_error.png');
