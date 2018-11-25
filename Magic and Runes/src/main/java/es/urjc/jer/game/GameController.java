@@ -26,7 +26,7 @@ public class GameController {
 	AtomicLong nextIdHechizo= new AtomicLong(0);					//suma de IDs de hechizos
 	//Hechizo hechizo = new Hechizo();
 	
-	// Con este GET recuperamos el número de jugadores
+	//Con este GET recuperamos el número de jugadores
 	@GetMapping(value = "/game")
 	public Collection<Player> getPlayers() {
 		return players.values();
