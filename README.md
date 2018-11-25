@@ -27,8 +27,11 @@
 
 ## HISTORIAL DE VERSIONES.
 0.1 Concepción de la idea.
+
 1.0 Primera versión offline.
+
 2.0 (ACTUAL) Primera versión con multijugador online.
+
 
 ## VISIÓN GENERAL DEL JUEGO.
 
