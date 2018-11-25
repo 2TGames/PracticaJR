@@ -1,7 +1,7 @@
 package es.urjc.jer.game;
 
 public class Hechizo {
-	private int x,y;
+	private int x=-1,y=-1;
 	private long id;
 	
 	

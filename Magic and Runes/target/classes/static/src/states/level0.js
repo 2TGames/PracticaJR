@@ -179,13 +179,15 @@ CatCatcher.level0State = function(game) {
     CatCatcher.level0State.prototype = {
         init() {
             if(game.player1.id==1){
-            	game.hechizo1 = {id:1};
                 game.player2 = {id:2};
-            	game.hechizo2= {id:2};
+            }else{
+                game.player2 = {id: 1};
+            }
+            
+            if(game.hechizo1.id==1){
+            	game.hechizo2 = {id:2};
             }else{
             	game.hechizo2 = {id:1};
-                game.player2 = {id: 1};
-            	game.hechizo1={id:2};
             }
         },
 
@@ -266,19 +268,23 @@ CatCatcher.level0State = function(game) {
         this.getPlayer(function(player2Data){
             game.player2 = JSON.parse(JSON.stringify(player2Data));
             mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
-            //console.log(JSON.stringify(game.player2));
+            console.log(JSON.stringify(game.player2));
         })
         
-        
+        this.getHechizo(function(hechizo2Data){
+        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2Data));
+        	hechizo2=game.add.sprite(game.player2.x,game.player2.y,'spellIzq');
+        	console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
+        })
         //hechizo=game.add.sprite(game.hechizo1.x,game.hechizo1.y,'hechizoDcha');
-        hechizos = game.add.group();
+        /*hechizos = game.add.group();
         hechizos.enableBody = true;
         hechizos.physicsBodyType = Phaser.Physics.ARCADE;
         hechizos.createMultiple(30, 'hechizoDcha');
         hechizos.setAll('anchor.x', 1);
         hechizos.setAll('anchor.y', 0.5);
         hechizos.setAll('outOfBoundsKill', true);
-        hechizos.setAll('checkWorldBounds', true);
+        hechizos.setAll('checkWorldBounds', true);*/
 
         //mago_derecha=game.add.sprite(700,400,'mago_naranja');
         //game.physics.enable([mago_derecha,mago_izquierda],Phaser.Physics.ARCADE);
@@ -476,16 +482,16 @@ CatCatcher.level0State = function(game) {
             }
         
         }*/
+    	
 
         //funcion de disparo para el mago verde
     	function fireHechizo(){
-    		console.log("Entra en la funcion disparar");
-    		hechizo=hechizos.getFirstExists(false);
-    		if(hechizo){
-    			hechizos.setAll('anchor.x',-1);
-    			hechizo.reset(mago.x,mago.y+5);
+    		hechizo = game.add.sprite(game.player1.x,game.player1.y,'hechizoIzq');
+    		game.physics.enable(hechizo,Phaser.Physics.ARCADE);
+    			lanzamiento=true;
     			hechizo.body.velocity.x=400;
-    		}
+    			hechizo.body.velocity.y=-50;
+    		
     		
     		/*if(game.time.now>hechizoTime){
     			hechizo=hechizos.getFirstExists(false);
@@ -508,6 +514,8 @@ CatCatcher.level0State = function(game) {
         		}
     		}*/
     	}
+    	
+    	
     	
         /*function fireHechizo () {
 
@@ -746,16 +754,16 @@ CatCatcher.level0State = function(game) {
             //console.log("Posicion de player 2: " +JSON.stringify(game.player2)  + " actualizada");
         })
         
-        /*if(lanzamiento==true){
+        if(lanzamiento==true){
         	this.putHechizo();
         	this.getHechizo(function(updateHechizo2){
+        		console.log("Entra en la funcion getHechizo");
         		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2));
         		hechizo2.x=game.hechizo2.x;
         		hechizo2.y=game.hechizo2.y;
         		console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
         	});
-        	
-        }*/
+        }
         
         
         
@@ -826,7 +834,7 @@ CatCatcher.level0State = function(game) {
                 "Content-Type":"application/json"
             }
         }).done(function(data){
-            //console.log("Actualizada posicion jugador 1: "+JSON.stringify(data));
+            console.log("Actualizada posicion jugador 1: "+JSON.stringify(data));
         })
     },
     
@@ -846,5 +854,7 @@ CatCatcher.level0State = function(game) {
     		console.log("Actualizada posicion hechizo: " + JSON.stringify(data));
     	})
     },
+    
+    
     
 }

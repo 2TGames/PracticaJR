@@ -63,8 +63,6 @@ public class GameController {
 		Hechizo hechizo = new Hechizo();
 		long id = nextIdHechizo.incrementAndGet();
 		hechizo.setId(id);
-		hechizo.setX(100);
-		hechizo.setY(400);
 		hechizos.put(hechizo.getId(),hechizo);
 		return hechizo;
 	}
@@ -80,6 +78,17 @@ public class GameController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	//Con este GET optenemos la información del hechizo con id = x;
+		@GetMapping(value="/hechizo/{id}")
+		public ResponseEntity<Hechizo> getHechizo(@PathVariable long id){
+			Hechizo hechizo = hechizos.get(id);
+			if(hechizo != null) {
+				return new ResponseEntity<>(hechizo,HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
 
 	// Con este PUT actualizamos la información del jugador con ID = id
 	@PutMapping(value = "/game/{id}")
@@ -98,6 +107,7 @@ public class GameController {
 	public ResponseEntity<Hechizo> updateHechizo(@PathVariable long id, @RequestBody Hechizo hechizo){
 		Hechizo savedHechizo = hechizos.get(hechizo.getId());
 		if(savedHechizo!=null) {
+			hechizos.put(id, hechizo);
 			return new ResponseEntity<>(hechizo,HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
