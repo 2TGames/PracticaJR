@@ -3,12 +3,12 @@ package es.urjc.jer.game;
 public class Player {
 
 	private long id;
-	private int x, y;
-	private int score;
+	private int x, y, vida, mana;
 	private String facing="idle";
 	
 	Player() {
-		this.score = 0;
+		this.vida = 100;
+		this.mana = 100;
 	}
 
 	public String getFacing() {
@@ -19,6 +19,22 @@ public class Player {
 		this.facing = facing;
 	}
 
+	public int getVida() {
+		return vida;
+	}
+
+	public void setVida(int v) {
+		this.vida = v;
+	}
+	
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int m) {
+		this.mana = m;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -43,17 +59,10 @@ public class Player {
 		this.y = y;
 	}
 
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-	}
 
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", x=" + x + ", y=" + y + ", score=" + score + "]";
+		return "Player [id=" + id + ", x=" + x + ", y=" + y + ", vida=" + vida + ", mana=" + mana + "]";
 	}
 
 }
