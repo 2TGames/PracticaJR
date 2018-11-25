@@ -16,8 +16,9 @@ CatCatcher.level0State = function(game) {
     var mago_derecha_facing='left';
     var flechas;
     var w,a,s,d;
-    var vidaizq,vidadcha;
+    var vidaizq,vidadcha,vidaEnemigo,manaEnemigo;
     var lanzamiento=false;
+    var vidaLocal,hechizoEnemigo;
     
     /*var vidaJ1=100;
     var vidaJ2=100;
@@ -59,12 +60,12 @@ CatCatcher.level0State = function(game) {
     var redRight=true;
     var greenRight=true;*/
 
-    function micolision(mago_izquierda,spells){
+    /*function micolision(vidaLocal,game.hechizo2){
         console.log("yes");
-        mago_izquierda.vida-=20;
-        vidaizq=new Phaser.Rectangle(25,25,mago_izquierda.vida,20);
+        vidaLocal-=20;
+        vida=new Phaser.Rectangle(25,25,vidaLocal,20);
         //game.debug.geom(vidaizq,'rgba(250,255,10,1');
-        if(mago_izquierda.vida<=0){
+        /*if(mago_izquierda.vida<=0){
             mago_izquierda.vida=100;
             mago_derecha.mana=100;
             mago_izquierda.mana=100;
@@ -77,10 +78,10 @@ CatCatcher.level0State = function(game) {
         }
         //dañoJ2+=20;
         
-        spells.kill();
+        hechizo2.kill();
         /*caugth++;
-        score.setText("Score: " + caugth);*/
-    }
+        score.setText("Score: " + caugth);
+    }*/
 
     function micolision2(mago_derecha,hechizos){
         console.log("no");
@@ -181,10 +182,10 @@ CatCatcher.level0State = function(game) {
         init() {
             if(game.player1.id==1){
                 game.player2 = {id:2,
-                				facing:"right"};
-            }else{
-                game.player2 = {id: 1,
                 				facing:"left"};
+            }else if(game.player1.id==2){
+                game.player2 = {id: 1,
+                				facing:"right"};
             }
             
             if(game.hechizo1.id==1){
@@ -216,6 +217,8 @@ CatCatcher.level0State = function(game) {
         game.load.image('hechizoIzq','assets/spells/basico_verde_izquierda.png');
         game.load.image('enchantmentJ2', 'assets/spells/encantamiento_naranja.png');
         game.load.image('enchantmentJ1','assets/spells/encantamiento_verde.png');
+        game.load.image('hechizo','assets/spells/fuegoNaranja.png');
+        game.load.image('hechizo2','assets/spells/fuegoNaranja.png');
         //game.load.spritesheet('walk','assets/images/andando_izq.png',60,54);
         
         game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
@@ -239,17 +242,19 @@ CatCatcher.level0State = function(game) {
          
          
          if(game.player1.id==1){
-        	 vidaizq=new Phaser.Rectangle(25,25,/*game.player1.vida*/100,20);
-        	 vidadcha=new Phaser.Rectangle(650,25,/*game.player2.vida*/100,20);
-        	 manaizq=new Phaser.Rectangle(25,50,/*game.player1.mana*/100,20);
-        	 manadcha=new Phaser.Rectangle(650,50,/*game.player2.mana*/100,20);
+        	 vida=new Phaser.Rectangle(25,25,game.player1.vida,20);
+        	 mana=new Phaser.Rectangle(25,50,game.player1.mana,20);
+        	 //vidadcha=new Phaser.Rectangle(650,25,/*game.player2.vida*/100,20);
+        	 //manaizq=new Phaser.Rectangle(25,50,/*game.player1.mana*/100,20);
+        	 //manadcha=new Phaser.Rectangle(650,50,/*game.player2.mana*/100,20);
          }else{
-        	 vidaizq=new Phaser.Rectangle(25,25,/*game.player2.vida*/100,20);
-        	 vidadcha=new Phaser.Rectangle(650,25,/*game.player1.vida*/100,20);
-        	 manadcha=new Phaser.Rectangle(25,50,/*game.player1.mana*/100,20);
-        	 manaizq=new Phaser.Rectangle(650,50,/*game.player2.mana*/100,20);
+        	 //vidaizq=new Phaser.Rectangle(25,25,/*game.player2.vida*/100,20);
+        	 vida=new Phaser.Rectangle(650,25,game.player1.vida,20);
+        	 mana=new Phaser.Rectangle(650,50,game.player1.mana,20);
+        	 //manaizq=new Phaser.Rectangle(650,50,/*game.player2.mana*/100,20);
          }
-
+         
+         vidaLocal = game.player1.vida;
          
         caugth=0;
         background= game.add.sprite(0,0,'background');
@@ -288,26 +293,21 @@ CatCatcher.level0State = function(game) {
             //console.log(JSON.stringify(game.player2));
         })
         
-    	hechizoI=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoIzq');
-    	game.physics.enable(hechizoI,Phaser.Physics.ARCADE);
-    	hechizoI.visible=false;
-    	hechizoD=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoDcha');
+    	hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizo');
+    	game.physics.enable(hechizo,Phaser.Physics.ARCADE);
+    	hechizo.visible=false;
+    	/*hechizoD=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoDcha');
 		game.physics.enable(hechizoD,Phaser.Physics.ARCADE);
-		hechizoD.visible=false;
+		hechizoD.visible=false;*/
 		
-        this.getHechizoI(function(hechizo2IData){
-        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2IData));
-        	hechizo2I=game.add.sprite(game.player2.x,game.player2.y,'spellDcha');
-        	hechizo2I.visible=false;
+        this.getHechizo(function(hechizo2Data){
+        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2Data));
+        	hechizo2=game.add.sprite(game.player2.x,game.player2.y,'hechizo2');
+        	hechizo2.visible=false;
         	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
         })
         
-        this.getHechizoD(function(hechizo2DData){
-        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2DData));
-        	hechizo2D=game.add.sprite(game.player2.x,game.player2.y,'spellDcha');
-        	hechizo2D.visible=false;
-        	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
-        })
+       
         //hechizo=game.add.sprite(game.hechizo1.x,game.hechizo1.y,'hechizoDcha');
         /*hechizos = game.add.group();
         hechizos.enableBody = true;
@@ -525,18 +525,18 @@ CatCatcher.level0State = function(game) {
     		
     		if(direccionIzq==true){
     			lanzamiento=true;
-    			hechizoI=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoIzq');
-    			game.physics.enable(hechizoI,Phaser.Physics.ARCADE);
-    			hechizoI.visible=true;
-    			hechizoI.body.velocity.x=-400;
+    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizo');
+    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
+    			hechizo.visible=true;
+    			hechizo.body.velocity.x=-400;
     			//hechizo.body.velocity.y=50;
     		}else if(direccionIzq==false){
     			lanzamiento=true;
     			console.log("Direccion derecha");
-    			hechizoD=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoDcha');
-    			game.physics.enable(hechizoD,Phaser.Physics.ARCADE);
-    			hechizoD.visible=true;
-    			hechizoD.body.velocity.x=400;
+    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizo');
+    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
+    			hechizo.visible=true;
+    			hechizo.body.velocity.x=400;
     			//hechizo.body.velocity.y=50;
     		}
     			
@@ -666,11 +666,13 @@ CatCatcher.level0State = function(game) {
         /*mago_derecha.body.velocity.x=0;*/
     	
 
-    	game.debug.geom(vidaizq,'rgba(0,255,0,1)');
-        game.debug.geom(vidadcha,'rgba(0,255,0,1)');
+    	game.debug.geom(vida,'rgba(0,255,0,1)');
+    	game.debug.geom(vidaEnemigo,'rgba(0,255,0,1)');
+        //game.debug.geom(vidadcha,'rgba(0,255,0,1)');
         
-        game.debug.geom(manadcha,'rgba(0,0,255,1)');
-        game.debug.geom(manaizq,'rgba(0,0,255,1');
+        game.debug.geom(mana,'rgba(0,0,255,1)');
+        game.debug.geom(manaEnemigo,'rgba(0,0,255,1)');
+        //game.debug.geom(manaizq,'rgba(0,0,255,1');
     	
     	
         mago.body.velocity.x=0;
@@ -679,7 +681,7 @@ CatCatcher.level0State = function(game) {
         if(akey.isDown){
             
             mago.body.velocity.x=-150;
-            //mago.scale.x*=-1;
+            
             direccionIzq=true;
             game.player1.facing="left";
 			//hechizo.scale.x*=-1;
@@ -691,6 +693,7 @@ CatCatcher.level0State = function(game) {
         }else if(dkey.isDown){
              
             mago.body.velocity.x=150;
+            
             //mago.scale.x*=-1;
             direccionIzq=false;
             game.player1.facing="right";
@@ -776,11 +779,12 @@ CatCatcher.level0State = function(game) {
         {
             hechizoTempo=0;
             fireHechizo();
-            /*if(mago_izquierda.mana>0){
+            if(game.player1.mana>0){
                 fireHechizo();
-                manaizq=new Phaser.Rectangle(25,50,mago_izquierda.mana-spellCost,20);
-                mago_izquierda.mana-=spellCost;
-            }*/
+                //game.player1.mana-=spellCost;
+                mana=new Phaser.Rectangle(25,50,game.player1.mana-spellCost,20);
+                game.player1.mana-=spellCost;
+            }
             
         }
         // Enchanting?
@@ -811,6 +815,14 @@ CatCatcher.level0State = function(game) {
             game.player2 = JSON.parse(JSON.stringify(updatePlayer2));
             mago2.x =game.player2.x;
             mago2.y=game.player2.y;
+            if(game.player2.id==2){
+            	vidaEnemigo=new Phaser.Rectangle(650,25,game.player2.vida,20);
+            	manaEnemigo=new Phaser.Rectangle(650,50,game.player2.mana,20);
+            }else if(game.player2.id==1){
+            	vidaEnemigo=new Phaser.Rectangle(25,25,game.player2.vida,20);
+            	manaEnemigo=new Phaser.Rectangle(25,50,game.player2.mana,20);
+            }
+           
             if(game.player2.id==1){
             	mago2.scale.x=-1;
             }
@@ -819,51 +831,36 @@ CatCatcher.level0State = function(game) {
         })
         
         if(lanzamiento==true){
-        	if(direccionIzq==true){
-        		this.putHechizoI();
-        	}else if(direccionIzq==false){
-        		this.putHechizoD();
-        	}
-        	
+        	this.putHechizo();
         }
         
-        if(direccionIzq==true){
-        	this.getHechizoI(function(updateHechizo2I){
-        		console.log("Entra en la funcion getHechizoIzquierda");
-        		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2I));
-        		//hechizo2I.scale.x*=-1;
-        		hechizo2I.visible=true;
-            		hechizo2I.x=game.hechizo2.x;
-            		hechizo2I.y=game.hechizo2.y;
-            		hechizo2I.visible=true;
-        		
-        		//console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
-        	});
-        }else if(direccionIzq==false){
-        	this.getHechizoD(function(updateHechizo2D){
-        		console.log("Entra en la funcion getHechizoDerecha");
-        		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2D));
-        		//hechizo2D.scale.x*=-1;
-        		hechizo2D.visible=true;
-            		hechizo2D.x=game.hechizo2.x;
-            		hechizo2D.y=game.hechizo2.y;
-            		hechizo2D.visible=true;
-        		
-        		//console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
-        	});
-        }
+        this.getHechizo(function(updateHechizo2){
+    		console.log("Entra en la funcion getHechizoIzquierda");
+    		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2));
+    		//hechizo2I.scale.x*=-1;
+    		hechizo2.visible=true;
+        		hechizo2.x=game.hechizo2.x;
+        		hechizo2.y=game.hechizo2.y;
+        		hechizo2.visible=true;
+    		
+    		//console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
+    	});
         	
-        
-        
-        	
-        
-        
-        
-        
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
-    
-        /*game.physics.arcade.collide(mago_izquierda,spellsDcha,micolision);
-        game.physics.arcade.collide(mago_izquierda,spellsIzq,micolision);
+       
+        var micolision=game.physics.arcade.collide(game.player1,game.hechizo2);
+        //console.log(micolision);
+        if(micolision){
+        	console.log("yes");
+        	hechizo2.kill();
+        	game.player1.vida-=20;
+        }else{
+        	this.getHechizo(function(updateHechizo2){
+        		game.hechizo2.x=updateHechizo2.x;
+        		game.hechizo2.y=updateHechizo2.y;
+        	})
+        }
+        /*game.physics.arcade.collide(mago_izquierda,spellsIzq,micolision);
         game.physics.arcade.collide(mago_derecha,hechizosDcha,micolision2);
         game.physics.arcade.collide(mago_derecha,hechizosIzq,micolision2);
         
@@ -900,7 +897,7 @@ CatCatcher.level0State = function(game) {
     },
     
     //Recuperamos la información del hechizo del enemigo
-    getHechizoI(callback){
+    getHechizo(callback){
     	$.ajax({
     		method:"GET",
     		url:'http://192.168.1.140:8080/hechizo/' + game.hechizo2.id,
@@ -914,19 +911,7 @@ CatCatcher.level0State = function(game) {
     	})
     },
     
-    getHechizoD(callback){
-    	$.ajax({
-    		method:"GET",
-    		url:'http://192.168.1.140:8080/hechizo/' + game.hechizo2.id,
-    		processData:false,
-    		headers:{
-    			"Content-Type":"application/json"
-    		}
-    	}).done(function(data){
-    		game.hechizo2 = JSON.parse(JSON.stringify(data));
-    		callback(data);
-    	})
-    },
+    
 
     putPlayer(){
         game.player1.x=mago.x;
@@ -946,9 +931,9 @@ CatCatcher.level0State = function(game) {
     },
     
     //Actualizamos la informacion de nuestro hechizo
-    putHechizoI(){
-    	game.hechizo1.x=hechizoI.x;
-    	game.hechizo1.y=hechizoI.y;
+    putHechizo(){
+    	game.hechizo1.x=hechizo.x;
+    	game.hechizo1.y=hechizo.y;
     	$.ajax({
     		method:"PUT",
     		url:'http://192.168.1.140:8080/hechizo/'+game.hechizo1.id,
@@ -961,22 +946,5 @@ CatCatcher.level0State = function(game) {
     		//console.log("Actualizada posicion hechizo: " + JSON.stringify(data));
     	})
     },
-    
-    putHechizoD(){
-    	game.hechizo1.x=hechizoD.x;
-    	game.hechizo1.y=hechizoD.y;
-    	$.ajax({
-    		method:"PUT",
-    		url:'http://192.168.1.140:8080/hechizo/'+game.hechizo1.id,
-    		data:JSON.stringify(game.hechizo1),
-    		processData:false,
-    		headers:{
-    			"Content-Type":"application/json"
-    		}
-    	}).done(function(data){
-    		//console.log("Actualizada posicion hechizo: " + JSON.stringify(data));
-    	})
-    },
-    
     
 }
