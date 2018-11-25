@@ -4,7 +4,7 @@ CatCatcher.endingState = function(game) {
 var mKey;
 CatCatcher.endingState.prototype = {
 
-	// Elimina el cazador que ha creado este cliente.
+	// Elimina el mago que ha creado este cliente.
 	init: function() {
 		if (game.player1 != null) {
 			$.ajax({
