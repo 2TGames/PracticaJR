@@ -42,17 +42,28 @@ Este juego, con una mecánica de avanzar y retroceder con respecto al objetivo (
 ## MECÁNICA DEL JUEGO.
 
 *Cámara*: perspectiva lateral en 2D sin scroll lateral.
+
 *Periféricos*: teclado y monitor.
+
 *Controles*: 
+
 	Movimiento: teclas WASD(J1), flechas del teclado (J2).
+
 	Lanzamiento de hechizo: V (J1), I (J2).
+
 	Lanzamiento de trampa: B (J1), O (J2).
+
 	
 *Puntuación*: La puntuación se mostrará en la parte superior de la pantalla en forma de mapas superados, con un cartel de “VICTORIA” o “DERROTA” al final de la partida.
+
 *Guardar/Cargar*: Al tratarse de partidas aisladas, el jugador empezará siempre partida nueva con otro jugador.
+
 *Reloj*: Habrá un temporizador de 3 minutos, que se reiniciará con cada muerte. Si llega a cero la partida acaba, ganando el que esté más cerca de su objetivo. Además, por cada minuto transcurrido, se le restará una cantidad de maná resultante de la siguiente fórmula "escenarios avanzados desde el inicial * 10% del maná inicial del jugador", y en su defecto, se le restará vida. Esto se hará a fin de evitar juegos estáticos y obligar a los jugadores a avanzar.
+
 	~~NOTA:Puesto que no es necesario matar el otro jugador para avanzar, la mecánica del reloj ya no es necesaria para agilizar el juego.~~
+
 	NOTA: Puest que el dejar un camino alternativo al combate abierto dejaba la opción de no combatir y no hacer caso al enemigo, decidimos eliminar esa opción.
+
 
 ## ESTADOS DEL JUEGO.
 
