@@ -9,14 +9,14 @@ game.global = {
 }
 
 //--------------------------AÑADIMOS AL JUEGO TODOS LOS ESTADOS----------------------------//
-game.state.add('bootState', CatCatcher.bootState)
-game.state.add('preloadState', CatCatcher.preloadState)
-game.state.add('pantalla_cargaState', CatCatcher.pantalla_cargaState)
-game.state.add('menuState', CatCatcher.menuState)
-game.state.add('matchmakingState', CatCatcher.matchmakingState)
-game.state.add('level0State', CatCatcher.level0State)
-game.state.add('endingState', CatCatcher.endingState)
-game.state.add('errorState', CatCatcher.errorState)
-game.state.add('ayudaState', CatCatcher.ayudaState)
+game.state.add('bootState', MagicAndRunes.bootState)
+game.state.add('preloadState', MagicAndRunes.preloadState)
+game.state.add('pantalla_cargaState', MagicAndRunes.pantalla_cargaState)
+game.state.add('menuState', MagicAndRunes.menuState)
+game.state.add('matchmakingState', MagicAndRunes.matchmakingState)
+game.state.add('level0State', MagicAndRunes.level0State)
+game.state.add('endingState', MagicAndRunes.endingState)
+game.state.add('errorState', MagicAndRunes.errorState)
+game.state.add('ayudaState', MagicAndRunes.ayudaState)
 //-----------------Empezamos por el estado "bootState"
 game.state.start('bootState')

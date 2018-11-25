@@ -1,4 +1,4 @@
-CatCatcher.menuState = function(game) {
+MagicAndRunes.menuState = function(game) {
 
 }
 
@@ -23,7 +23,7 @@ function err() {
     this.state.start("errorState");
 }
 
-CatCatcher.menuState.prototype = {
+MagicAndRunes.menuState.prototype = {
 
     preload: function() {
     	//-----------------------CARGA DE IMÁGENES--------------------------------------//

@@ -424,7 +424,27 @@ CatCatcher.level0State = function(game) {
     },
 
     update: function() {
+    	
+    	var micolision=game.physics.arcade.collide(mago,hechizo);
+        console.log(micolision);
+        if(micolision){
+        	console.log("yes");
+        	hechizo.kill();
+        	game.player2.vida-=20;
+        }else{
+        	this.getHechizo(function(updateHechizo2){
+        		hechizo.x=updateHechizo2.x;
+        		hechizo.y=updateHechizo2.y;
+        	})
+        }
 
+        if (mago.body.y>540){
+        	game.player1.vida=0;
+        }
+        
+        if(game.player1.vida==0 ||  game.player2.vida==0){
+        	this.game.state.start("endingState");
+        }
         /*if (mago_izquierda.body.x>765 && (mago_izquierda.body.y>=461 || mago_izquierda.body.y<=462)){
             mago_izquierda.vida=100;
             mago_derecha.mana=100;
@@ -813,6 +833,7 @@ CatCatcher.level0State = function(game) {
 
         this.getPlayer(function(updatePlayer2){
             game.player2 = JSON.parse(JSON.stringify(updatePlayer2));
+            
             mago2.x =game.player2.x;
             mago2.y=game.player2.y;
             if(game.player2.id==2){
@@ -848,18 +869,7 @@ CatCatcher.level0State = function(game) {
         	
         // se detectan las colisiones de los hechizos con los magos para actualizar la vida de cada uno de ellos
        
-        var micolision=game.physics.arcade.collide(game.player1,game.hechizo2);
-        //console.log(micolision);
-        if(micolision){
-        	console.log("yes");
-        	hechizo2.kill();
-        	game.player1.vida-=20;
-        }else{
-        	this.getHechizo(function(updateHechizo2){
-        		game.hechizo2.x=updateHechizo2.x;
-        		game.hechizo2.y=updateHechizo2.y;
-        	})
-        }
+        
         /*game.physics.arcade.collide(mago_izquierda,spellsIzq,micolision);
         game.physics.arcade.collide(mago_derecha,hechizosDcha,micolision2);
         game.physics.arcade.collide(mago_derecha,hechizosIzq,micolision2);

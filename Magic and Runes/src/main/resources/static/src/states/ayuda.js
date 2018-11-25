@@ -1,4 +1,4 @@
-CatCatcher.ayudaState = function(game) {
+MagicAndRunes.ayudaState = function(game) {
 
 }
 
@@ -10,7 +10,7 @@ function men() {
 
 }
 
-CatCatcher.ayudaState.prototype = {
+MagicAndRunes.ayudaState.prototype = {
 
     preload: function() {
         game.load.image('fondo','assets/ayuda/fondo.png');

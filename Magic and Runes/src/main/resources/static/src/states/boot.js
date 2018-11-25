@@ -1,10 +1,10 @@
-var CatCatcher = {}
+var MagicAndRunes = {}
 
-CatCatcher.bootState = function(game) {
+MagicAndRunes.bootState = function(game) {
 
 }
 
-CatCatcher.bootState.prototype = {
+MagicAndRunes.bootState.prototype = {
 
     preload: function() {
         

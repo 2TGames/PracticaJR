@@ -1,26 +1,25 @@
-CatCatcher.matchmakingState = function (game) {
+MagicAndRunes.matchmakingState = function (game) {
 
 }
 
-CatCatcher.matchmakingState.prototype = {
+MagicAndRunes.matchmakingState.prototype = {
 	
 	// Obtenemos el número de jugadores creados con this.getNumPlayers. Si ya hay 
 	// suficientes jugadores, echa al menú al jugador para que lo vuelva a intentar.
 	init: function () {
 		this.getNumPlayers(function (numPlayers) {
 			if (numPlayers.length > 1) {
-				console.log ('==========================================================');
 				console.log ('= El servidor está lleno. Vuelve a intentarlo más tarde. =');
-				console.log ('==========================================================');
 				game.state.start('menuState');
 			}
 		});
 	},
 		
     preload: function () {
-        var text = "- MatchMaking -\n Esperando otro jugador \n para iniciar partida.";
-        var style = { font: "45px Arial", fill: "#0040FF", align: "center" };
-        var t = game.add.text(game.world.centerX - 200, 0, text, style);
+    	var match=game.add.image(0,0,'match');
+        var text = "Esperando a otro jugador...";
+        var style = { font: "20px Arial", fill: "#FFBF00", align: "center" };
+        var t = game.add.text(game.world.centerX - 350, game.world.centerY+250, text, style);
     },
 
     // en CREATE, a pesar de estar bastante lejos de INIT, puede dar tiempo a que se cree el jugador
