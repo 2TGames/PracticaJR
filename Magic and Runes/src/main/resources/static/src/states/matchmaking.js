@@ -31,7 +31,7 @@ CatCatcher.matchmakingState.prototype = {
     	this.createHechizo();
     },
 
-    // Una vez hay suficientes jugadores, se pasa a level0State. El problema de no hacer en INIT
+    // Una vez hay suficientes jugadores, se pasa a levelState. El problema de no hacer en INIT
     // el this.createPlayer, haciendo un ELSE de si puede crear jugadores, es que va tan rápido,
     // que antes de haber comprobado si más de 1 jugador ya conectado, llega aquí y te dice que hay ya 2.
     // Por eso el comprobador de >1 y que en el MENÚ revise si hay un jugador sobrante creado para eliminar.
@@ -46,7 +46,7 @@ CatCatcher.matchmakingState.prototype = {
     
     getNumPlayers: function (callback) {
         $.ajax({
-            url: 'http://192.168.1.135:8080/game',
+            url: 'http://192.168.1.140:8080/game',
         }).done(function (data) {
             callback(data);
         })
@@ -55,7 +55,7 @@ CatCatcher.matchmakingState.prototype = {
     createPlayer: function () {
         $.ajax({
             method: "POST",
-            url: 'http://192.168.1.135:8080/game',
+            url: 'http://192.168.1.140:8080/game',
             processData: false,
             headers: {
                 "Content-Type": "application/json"
@@ -69,7 +69,7 @@ CatCatcher.matchmakingState.prototype = {
     createHechizo(){
     	$.ajax({
     		method:"POST",
-        	url:'http://192.168.1.135:8080/hechizo',
+        	url:'http://192.168.1.140:8080/hechizo',
         	processData:false,
         	headers:{
         		"Content-Type":"application/json"
