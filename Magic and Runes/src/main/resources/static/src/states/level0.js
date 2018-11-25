@@ -187,6 +187,15 @@ MagicAndRunes.level0State = function(game) {
     },
 
     update: function() {
+    	
+    	//Muerte por caida
+    	if(mago.body.y>540){
+    		game.player1.vida=0;
+    	}
+    	
+    	if(game.player1.vida==0 || game.player1.vida==0){
+    		this.game.state.start("endingState");
+    	}
 
         //funcion de disparo para el mago verde
     	function fireHechizo(){
