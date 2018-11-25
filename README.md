@@ -31,13 +31,21 @@
 1.0 Primera versión offline.
 
 2.0 (ACTUAL) Primera versión con multijugador online.
+
 	*Añadida música en el menú de inicio.
+
 	*Añadido boot de música en el juego.
+
 	*Añadida animación de movimiento de los personajes
+
 	*Añadido estado de ayuda.
+
 	*Mejorada la fluidez de diseño en los escenarios.
+
 	*Mejora de la interfaz del menú
+
 	*Añadido estado de "opción en progreso" para Salir, Códice y Ayuda.
+
 
 ## VISIÓN GENERAL DEL JUEGO.
 
