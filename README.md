@@ -1,4 +1,4 @@
-# MAGIC AND RUNES
+﻿# MAGIC AND RUNES
 
 ![Imagen de pantalla inicio](https://github.com/2TGames/PracticaJR/blob/master/Assets/images/pantalla%20inicio.png)
 
@@ -13,7 +13,7 @@
 
 *Plataforma*: PC.
 
-*Versión*: 1.0.
+*Versión*: 2.0.
 
 *Sinopsis*: Los personajes jugables (por el momento solo uno) serán magos repudiados por la sociedad mágica a la que pertenecen. Para que los vuelvan a aceptar se enfrentarán en un duelo a muerte frente a otro renegado.
 
@@ -27,7 +27,8 @@
 
 ## HISTORIAL DE VERSIONES.
 0.1 Concepción de la idea.
-1.0 (ACTUAL) Primera versión offline.
+1.0 Primera versión offline.
+2.0 (ACTUAL) Primera versión con multijugador online.
 
 ## VISIÓN GENERAL DEL JUEGO.
 
@@ -47,11 +48,12 @@ Este juego, con una mecánica de avanzar y retroceder con respecto al objetivo (
 *Puntuación*: La puntuación se mostrará en la parte superior de la pantalla en forma de mapas superados, con un cartel de “VICTORIA” o “DERROTA” al final de la partida.
 *Guardar/Cargar*: Al tratarse de partidas aisladas, el jugador empezará siempre partida nueva con otro jugador.
 *Reloj*: Habrá un temporizador de 3 minutos, que se reiniciará con cada muerte. Si llega a cero la partida acaba, ganando el que esté más cerca de su objetivo. Además, por cada minuto transcurrido, se le restará una cantidad de maná resultante de la siguiente fórmula "escenarios avanzados desde el inicial * 10% del maná inicial del jugador", y en su defecto, se le restará vida. Esto se hará a fin de evitar juegos estáticos y obligar a los jugadores a avanzar.
-	NOTA:Puesto que no es necesario matar el otro jugador para avanzar, la mecánica del reloj ya no es necesaria para agilizar el juego.
+	~~NOTA:Puesto que no es necesario matar el otro jugador para avanzar, la mecánica del reloj ya no es necesaria para agilizar el juego.~~
+	NOTA: Puest que el dejar un camino alternativo al combate abierto dejaba la opción de no combatir y no hacer caso al enemigo, decidimos eliminar esa opción.
 
 ## ESTADOS DEL JUEGO.
 
-El jugador, estando en el menú principal, en un futuro podrá ir a la pantalla de estadísticas, a la del códice, que almacenará los logros completados y por completar (así como pequeños fragmentos del lore o la intrahistoria del videojuego). Por último, podrá acceder al modo de juego “Multijugador Online” y el “Multijugador Offline” (que, por el momento, es el único del que dispone el juego), los cuales no tendrán menús de pausa. Una vez que se seleccione en un futuro el modo de juego online se iniciará un proceso de "match making" en el cual se seleccionará a otro jugador con el mismo nivel o experiencia de juego que el jugador para así que ambos jugadores tengan las mismas posibilidades de ganar debido a que el nivel de ambos será el mismo o muy parecido. Para ello se implementará un sistema en base a las victorias que recompensará con rangos a los jugadores y será lo que se utilice para el proceso de "match making".
+El jugador, estando en el menú principal, en un futuro podrá ir a la pantalla de estadísticas y a la del códice, que almacenará los logros completados y por completar (así como pequeños fragmentos del lore o la intrahistoria del videojuego). Por último, podrá acceder al modo de juego “Multijugador Online” (que, por el momento, es el único del que dispone el juego) y el “Multijugador Offline”, los cuales no tendrán menús de pausa. Una vez que se seleccione en un futuro el modo de juego online se iniciará un proceso de "match making" en el cual se seleccionará a otro jugador con el mismo nivel o experiencia de juego que el jugador para así que ambos jugadores tengan las mismas posibilidades de ganar debido a que el nivel de ambos será el mismo o muy parecido. Para ello se implementará un sistema en base a las victorias que recompensará con rangos a los jugadores y será lo que se utilice para el proceso de "match making". Asimismo, también se ha añadido una opción de ayuda al menú principal.
 
 ## INTERFACES.
 
@@ -75,7 +77,7 @@ Estados del juego al comenzar la partida:
 
 Nombre de la pantalla: Menú principal.
 
-Descripción de la pantalla: En esta pantalla el jugador podrá acceder al modo jugar.
+Descripción de la pantalla: En esta pantalla el jugador podrá acceder al modo jugar y al estado de ayuda. También tendrá acceso al estado asignado a los modos de juego en desarrollo.
 
 Estados del juego: Abrir el juego; al terminar una partida.
 
@@ -146,7 +148,8 @@ Armas: varita mágica.
 
 ## HABILIDADES.
 
-Amplia variedad de hechizos con los que atacar.
+Impacto básico: Hechizo que aprenden a usar todos los magos de la Escuela (2 maná/ -20 vida).
+Gas explosivo: Trampa mágica de gran daño. Desaparece al aplicar sus efectos. (30 maná/ -40 vida).
 
 ## ARMAS.
 
