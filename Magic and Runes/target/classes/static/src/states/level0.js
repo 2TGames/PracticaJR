@@ -217,7 +217,7 @@ CatCatcher.level0State = function(game) {
         
         game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
 
-        console.log(JSON.stringify(game.player1));
+        //console.log(JSON.stringify(game.player1));
 
     },
 
@@ -268,13 +268,15 @@ CatCatcher.level0State = function(game) {
         this.getPlayer(function(player2Data){
             game.player2 = JSON.parse(JSON.stringify(player2Data));
             mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
-            console.log(JSON.stringify(game.player2));
+            //console.log(JSON.stringify(game.player2));
         })
         
+    	
         this.getHechizo(function(hechizo2Data){
         	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2Data));
         	hechizo2=game.add.sprite(game.player2.x,game.player2.y,'spellIzq');
-        	console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
+        	hechizo2.visible=false;
+        	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
         })
         //hechizo=game.add.sprite(game.hechizo1.x,game.hechizo1.y,'hechizoDcha');
         /*hechizos = game.add.group();
@@ -486,11 +488,29 @@ CatCatcher.level0State = function(game) {
 
         //funcion de disparo para el mago verde
     	function fireHechizo(){
-    		hechizo = game.add.sprite(game.player1.x,game.player1.y,'hechizoIzq');
-    		game.physics.enable(hechizo,Phaser.Physics.ARCADE);
+    		/*hechizo = game.add.sprite(mago.x,mago.y-5,'hechizoDcha');
+     		game.physics.enable(hechizo,Phaser.Physics.ARCADE);
+     		hechizo.anchor.setTo(.5,.5);
+     		hechizo.visible=true;*/
+    		
+    		if(direccionIzq==true){
     			lanzamiento=true;
+    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoIzq');
+    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
+    			hechizo.body.velocity.x=-400;
+    			//hechizo.body.velocity.y=50;
+    		}else if(direccionIzq==false){
+    			lanzamiento=true;
+    			console.log("Direccion derecha");
+    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizoDcha');
+    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
     			hechizo.body.velocity.x=400;
-    			hechizo.body.velocity.y=-50;
+    			//hechizo.body.velocity.y=50;
+    		}
+    			
+    			//hechizo.body.velocity.y=-50;
+    		
+    			
     		
     		
     		/*if(game.time.now>hechizoTime){
@@ -627,6 +647,8 @@ CatCatcher.level0State = function(game) {
         if(akey.isDown){
             
             mago.body.velocity.x=-150;
+            direccionIzq=true;
+			//hechizo.scale.x*=-1;
             if(facing_j1!='left'){
                 mago.animations.play('left');
                 facing_j1='left';
@@ -635,6 +657,8 @@ CatCatcher.level0State = function(game) {
         }else if(dkey.isDown){
              
             mago.body.velocity.x=150;
+            direccionIzq=false;
+			//hechizo.scale.x*=-1;
             if(facing_j1!='right'){
                 mago.animations.play('right');
                 facing_j1='right';
@@ -756,14 +780,19 @@ CatCatcher.level0State = function(game) {
         
         if(lanzamiento==true){
         	this.putHechizo();
+        	
+        }
+        
         	this.getHechizo(function(updateHechizo2){
         		console.log("Entra en la funcion getHechizo");
         		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2));
-        		hechizo2.x=game.hechizo2.x;
-        		hechizo2.y=game.hechizo2.y;
-        		console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
+        		hechizo2.visible=true;
+            		hechizo2.x=game.hechizo2.x;
+            		hechizo2.y=game.hechizo2.y;
+            		hechizo2.visible=true;
+        		
+        		//console.log("Posicion del hechizo enemigo: " + JSON.stringify(game.hechizo2) + "actualizada");
         	});
-        }
         
         
         
@@ -834,7 +863,7 @@ CatCatcher.level0State = function(game) {
                 "Content-Type":"application/json"
             }
         }).done(function(data){
-            console.log("Actualizada posicion jugador 1: "+JSON.stringify(data));
+            //console.log("Actualizada posicion jugador 1: "+JSON.stringify(data));
         })
     },
     
@@ -851,7 +880,7 @@ CatCatcher.level0State = function(game) {
     			"Content-Type":"application/json"
     		}
     	}).done(function(data){
-    		console.log("Actualizada posicion hechizo: " + JSON.stringify(data));
+    		//console.log("Actualizada posicion hechizo: " + JSON.stringify(data));
     	})
     },
     
