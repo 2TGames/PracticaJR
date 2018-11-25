@@ -22,8 +22,10 @@ public class GameController {
 
 	Map<Long, Player> players = new ConcurrentHashMap<>();			//mapa de jugadores
 	Map<Long,Hechizo> hechizos = new ConcurrentHashMap<>();			//mapa de hechizos
+	Map<Long,Niebla> nieblas = new ConcurrentHashMap<>();			//mapa de nieblas
 	AtomicLong nextId = new AtomicLong(0);							//suma de IDs de jugadores
 	AtomicLong nextIdHechizo= new AtomicLong(0);					//suma de IDs de hechizos
+	AtomicLong nextIdNiebla= new AtomicLong(0);						//suma de IDs de nieblas
 	//Hechizo hechizo = new Hechizo();
 	
 	//Con este GET recuperamos el número de jugadores
@@ -37,6 +39,12 @@ public class GameController {
 	public Collection<Hechizo> getHechizos(){
 		return hechizos.values();
 	}
+	
+	// Con este GET recuperamos las nieblas 
+		@GetMapping(value = "/niebla")
+		public Collection<Niebla> getNieblas(){
+			return nieblas.values();
+		}
 
 	// Con este POST creamos un nuevo jugador
 	@PostMapping(value = "/game")
@@ -68,6 +76,17 @@ public class GameController {
 		hechizos.put(hechizo.getId(),hechizo);
 		return hechizo;
 	}
+	
+	//Con este POST creamos las nieblas
+	@PostMapping("/niebla")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Niebla newNiebla() {
+		Niebla niebla = new Niebla();
+		long id = nextIdNiebla.incrementAndGet();
+		niebla.setId(id);
+		nieblas.put(niebla.getId(),niebla);
+		return niebla;
+	}
 
 	// Con este GET, podemos recuperar la información particular de cada uno de los
 	// jugadores
@@ -92,7 +111,16 @@ public class GameController {
 			}
 		}
 		
-		
+	//Con este GET optenemos la información de la niebla con id = x;
+			@GetMapping(value="/niebla/{id}")
+			public ResponseEntity<Niebla> getNiebla(@PathVariable long id){
+				Niebla niebla = nieblas.get(id);
+				if(niebla != null) {
+					return new ResponseEntity<>(niebla,HttpStatus.OK);
+				}else {
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+			}
 
 	// Con este PUT actualizamos la información del jugador con ID = id
 	@PutMapping(value = "/game/{id}")
@@ -117,6 +145,18 @@ public class GameController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	// Con este PUT actualizamos la información de la niebla del jugador con su respectiva id
+		@PutMapping(value="/niebla/{id}")
+		public ResponseEntity<Niebla> updateNiebla(@PathVariable long id, @RequestBody Niebla niebla){
+			Niebla savedNiebla = nieblas.get(niebla.getId());
+			if(savedNiebla!=null) {
+				niebla.put(id, niebla);
+				return new ResponseEntity<>(niebla,HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
 
 	// Con este DELETE borramos el jugador con ID = id
 	@DeleteMapping(value = "/game/{id}")
@@ -141,5 +181,17 @@ public class GameController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	// Con este DELETE borramos la niebla con ID = x
+		@DeleteMapping(value="/niebla/{id}")
+		public ResponseEntity<Niebla> borraNiebla(@PathVariable long id){
+			Niebla savedNiebla = nieblas.get(id);
+			if(savedNiebla != null) {
+				nieblas.remove(savedNiebla.getId());
+				return new ResponseEntity<>(savedNiebla, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
 	
 }
