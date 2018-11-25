@@ -31,7 +31,13 @@
 1.0 Primera versión offline.
 
 2.0 (ACTUAL) Primera versión con multijugador online.
-
+	*Añadida música en el menú de inicio.
+	*Añadido boot de música en el juego.
+	*Añadida animación de movimiento de los personajes
+	*Añadido estado de ayuda.
+	*Mejorada la fluidez de diseño en los escenarios.
+	*Mejora de la interfaz del menú
+	*Añadido estado de "opción en progreso" para Salir, Códice y Ayuda.
 
 ## VISIÓN GENERAL DEL JUEGO.
 
@@ -62,7 +68,7 @@ Este juego, con una mecánica de avanzar y retroceder con respecto al objetivo (
 
 ~~NOTA:Puesto que no es necesario matar el otro jugador para avanzar, la mecánica del reloj ya no es necesaria para agilizar el juego.~~
 
-NOTA: Puest que el dejar un camino alternativo al combate abierto dejaba la opción de no combatir y no hacer caso al enemigo, decidimos eliminar esa opción.
+NOTA: Puesto que el dejar un camino alternativo al combate abierto dejaba la opción de no combatir y no hacer caso al enemigo, decidimos eliminar esa opción.
 
 
 ## ESTADOS DEL JUEGO.
