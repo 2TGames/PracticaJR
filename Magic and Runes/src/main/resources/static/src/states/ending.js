@@ -9,7 +9,7 @@ MagicAndRunes.endingState.prototype = {
 		if (game.player1 != null) {
 			$.ajax({
 	            method: "DELETE",
-	            url: 'http://10.0.49.165:8080/game/' + game.player1.id,
+	            url: 'http://10.0.70.215:8080/game/' + game.player1.id,
 	            processData: false,
 	            headers: {
 	                "Content-Type": "application/json"

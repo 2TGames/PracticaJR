@@ -45,7 +45,7 @@ MagicAndRunes.matchmakingState.prototype = {
     
     getNumPlayers: function (callback) {
         $.ajax({
-            url: 'http://192.168.1.140:8080/game',
+            url: 'http://10.0.70.215:8080/game',
         }).done(function (data) {
             callback(data);
         })
@@ -54,7 +54,7 @@ MagicAndRunes.matchmakingState.prototype = {
     createPlayer: function () {
         $.ajax({
             method: "POST",
-            url: 'http://192.168.1.140:8080/game',
+            url: 'http://10.0.70.215:8080/game',
             processData: false,
             headers: {
                 "Content-Type": "application/json"
@@ -68,7 +68,7 @@ MagicAndRunes.matchmakingState.prototype = {
     createHechizo(){
     	$.ajax({
     		method:"POST",
-        	url:'http://192.168.1.140:8080/hechizo',
+        	url:'http://10.0.70.215:8080/hechizo',
         	processData:false,
         	headers:{
         		"Content-Type":"application/json"
