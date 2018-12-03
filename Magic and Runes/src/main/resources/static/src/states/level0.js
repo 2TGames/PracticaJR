@@ -348,7 +348,7 @@ MagicAndRunes.level0State = function(game) {
     getPlayer(callback){
         $.ajax({
             method:"GET",
-            url:'http://10.0.70.215:8080/game/' + game.player2.id,
+            url:'/game/' + game.player2.id,
             processData:false,
             headers:{
                 "Content-Type":"application/json"
@@ -363,7 +363,7 @@ MagicAndRunes.level0State = function(game) {
     getHechizo(callback){
     	$.ajax({
     		method:"GET",
-    		url:'http://10.0.70.215:8080/hechizo/' + game.hechizo2.id,
+    		url:'/hechizo/' + game.hechizo2.id,
     		processData:false,
     		headers:{
     			"Content-Type":"application/json"
@@ -382,7 +382,7 @@ MagicAndRunes.level0State = function(game) {
         game.player1.facing;
         $.ajax({
             method:"PUT",
-            url:'http://10.0.70.215:8080/game/'+game.player1.id,
+            url:'/game/'+game.player1.id,
             data:JSON.stringify(game.player1),
             processData:false,
             headers:{
@@ -399,7 +399,7 @@ MagicAndRunes.level0State = function(game) {
     	game.hechizo1.y=hechizo.y;
     	$.ajax({
     		method:"PUT",
-    		url:'http://10.0.70.215:8080/hechizo/'+game.hechizo1.id,
+    		url:'/hechizo/'+game.hechizo1.id,
     		data:JSON.stringify(game.hechizo1),
     		processData:false,
     		headers:{
