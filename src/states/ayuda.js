@@ -11,7 +11,7 @@ MagicAndRunes.ayudaState.prototype = {
 
     preload: function() {
         game.load.image('fondo','assets/ayuda/fondo.png');
-        game.load.image('halo_verde','assets/images/menu_principal/halo_verde.png');
+        game.load.image('halo_verde','assets/ayuda/halo_verde.png');
         //game.load.image('fondo','assets/images/fondo magico.png');
     },
 
