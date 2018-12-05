@@ -61,7 +61,7 @@ MagicAndRunes.matchmakingState.prototype = {
             },
         }).done(function (data) {
             console.log("Player created: " + JSON.stringify(data));
-            game.player1 = data
+            game.player1 = data;
         })
     },
     

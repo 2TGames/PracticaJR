@@ -8,6 +8,7 @@ game.global = {
 	numPlayers: 0													//Número de jugadores
 }
 
+
 //--------------------------AÑADIMOS AL JUEGO TODOS LOS ESTADOS----------------------------//
 game.state.add('bootState', MagicAndRunes.bootState)
 game.state.add('preloadState', MagicAndRunes.preloadState)

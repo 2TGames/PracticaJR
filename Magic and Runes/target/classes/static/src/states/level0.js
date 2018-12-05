@@ -1,6 +1,8 @@
 MagicAndRunes.level0State = function(game) {
     
 }
+
+
     var mago;														//Mago controlado
     var mago2;														//Mago enemigo
     var layer;														//Capa actual del mapa
@@ -61,6 +63,7 @@ MagicAndRunes.level0State = function(game) {
     
     MagicAndRunes.level0State.prototype = {
         init() {
+        	
         	//El jugador empieza mirando a izquierda o derecha dependiendo de su IP
             if(game.player1.id==1){
                 game.player2 = {id:2,
