@@ -8,6 +8,11 @@ game.global = {
 	numPlayers: 0													//Número de jugadores
 }
 
+debug={
+	ws:1
+}
+var ws = new WebSocket('ws://'+window.location.host+'/game')
+
 
 //--------------------------AÑADIMOS AL JUEGO TODOS LOS ESTADOS----------------------------//
 game.state.add('bootState', MagicAndRunes.bootState)
@@ -21,3 +26,41 @@ game.state.add('errorState', MagicAndRunes.errorState)
 game.state.add('ayudaState', MagicAndRunes.ayudaState)
 //-----------------Empezamos por el estado "bootState"
 game.state.start('bootState')
+
+
+ws.onopen = function(event){
+	if(debug.ws){
+		console.log('[DEBUG-WS] Se ha establecido la conexion');
+	}
+	data = {
+			type:'JOIN'
+	}
+	this.send(JSON.stringify(data));
+	console.log("Se ha enviado el mensaje: " +data.type);
+	
+}
+
+ws.onmessage = function(message){
+	if(debug.ws){
+		console.log('[DEBUG-WS] Se ha producido un mensaje: ' + message.data);
+	}
+	var msg = JSON.parse(message.data);
+	console.log('INFO RECIBIDA '+msg.type);
+	switch(msg.type){
+	case "PLAYER CREATED":
+		console.log("******PLAYER CREATED******");
+		console.log("id: "+msg.player.id);
+	}
+}
+
+ws.onerror = function(error){
+	console.log('Se ha producido un error');
+}
+
+ws.onclose = function(event){
+	if(debug.ws){
+		console.log('[DEBUG-WS] Se ha cerrado la conexion');
+	}
+}
+
+

@@ -2,6 +2,7 @@ MagicAndRunes.matchmakingState = function (game) {
 
 }
 
+
 MagicAndRunes.matchmakingState.prototype = {
 	
 	// Obtenemos el número de jugadores creados con this.getNumPlayers. Si ya hay 
@@ -16,6 +17,7 @@ MagicAndRunes.matchmakingState.prototype = {
 	},
 		
     preload: function () {
+    	
     	var match=game.add.image(0,0,'match');
         var text = "Esperando a otro jugador...";
         var style = { font: "20px Arial", fill: "#FFBF00", align: "center" };
@@ -26,6 +28,8 @@ MagicAndRunes.matchmakingState.prototype = {
     // ya que this.getNumPlayers puede haberse ejecutado en su totalidad (a falta del DONE) y Phaser
     // sigue con la ejecución de PRELOAD y de CREATE. ¡¡¡ Esa es una de las claves.!!!
     create: function () {
+    	
+    	
     	this.createPlayer();
     	this.createHechizo();
     },

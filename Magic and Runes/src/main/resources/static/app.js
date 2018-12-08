@@ -2,7 +2,7 @@ debug = {
 		ws:1
 }
 
-var ws = new WebSocket('ws://127.0.0.1:8080/game');
+var ws = new WebSocket('ws://localhost:8080/game');
 
 ws.onopen = function (event){
 	if(debug.ws){

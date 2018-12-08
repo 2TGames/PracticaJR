@@ -5,9 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 public class GameController {
 
 	Map<Long, Player> players = new ConcurrentHashMap<>();			//mapa de jugadores
@@ -55,7 +53,6 @@ public class GameController {
 		return player;
 	}
 	
-	//Con este POST creamos los hechizos
 	
 	public Hechizo newHechizo() {
 		Hechizo hechizo = new Hechizo();
@@ -65,7 +62,6 @@ public class GameController {
 		return hechizo;
 	}
 	
-	//Con este POST creamos las nieblas
 	
 	public Niebla newNiebla() {
 		Niebla niebla = new Niebla();
