@@ -50,19 +50,38 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 					jsonPlayer.put("x", player.getX());
 					jsonPlayer.put("y", player.getY());
 					jsonPlayer.put("vida",player.getVida());
+					jsonPlayer.put("mana", player.getMana());
 					
 
 					json.put("type", "PLAYER_CREATED");
 					json.putPOJO("player", jsonPlayer);
 				} else {
-					json.put("type", "GAME_CPMPLETE");
+					json.put("type", "MAX PLAYERS");
 				}
 				session.sendMessage(new TextMessage(json.toString()));
 
 				if (debug)
 					System.out.println("[DEBUG] " + json.toString());
 				break;
-
+			case "PLAYERS":
+				if(gameController.getPlayers().size()==2) {
+					json.put("type", "ENOUGH");
+					json.putPOJO("numJugadores", gameController.getPlayers().size());
+				}else if (gameController.getPlayers().size() > 2) {
+					json.put("type", "EXCEED");
+					json.putPOJO("numJugadores", gameController.getPlayers().size());
+				}else if (gameController.getPlayers().size()<2) {
+					json.put("type", "WAIT");
+					json.putPOJO("numJugadores", gameController.getPlayers().size());
+					//json.putPOJO("player", gameController.getPlayers().size());
+				}
+				session.sendMessage(new TextMessage(json.toString()));
+				
+				if(debug) {
+					System.out.println(json.toString());
+				}
+				break;
+				
 			default:
 				break;
 			}

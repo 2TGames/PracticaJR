@@ -6,12 +6,13 @@ game.global = {
 	hechizo1:null,													//Creación del hechizo 1
 	hechizo2:null,													//Creación del hechizo 2
 	numPlayers: 0													//Número de jugadores
+	
 }
 
 debug={
 	ws:1
 }
-var ws = new WebSocket('ws://'+window.location.host+'/game')
+//var ws = new WebSocket('ws://'+window.location.host+'/game')
 
 
 //--------------------------AÑADIMOS AL JUEGO TODOS LOS ESTADOS----------------------------//
@@ -28,7 +29,7 @@ game.state.add('ayudaState', MagicAndRunes.ayudaState)
 game.state.start('bootState')
 
 
-ws.onopen = function(event){
+/*ws.onopen = function(event){
 	if(debug.ws){
 		console.log('[DEBUG-WS] Se ha establecido la conexion');
 	}
@@ -38,9 +39,9 @@ ws.onopen = function(event){
 	this.send(JSON.stringify(data));
 	console.log("Se ha enviado el mensaje: " +data.type);
 	
-}
+}*/
 
-ws.onmessage = function(message){
+/*ws.onmessage = function(message){
 	if(debug.ws){
 		console.log('[DEBUG-WS] Se ha producido un mensaje: ' + message.data);
 	}
@@ -51,16 +52,16 @@ ws.onmessage = function(message){
 		console.log("******PLAYER CREATED******");
 		console.log("id: "+msg.player.id);
 	}
-}
+}*/
 
-ws.onerror = function(error){
+/*game.ws.onerror = function(error){
 	console.log('Se ha producido un error');
 }
 
-ws.onclose = function(event){
+game.ws.onclose = function(event){
 	if(debug.ws){
 		console.log('[DEBUG-WS] Se ha cerrado la conexion');
 	}
-}
+}*/
 
 

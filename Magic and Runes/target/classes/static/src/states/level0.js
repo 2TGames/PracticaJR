@@ -65,7 +65,7 @@ MagicAndRunes.level0State = function(game) {
         init() {
         	
         	//El jugador empieza mirando a izquierda o derecha dependiendo de su IP
-            if(game.player1.id==1){
+            /*if(game.player1.id==1){
                 game.player2 = {id:2,
                 				facing:"left"};
             }else if(game.player1.id==2){
@@ -77,7 +77,7 @@ MagicAndRunes.level0State = function(game) {
             	game.hechizo2 = {id:2};
             }else{
             	game.hechizo2 = {id:1};
-            }
+            }*/
         },
 
     preload: function() {
@@ -348,69 +348,4 @@ MagicAndRunes.level0State = function(game) {
         
     },
 
-    getPlayer(callback){
-        $.ajax({
-            method:"GET",
-            url:'/game/' + game.player2.id,
-            processData:false,
-            headers:{
-                "Content-Type":"application/json"
-            }
-        }).done(function(data){
-            game.player2= JSON.parse(JSON.stringify(data));
-            callback(data);
-        })
-    },
-    
-    //Recuperamos la información del hechizo del enemigo
-    getHechizo(callback){
-    	$.ajax({
-    		method:"GET",
-    		url:'/hechizo/' + game.hechizo2.id,
-    		processData:false,
-    		headers:{
-    			"Content-Type":"application/json"
-    		}
-    	}).done(function(data){
-    		game.hechizo2 = JSON.parse(JSON.stringify(data));
-    		callback(data);
-    	})
-    },
-    
-    
-
-    putPlayer(){
-        game.player1.x=mago.x;
-        game.player1.y=mago.y;
-        game.player1.facing;
-        $.ajax({
-            method:"PUT",
-            url:'/game/'+game.player1.id,
-            data:JSON.stringify(game.player1),
-            processData:false,
-            headers:{
-                "Content-Type":"application/json"
-            }
-        }).done(function(data){
-            //console.log("Actualizada posicion jugador 1: "+JSON.stringify(data));
-        })
-    },
-    
-    //Actualizamos la informacion de nuestro hechizo
-    putHechizo(){
-    	game.hechizo1.x=hechizo.x;
-    	game.hechizo1.y=hechizo.y;
-    	$.ajax({
-    		method:"PUT",
-    		url:'/hechizo/'+game.hechizo1.id,
-    		data:JSON.stringify(game.hechizo1),
-    		processData:false,
-    		headers:{
-    			"Content-Type":"application/json"
-    		}
-    	}).done(function(data){
-    		//console.log("Actualizada posicion hechizo: " + JSON.stringify(data));
-    	})
-    },
-    
 }
