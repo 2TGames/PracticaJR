@@ -56,7 +56,7 @@ MagicAndRunes.menuState.prototype = {
     	//---------------------------IMÁGENES--------------------------------------------//
     	//Almacenamos el feondo en una variable y la primera runa en otra
         var fondo=game.add.image(0,0,'fondo');
-        var runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_1');
+        var runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_1');
 
         //----------------------------------BOTONES--------------------------------------//
         //Creamos los 5 botones, asignándole a cada un un sprite (halos), una posición y una funciòn
@@ -78,25 +78,25 @@ MagicAndRunes.menuState.prototype = {
     update: function() {
     	//Cambiamos de runa a intervalos de 30 sumas del temporizador
         if(temporizador_runa<30){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_1');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_1');
         }else if(temporizador_runa<60){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_2');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_2');
         }else if(temporizador_runa<90){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_3');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_3');
         }else if(temporizador_runa<120){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_4');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_4');
         }else if(temporizador_runa<150){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_5');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_5');
         }else if(temporizador_runa<180){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_6');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_6');
         }else if(temporizador_runa<210){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_7');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_7');
         }else if(temporizador_runa<240){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_8');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_8');
         }else if(temporizador_runa<270){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_9');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_9');
         }else if(temporizador_runa<300){
-            runa=game.add.sprite(game.world.centerX - 15, game.world.centerY,'runa_1');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY,'runa_1');
             temporizador_runa=0;//Al llegar a 30 sumas del temporizador en la última runa, 
             					//reiniciamos el temporizador
         }
