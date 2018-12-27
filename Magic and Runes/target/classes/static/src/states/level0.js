@@ -302,7 +302,11 @@ MagicAndRunes.level0State = function(game) {
             if(game.player1.mana>0){
                 fireHechizo();														//Función de disparo del hechizo
                 //game.player1.mana-=spellCost;
-                mana=new Phaser.Rectangle(25,50,game.player1.mana-spellCost,20);
+                if(game.player1.id==1){
+                	mana=new Phaser.Rectangle(25,50,game.player1.mana-spellCost,20);
+                }else{
+                	mana=new Phaser.Rectangle(650,50,game.player1.mana-spellCost,20);
+                }
                 game.player1.mana-=spellCost;
             }
         }
