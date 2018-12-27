@@ -62,7 +62,9 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", x=" + x + ", y=" + y + ", vida=" + vida + ", mana=" + mana + "]";
+		//return "Player [id=" + id + ", x=" + x + ", y=" + y + ", vida=" + vida + ", mana=" + mana + "]";
+		return "{\"id\":" + id + ",\"x\":" + x + ",\"y\":" + y + ",\"vida\":" + vida + ",\"mana\":" + mana +"}";
+
 	}
 
 }

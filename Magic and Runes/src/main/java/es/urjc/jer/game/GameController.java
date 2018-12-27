@@ -38,15 +38,21 @@ public class GameController {
 	
 	public Player newPlayer() {
 		Player player = new Player();
+		Hechizo hechizo = new Hechizo();
 		long id = nextId.incrementAndGet();
 		player.setId(id);
+		hechizo.setId(id);
 		if(player.getId()==1) {
 			player.setX(100);
 			player.setY(400);
+			hechizo.setX(player.getX());
+			hechizo.setY(player.getY());
 			player.setFacing("right");
 		}else if(player.getId()==2) {
 			player.setX(700);
 			player.setY(400);
+			hechizo.setX(player.getX());
+			hechizo.setY(player.getY());
 			player.setFacing("left");
 		}
 		players.put(player.getId(), player);
