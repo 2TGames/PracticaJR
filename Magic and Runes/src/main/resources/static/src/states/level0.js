@@ -147,7 +147,19 @@ MagicAndRunes.level0State = function(game) {
         game.physics.enable(mago,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
         
         //---------------------------------Cogemos la posición inicial del jugador 2
-        this.getPlayer(function(player2Data){
+        mensaje = {
+        		type:"UPDATE_PLAYER",
+        		player: game.player1
+        }
+        
+        ws.send(JSON.stringify(mensaje));
+        
+        mensaje = {
+        		type:"ENEMY"
+        }
+        ws.send(JSON.stringify(mensaje));
+        
+        /*this.getPlayer(function(player2Data){
             game.player2 = JSON.parse(JSON.stringify(player2Data));
             if(game.player2.id==1){
             	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_verde');
@@ -155,19 +167,19 @@ MagicAndRunes.level0State = function(game) {
             	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
             }
             //console.log(JSON.stringify(game.player2));
-        })
+        })*/
         
         //Creamos un hechizo invisible y le asignamos las físicas ARCADE
     	hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizo');
     	game.physics.enable(hechizo,Phaser.Physics.ARCADE);
     	hechizo.visible=false;
 		//Obtenemos el hechizo del jugador enemigo
-        this.getHechizo(function(hechizo2Data){
+        /*this.getHechizo(function(hechizo2Data){
         	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2Data));
         	hechizo2=game.add.sprite(game.player2.x,game.player2.y,'hechizo2');
         	hechizo2.visible=false;
         	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
-        })
+        })*/
         
         //Animaciones personajes
         mago.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
@@ -190,13 +202,18 @@ MagicAndRunes.level0State = function(game) {
     },
 
     update: function() {
-    	
+    	mensaje = {
+        		type:"UPDATE_PLAYER",
+        		player: game.player1
+        }
+        
+        ws.send(JSON.stringify(mensaje));
     	//Muerte por caida
     	if(mago.body.y>540){
     		game.player1.vida=0;
     	}
     	
-    	if(game.player1.vida==0 || game.player2.vida==0){
+    	if(game.player1.vida == 0 || game.player2.vida == 0){
     		this.game.state.start("endingState");
     	}
 
@@ -290,7 +307,7 @@ MagicAndRunes.level0State = function(game) {
             }
         }
         
-        this.putPlayer();															//Envía los datos del jugador al servidor
+        /*this.putPlayer();															//Envía los datos del jugador al servidor
 
         this.getPlayer(function(updatePlayer2){										//Obtiene la posición del jugador 2
             game.player2 = JSON.parse(JSON.stringify(updatePlayer2));
@@ -308,13 +325,13 @@ MagicAndRunes.level0State = function(game) {
             	mago2.scale.x=-1;
             }
 
-        })
+        })*/
         
-        if(lanzamiento==true){
+       /* if(lanzamiento==true){
         	this.putHechizo();											//Si se ha lanzado un hechizo, se añade un hechizo al servidor
-        }
+        }*/
         
-        this.getHechizo(function(updateHechizo2){						//Obtiene el hechizo del jugador 2
+        /*this.getHechizo(function(updateHechizo2){						//Obtiene el hechizo del jugador 2
     		console.log("Entra en la funcion getHechizoIzquierda");
     		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2));
     		
@@ -323,7 +340,7 @@ MagicAndRunes.level0State = function(game) {
         		hechizo2.y=game.hechizo2.y;
         		hechizo2.visible=true;
     		
-    		});
+    		});*/
         	
        //------------------------------COLISIÓN CON EL HECHIZO------------------------------------------//
         var micolision=game.physics.arcade.collide(game.player1,game.hechizo2);				//Colisión del jugador con el hechizo enemigo almacenado en un boolean
@@ -333,19 +350,26 @@ MagicAndRunes.level0State = function(game) {
         	hechizo2.kill();
         	game.player1.vida-=20;
         }else{																				//Si no, se llama al update del hechizo 2
-        	this.getHechizo(function(updateHechizo2){
+        	/*this.getHechizo(function(updateHechizo2){
         		game.hechizo2.x=updateHechizo2.x;
         		game.hechizo2.y=updateHechizo2.y;
-        	})
+        	})*/
         }
 
         game.physics.arcade.collide(mago,layer,colisionMapaMagoVerde,null,this);			//Activa la colisión entre el mapa y el mago
 
         hechizoTempo+=0.05;																	//Aumenta la cuenta del temporizador del hechizo
 
-        
+        mensaje = {
+        		type: "UPDATE_PLAYER",
+        		playerX: game.player1.x,
+        		playerY: game.player1.y,
+        		player: game.player1
+        }
 
         
     },
+    
+    
 
 }
