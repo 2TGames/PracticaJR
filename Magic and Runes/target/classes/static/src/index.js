@@ -28,6 +28,7 @@ game.state.add('level0State', MagicAndRunes.level0State)
 game.state.add('endingState', MagicAndRunes.endingState)
 game.state.add('errorState', MagicAndRunes.errorState)
 game.state.add('ayudaState', MagicAndRunes.ayudaState)
+game.state.add('codex_menuState', MagicAndRunes.codex_menuState)
 //-----------------Empezamos por el estado "bootState"
 game.state.start('bootState')
 
