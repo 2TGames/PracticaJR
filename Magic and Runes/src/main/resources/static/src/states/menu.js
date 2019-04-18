@@ -13,6 +13,11 @@ function jugar() {
     this.state.start("matchmakingState");			
 }
 
+//Si se inicia la función cd, el estado actual pasará a ser "codex_menuState"
+function cod() {
+    this.state.start("codex_menuState");			
+}
+
 //Si se inicia la función ayu, el estado actual pasará a ser "ayudaState"
 function ayu() {
     this.state.start("ayudaState");
@@ -62,7 +67,7 @@ MagicAndRunes.menuState.prototype = {
         //Creamos los 5 botones, asignándole a cada un un sprite (halos), una posición y una funciòn
         buttonBlack = game.add.button(340,80, 'halo_negro', jugar, this, 0);		//Pos: (340,80); llama a "jugar()"
         buttonGreen = game.add.button(170,204, 'halo_verde', ayu, this, 0);			//Pos: (170,204); llama a "ayu()"
-        buttonRed = game.add.button(520,204, 'halo_rojo', err, this, 0);			//Pos: (520,204); llama a "err()"
+        buttonRed = game.add.button(520,204, 'halo_rojo', cod, this, 0);			//Pos: (520,204); llama a "err()"
         buttonBlue = game.add.button(230,404, 'halo_azul', err, this, 0);			//Pos: (230,404); llama a "err()"
         buttonOrange = game.add.button(455,404, 'halo_naranja', err, this, 0);		//Pos: (455,404); llama a "err()"
 
@@ -96,7 +101,7 @@ MagicAndRunes.menuState.prototype = {
         }else if(temporizador_runa<270){
             runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_9');
         }else if(temporizador_runa<300){
-            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY,'runa_1');
+            runa=game.add.sprite(game.world.centerX - 27, game.world.centerY - 41,'runa_1');
             temporizador_runa=0;//Al llegar a 30 sumas del temporizador en la última runa, 
             					//reiniciamos el temporizador
         }
