@@ -141,7 +141,7 @@ MagicAndRunes.level0State = function(game) {
         	mago=game.add.sprite(game.player1.x,game.player1.y,'mago_verde');
         }else if(game.player1.id==2){
         	mago=game.add.sprite(game.player1.x,game.player1.y,'mago_naranja');
-        	mago.scale.x*=-1;
+        	//mago.scale.x=-1;
         }
         
         game.physics.enable(mago,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
@@ -154,10 +154,11 @@ MagicAndRunes.level0State = function(game) {
         
         ws.send(JSON.stringify(mensaje));
         
-        mensaje = {
-        		type:"ENEMY"
+        if(game.player2.id==1){
+        	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_verde');
+        }else if(game.player2.id==2){
+        	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
         }
-        ws.send(JSON.stringify(mensaje));
         
         /*this.getPlayer(function(player2Data){
             game.player2 = JSON.parse(JSON.stringify(player2Data));
@@ -213,9 +214,9 @@ MagicAndRunes.level0State = function(game) {
     		game.player1.vida=0;
     	}
     	
-    	if(game.player1.vida == 0 || game.player2.vida == 0){
+    	/*if(game.player1.vida == 0 || game.player2.vida == 0){
     		this.game.state.start("endingState");
-    	}
+    	}*/
 
         //funcion de disparo para el mago verde
     	function fireHechizo(){
@@ -366,8 +367,8 @@ MagicAndRunes.level0State = function(game) {
 
         mensaje = {
         		type: "UPDATE_PLAYER",
-        		playerX: game.player1.x,
-        		playerY: game.player1.y,
+        		//playerX: game.player1.x,
+        		//playerY: game.player1.y,
         		player: game.player1
         }
 

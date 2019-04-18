@@ -68,10 +68,11 @@ ws.onmessage = function(message){
 		//console.log("Faltan jugadores");
 		break;
 	case "UPDATED":
-		if(msg.player.id == 2){
+		if(msg.player.id!=game.player1.id){
 			game.player2 = msg.player;
 		}
-		console.log("Jugador actualizado");
+		
+		console.log('Jugador actualizado');
 		console.log(game.player2);
 	}
 }

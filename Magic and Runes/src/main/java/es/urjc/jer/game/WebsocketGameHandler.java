@@ -96,14 +96,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler{
 				break;
 			case "UPDATE_PLAYER":
 				if(!gameController.getPlayers().equals(node.path("player").get("id").asLong())) {
-					json.put("type","UPDATED");
-					json.putPOJO("player", player);
+					
+					player.setId(node.path("player").get("id").asLong());
 					player.setX(node.path("player").get("x").asInt());
 					player.setY(node.path("player").get("y").asInt());
 					player.setVida(node.path("player").get("vida").asInt());
 					player.setMana(node.path("player").get("mana").asInt());
 					for(int i=0; i < sessions.size(); i++) {
-						session.sendMessage(new TextMessage(json.toString()));
+						
+							json.put("type","UPDATED");
+							json.putPOJO("player", player);
+							session.sendMessage(new TextMessage(json.toString()));
+						
 					}
 					System.out.println(json.toString());
 				}
