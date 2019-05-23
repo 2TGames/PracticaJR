@@ -77,9 +77,22 @@ MagicAndRunes.matchmakingState.prototype = {
     create: function () {
     	
     	mensaje = {
-    			type:'JOIN'
+    			event:'JOIN'
     	}
     	ws.send(JSON.stringify(mensaje));
+    	
+    	
+    	
+    	mensaje = {
+        		event:"UPDATE_PLAYER",
+        		id: game.global.player1.id,
+        		x: game.global.player1.x,
+        		y: game.global.player1.y,
+        		vida: game.global.player1.vida,
+        		mana: game.global.player1.mana
+        }
+        
+        ws.send(JSON.stringify(mensaje));
     	
     	/*ws.onmessage = function(message){
     		console.log('entra a onmessage');
@@ -127,11 +140,11 @@ MagicAndRunes.matchmakingState.prototype = {
 			console.log('Se ha enviado el mensaje: '+numPlayers.type);
     	}*/
     	mensaje = {
-    			type:'PLAYERS'
+    			event:'PLAYERS'
     	}
     	ws.send(JSON.stringify(mensaje));
     	
-    	if(game.gameReady==1){
+    	if(game.global.gameReady==1){
     		this.state.start("level0State");
     	}
     	

@@ -115,15 +115,15 @@ MagicAndRunes.level0State = function(game) {
          
          //----------------------------BARRAS PLAYER 1-------------------------------//
          //Creamos las barras de vida y maná del jugador local dependiendo de su ID
-         if(game.player1.id==1){
-        	 vida=new Phaser.Rectangle(25,25,game.player1.vida,20);
-        	 mana=new Phaser.Rectangle(25,50,game.player1.mana,20);
-         }else{
-        	 vida=new Phaser.Rectangle(650,25,game.player1.vida,20);
-        	 mana=new Phaser.Rectangle(650,50,game.player1.mana,20);
+         if(game.global.player1.id==0){
+        	 vida=new Phaser.Rectangle(25,25,game.global.player1.vida,20);
+        	 mana=new Phaser.Rectangle(25,50,game.global.player1.mana,20);
+         }else if (game.global.player1.id == 1){
+        	 vida=new Phaser.Rectangle(650,25,game.global.player1.vida,20);
+        	 mana=new Phaser.Rectangle(650,50,game.global.player1.mana,20);
          }
          
-         vidaLocal = game.player1.vida;										//Igualamos la vidaLocal a la vida de player1
+         vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
          
          //---------------------ELEMENTOS BÁSICOS DEL NIVEL------------------------//
         background= game.add.sprite(0,0,'background');						//Asignamos el background a su variable
@@ -137,28 +137,17 @@ MagicAndRunes.level0State = function(game) {
         medidor=game.add.sprite(292,20,'nivAct');							//Le asignamos la imagn al medidor
         
         //Añadimos el personaje del jugador 1
-        if(game.player1.id==1){
-        	mago=game.add.sprite(game.player1.x,game.player1.y,'mago_verde');
-        }else if(game.player1.id==2){
-        	mago=game.add.sprite(game.player1.x,game.player1.y,'mago_naranja');
+        if(game.global.player1.id==0){
+        	game.global.player1.image = game.add.sprite(game.global.player1.x,game.global.player1.y,'mago_verde');
+        }else if(game.global.player1.id==1){
+        	game.global.player1.image =game.add.sprite(game.global.player1.x,game.global.player1.y,'mago_naranja');
         	//mago.scale.x=-1;
         }
         
-        game.physics.enable(mago,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
+        game.physics.enable(game.global.player1.image,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
         
         //---------------------------------Cogemos la posición inicial del jugador 2
-        mensaje = {
-        		type:"UPDATE_PLAYER",
-        		player: game.player1
-        }
-        
-        ws.send(JSON.stringify(mensaje));
-        
-        if(game.player2.id==1){
-        	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_verde');
-        }else if(game.player2.id==2){
-        	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
-        }
+       
         
         /*this.getPlayer(function(player2Data){
             game.player2 = JSON.parse(JSON.stringify(player2Data));
@@ -171,7 +160,7 @@ MagicAndRunes.level0State = function(game) {
         })*/
         
         //Creamos un hechizo invisible y le asignamos las físicas ARCADE
-    	hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizo');
+    	hechizo=game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
     	game.physics.enable(hechizo,Phaser.Physics.ARCADE);
     	hechizo.visible=false;
 		//Obtenemos el hechizo del jugador enemigo
@@ -183,12 +172,12 @@ MagicAndRunes.level0State = function(game) {
         })*/
         
         //Animaciones personajes
-        mago.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
-        mago.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
-        mago.frame=9;
+        game.global.player1.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
+        game.global.player1.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+        game.global.player1.image.frame=9;
 
-        mago.body.gravity.y=500;											//Gravedad asignada al mago
-        mago.body.bounce.y=0.1;												//Rebote con el suelo
+        game.global.player1.image.body.gravity.y=500;											//Gravedad asignada al mago
+        game.global.player1.image.body.bounce.y=0.1;												//Rebote con el suelo
         
 
         
@@ -203,15 +192,9 @@ MagicAndRunes.level0State = function(game) {
     },
 
     update: function() {
-    	mensaje = {
-        		type:"UPDATE_PLAYER",
-        		player: game.player1
-        }
-        
-        ws.send(JSON.stringify(mensaje));
     	//Muerte por caida
-    	if(mago.body.y>540){
-    		game.player1.vida=0;
+    	if(game.global.player1.image.body.y>540){
+    		game.global.player1.vida=0;
     	}
     	
     	/*if(game.player1.vida == 0 || game.player2.vida == 0){
@@ -224,7 +207,7 @@ MagicAndRunes.level0State = function(game) {
     		//Después, lo hacemos visible y le asignamos velocidad en x y en y.
     		if(direccionIzq==true){
     			lanzamiento=true;
-    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizo');
+    			hechizo=game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
     			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
     			hechizo.visible=true;
     			hechizo.body.velocity.x=-400;
@@ -232,7 +215,7 @@ MagicAndRunes.level0State = function(game) {
     		}else if(direccionIzq==false){
     			lanzamiento=true;
     			console.log("Direccion derecha");
-    			hechizo=game.add.sprite(game.player1.x,game.player1.y+10,'hechizo');
+    			hechizo=game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
     			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
     			hechizo.visible=true;
     			hechizo.body.velocity.x=400;
@@ -250,48 +233,48 @@ MagicAndRunes.level0State = function(game) {
         
         //--------------------------------MOVIMIENTO DEL MAGO-----------------------------------//
         
-        mago.body.velocity.x=0;														//Eliminamos la velocidad en x del mago,
+        game.global.player1.image.body.velocity.x=0;														//Eliminamos la velocidad en x del mago,
         																			//para que no afecte a los cáculos del movimiento 
         																			//a continuación
 
         //Movimiento mago
         if(akey.isDown){
-            mago.body.velocity.x=-150;												//Velocidad en x 
+        	game.global.player1.image.body.velocity.x=-150;												//Velocidad en x 
             
             direccionIzq=true;														//El mago ahora apunta a la izquierda; si no lo 
             																		//hacía ahora lo hace
-            game.player1.facing="left";
+            game.global.player1.facing="left";
             if(facing_j1!='left'){
-                mago.animations.play('left');										//El conjunto de sprites de la animación es "left"
+            	game.global.player1.image.animations.play('left');										//El conjunto de sprites de la animación es "left"
                 facing_j1='left';
             }
             greenLeft = true;
         }else if(dkey.isDown){
              
-            mago.body.velocity.x=150;												//Velocidad en x 
+        	game.global.player1.image.body.velocity.x=150;												//Velocidad en x 
             
             direccionIzq=false;														//El mago ahora apunta a la izquierda; si no lo 
 																					//hacía ahora lo hace
-            game.player1.facing="right";
+            game.global.player1.facing="right";
 
             if(facing_j1!='right'){
-                mago.animations.play('right');										//El conjunto de sprites de la animación es "right"
+            	game.global.player1.image.animations.play('right');										//El conjunto de sprites de la animación es "right"
                 facing_j1='right';
             }
             greenLeft = false;
         }else{																		//Se reasigna el frame
             if(facing_j1!='idle'){
-                mago.animations.stop();
+            	game.global.player1.image.animations.stop();
                 if(facing_j1=='right'){
-                    mago.frame=9;
+                	game.global.player1.image.frame=9;
                 }else{
-                    mago.frame=0;
+                	game.global.player1.image.frame=0;
                 }
             }
         }
 
-        if(wkey.isDown && mago.body.onFloor() && game.time.now > temp2){
-            mago.body.velocity.y=-300;												//Se le asigna un salto de 300 de velocidad 
+        if(wkey.isDown && game.global.player1.image.body.onFloor() && game.time.now > temp2){
+        	game.global.player1.image.body.velocity.y=-300;												//Se le asigna un salto de 300 de velocidad 
             temp2=game.time.now+750;												//Se reinicia el temporizador del salto
         }
 
@@ -300,15 +283,15 @@ MagicAndRunes.level0State = function(game) {
         if (fire2Button.isDown && hechizoTempo>3)
         {
             hechizoTempo=0;															//Se reinicia el temporizador del hechizo
-            if(game.player1.mana>0){
+            if(game.global.player1.mana>0){
                 fireHechizo();														//Función de disparo del hechizo
                 //game.player1.mana-=spellCost;
-                if(game.player1.id==1){
-                	mana=new Phaser.Rectangle(25,50,game.player1.mana-spellCost,20);
+                if(game.global.player1.id==1){
+                	mana=new Phaser.Rectangle(25,50,game.global.player1.mana-spellCost,20);
                 }else{
-                	mana=new Phaser.Rectangle(650,50,game.player1.mana-spellCost,20);
+                	mana=new Phaser.Rectangle(650,50,game.global.player1.mana-spellCost,20);
                 }
-                game.player1.mana-=spellCost;
+                game.global.player1.mana-=spellCost;
             }
         }
         
@@ -348,12 +331,12 @@ MagicAndRunes.level0State = function(game) {
     		});*/
         	
        //------------------------------COLISIÓN CON EL HECHIZO------------------------------------------//
-        var micolision=game.physics.arcade.collide(game.player1,game.hechizo2);				//Colisión del jugador con el hechizo enemigo almacenado en un boolean
+        var micolision=game.physics.arcade.collide(game.global.player1,game.global.hechizo2);				//Colisión del jugador con el hechizo enemigo almacenado en un boolean
         //console.log(micolision);
         if(micolision){																		//Si han colisionado el hechizo tiene efecto
         	console.log("yes");
         	hechizo2.kill();
-        	game.player1.vida-=20;
+        	game.global.player1.vida-=20;
         }else{																				//Si no, se llama al update del hechizo 2
         	/*this.getHechizo(function(updateHechizo2){
         		game.hechizo2.x=updateHechizo2.x;
@@ -361,17 +344,21 @@ MagicAndRunes.level0State = function(game) {
         	})*/
         }
 
-        game.physics.arcade.collide(mago,layer,colisionMapaMagoVerde,null,this);			//Activa la colisión entre el mapa y el mago
+        game.physics.arcade.collide(game.global.player1.image,layer,colisionMapaMagoVerde,null,this);			//Activa la colisión entre el mapa y el mago
 
         hechizoTempo+=0.05;																	//Aumenta la cuenta del temporizador del hechizo
 
         mensaje = {
-        		type: "UPDATE_PLAYER",
-        		//playerX: game.player1.x,
-        		//playerY: game.player1.y,
-        		player: game.player1
+        		event:"UPDATE_PLAYER",
+        		id: game.global.player1.id,
+        		x: game.global.player1.x,
+        		y: game.global.player1.y,
+        		vida: game.global.player1.vida,
+        		mana: game.global.player1.mana
         }
-
+        setTimeout(() =>{
+        	ws.send(JSON.stringify(mensaje))
+        }, 5000)
         
     },
     

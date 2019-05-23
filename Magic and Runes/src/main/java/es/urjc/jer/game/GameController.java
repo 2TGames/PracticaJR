@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class GameController {
 
-	Map<Long, Player> players = new ConcurrentHashMap<>();			//mapa de jugadores
+	Map<String, Player> players = new ConcurrentHashMap<>();			//mapa de jugadores
 	Map<Long,Hechizo> hechizos = new ConcurrentHashMap<>();			//mapa de hechizos
 	Map<Long,Niebla> nieblas = new ConcurrentHashMap<>();			//mapa de nieblas
 	AtomicLong nextId = new AtomicLong(0);							//suma de IDs de jugadores
@@ -35,8 +35,27 @@ public class GameController {
 		}
 
 	// Con este POST creamos un nuevo jugador
+	public void addPlayer(Player player) {
+		
+		Hechizo hechizo = new Hechizo();
+		if(player.getId() == 0) {
+			player.setX(100);
+			player.setY(400);
+			hechizo.setX(player.getX());
+			hechizo.setY(player.getY());
+		}else if (player.getId()== 1) {
+			player.setX(700);
+			player.setY(400);
+			hechizo.setX(player.getX());
+			hechizo.setY(player.getY());
+		}
+		
+		players.put(player.getSession().getId(),player);
+	}
 	
-	public Player newPlayer() {
+	
+	
+	/*public Player newPlayer() {
 		Player player = new Player();
 		Hechizo hechizo = new Hechizo();
 		long id = nextId.incrementAndGet();
@@ -57,7 +76,7 @@ public class GameController {
 		}
 		players.put(player.getId(), player);
 		return player;
-	}
+	}*/
 	
 	
 	public Hechizo newHechizo() {

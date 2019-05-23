@@ -1,15 +1,22 @@
 package es.urjc.jer.game;
 
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+
 public class Player {
 
-	private long id;
+	private final WebSocketSession session;
+	private int id;
 	private int x, y, vida, mana;
 	private String facing="idle";
 	
-	Player() {
+	public Player(int playerId, WebSocketSession session) {
+		this.id = playerId;
 		this.vida = 100;
 		this.mana = 100;
+		this.session = session;
 	}
+
 
 	public String getFacing() {
 		return facing;
@@ -35,11 +42,11 @@ public class Player {
 		this.mana = m;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -57,6 +64,14 @@ public class Player {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public WebSocketSession getSession() {
+		return this.session;
+	}
+	
+	public void sendMessage(String msg) throws Exception{
+		this.session.sendMessage(new TextMessage(msg));
 	}
 
 
