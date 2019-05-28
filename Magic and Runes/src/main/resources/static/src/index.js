@@ -72,31 +72,35 @@ ws.onmessage = function(message){
 		console.log("Faltan jugadores");
 		break;
 	case "UPDATED":
+		
 		if(typeof game.global.player1.image !== 'undefined'){
-			for(var player of msg.players){
-				if(game.global.player1.id == player.id){
-					game.global.player1.image.x = player.x
-					game.global.player1.image.y = player.y
-					game.global.player1.vida = player.vida
-					game.global.player1.mana = player.mana
-				}else{
-					if(typeof game.global.player2.id == 'undefined'){
-						if(game.global.player1.image.key == 'mago_verde'){
-							game.global.player2.image = game.add.sprite(player.x,player.y,'mago_naranja')
-						}else if(game.global.player1.image.key == 'mago_naranja'){
-							game.global.player2.image = game.add.sprite(player.x,player.y,'mago_verde')
-						}
-						game.global.player2.image.anchor.setTo(0.5,0.5)
-						game.global.player2.x = player.x
-						game.global.player2.y = player.y
-						game.global.player2.vida = player.vida
-						game.global.player2.mana = player.mana
-					}else{
-						game.global.player2.image.x = player.x
-						game.global.player2.image.y = player.y
-						game.global.player2.vida = player.vida
-						game.global.player2.mana = player.mana
+			if(game.global.player1.id == msg.player.id){
+				game.global.player1.vida = msg.player.vida
+				game.global.player1.mana = msg.player.mana
+				game.global.player1.x = msg.x
+				game.global.player1.y = msg.y
+			}else{
+				if(typeof game.global.player2.id == 'undefined'){
+					game.global.player2.id = msg.player.id
+					if(game.global.player1.image.key == 'mago_verde'){
+						game.global.player2.image = game.add.sprite(msg.player.x,msg.player.y,'mago_naranja')
+					}else if(game.global.player1.image.key == 'mago_naranja'){
+						game.global.player2.image = game.add.sprite(msg.player.x,msg.player.y,'mago_verde')
 					}
+					game.global.player2.image.anchor.setTo(0.5,0.5)
+					game.physics.enable(game.global.player2.image,Phaser.Physics.ARCADE);
+					game.global.player2.image.body.gravity.y=500;											//Gravedad asignada al mago
+			        game.global.player2.image.body.bounce.y=0.1;
+					game.global.player2.vida = msg.player.vida
+					game.global.player2.mana = msg.player.mana
+					game.global.player2.image.x = msg.player.x
+					game.global.player2.image.y = msg.player.y
+				}else{
+					game.global.player2.id = msg.player.id
+					game.global.player2.vida = msg.player.vida
+					game.global.player2.mana = msg.player.mana
+					game.global.player2.image.x = msg.player.x
+					game.global.player2.image.y = msg.player.y
 				}
 			}
 		}

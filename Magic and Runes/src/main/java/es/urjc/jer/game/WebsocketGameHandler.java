@@ -54,10 +54,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	 * session.sendMessage(message); } }
 	 */
 	
-	public void broadcast(String message) {
+	public void broadcast(String message, int id) {
 		for(Player player: gameController.getPlayers()) {
 			try {
-				player.getSession().sendMessage(new TextMessage(message.toString()));
+				if(player.getId() != id) {
+					player.getSession().sendMessage(new TextMessage(message.toString()));
+				}
 			}catch(Exception e) {
 				System.err.println("Error sending message to player: " + player.getId());
 				e.printStackTrace();
@@ -121,15 +123,17 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					}
 					break;
 				case "UPDATE_PLAYER":
-					player.setX(node.path("x").asInt());
-					player.setY(node.path("y").asInt());
-					player.setVida(node.path("vida").asInt());
-					player.setMana(node.path("mana").asInt());
-					
+					System.out.println("mensaje recibido de player " + node.path("id").asInt());
 					ObjectNode jsonPlayer = mapper.createObjectNode();
+					player.setVida(node.get("vida").asInt());
+					player.setMana(node.get("mana").asInt());
+					player.setX(node.get("x").asInt());
+					player.setY(node.get("y").asInt());
+					
 					jsonPlayer.put("event", "UPDATED");
-					jsonPlayer.putPOJO("players", arrayPlayers);
-					this.broadcast(jsonPlayer.toString());
+					jsonPlayer.putPOJO("player", player);
+					
+					this.broadcast(jsonPlayer.toString(), node.path("id").asInt());
 					//player.getSession().sendMessage(new TextMessage(jsonPlayer.toString()));
 					
 					System.out.println(jsonPlayer.toString());

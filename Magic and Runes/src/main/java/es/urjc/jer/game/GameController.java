@@ -22,6 +22,10 @@ public class GameController {
 		return players.values();
 	}
 	
+	public Player getPlayer(int id) {
+		return players.get(id);
+	}
+	
 	// Con este GET recuperamos los hechizos 
 	
 	public Collection<Hechizo> getHechizos(){

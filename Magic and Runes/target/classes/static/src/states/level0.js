@@ -56,6 +56,7 @@ MagicAndRunes.level0State = function(game) {
     	//-----------------------------Función de salto con la "W"
         if(wkey.isDown && mago_izquierda.body.onFloor() && game.time.now > temp2){
             mago_izquierda.body.velocity.y=-350;
+            game.global.player1.y = mago_izquierda.body.y
             temp2=game.time.now+750;
         }
     }
@@ -240,7 +241,7 @@ MagicAndRunes.level0State = function(game) {
         //Movimiento mago
         if(akey.isDown){
         	game.global.player1.image.body.velocity.x=-150;												//Velocidad en x 
-            
+        	game.global.player1.x = game.global.player1.image.body.x
             direccionIzq=true;														//El mago ahora apunta a la izquierda; si no lo 
             																		//hacía ahora lo hace
             game.global.player1.facing="left";
@@ -252,7 +253,7 @@ MagicAndRunes.level0State = function(game) {
         }else if(dkey.isDown){
              
         	game.global.player1.image.body.velocity.x=150;												//Velocidad en x 
-            
+        	game.global.player1.x = game.global.player1.image.body.x
             direccionIzq=false;														//El mago ahora apunta a la izquierda; si no lo 
 																					//hacía ahora lo hace
             game.global.player1.facing="right";
@@ -274,8 +275,9 @@ MagicAndRunes.level0State = function(game) {
         }
 
         if(wkey.isDown && game.global.player1.image.body.onFloor() && game.time.now > temp2){
-        	game.global.player1.image.body.velocity.y=-300;												//Se le asigna un salto de 300 de velocidad 
-            temp2=game.time.now+750;												//Se reinicia el temporizador del salto
+        	game.global.player1.image.body.velocity.y=-300;							//Se le asigna un salto de 300 de velocidad 
+            game.global.player1.y = game.global.player1.image.body.y
+        	temp2=game.time.now+750;												//Se reinicia el temporizador del salto
         }
 
         
@@ -345,20 +347,21 @@ MagicAndRunes.level0State = function(game) {
         }
 
         game.physics.arcade.collide(game.global.player1.image,layer,colisionMapaMagoVerde,null,this);			//Activa la colisión entre el mapa y el mago
-
+        game.physics.arcade.collide(game.global.player2.image,layer,colisionMapaMagoVerde,null,this);
+        
         hechizoTempo+=0.05;																	//Aumenta la cuenta del temporizador del hechizo
 
         mensaje = {
         		event:"UPDATE_PLAYER",
         		id: game.global.player1.id,
-        		x: game.global.player1.x,
-        		y: game.global.player1.y,
+        		x: game.global.player1.image.x,
+        		y: game.global.player1.image.y,
         		vida: game.global.player1.vida,
         		mana: game.global.player1.mana
         }
-        setTimeout(() =>{
+        
         	ws.send(JSON.stringify(mensaje))
-        }, 5000)
+       
         
     },
     
