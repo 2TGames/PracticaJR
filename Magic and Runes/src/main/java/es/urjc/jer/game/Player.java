@@ -7,8 +7,8 @@ public class Player {
 
 	private final WebSocketSession session;
 	private int id;
-	private int x, y, vida, mana;
-	private String facing="idle";
+	private int x, y, vida, mana,velocityX,velocityY;
+	private int facing;
 	
 	public Player(int playerId, WebSocketSession session) {
 		this.id = playerId;
@@ -17,12 +17,27 @@ public class Player {
 		this.session = session;
 	}
 
+	public int getVelocityX() {
+		return velocityX;
+	}
 
-	public String getFacing() {
+	public void setVelocityX(int velx) {
+		this.velocityX = velx;
+	}
+	
+	public int getVelocityY() {
+		return velocityY;
+	}
+
+	public void setVelocityY(int vely) {
+		this.velocityY = vely;
+	}
+	
+	public int getFacing() {
 		return facing;
 	}
 
-	public void setFacing(String facing) {
+	public void setFacing(int facing) {
 		this.facing = facing;
 	}
 
@@ -78,7 +93,7 @@ public class Player {
 	@Override
 	public String toString() {
 		//return "Player [id=" + id + ", x=" + x + ", y=" + y + ", vida=" + vida + ", mana=" + mana + "]";
-		return "{\"id\":" + id + ",\"x\":" + x + ",\"y\":" + y + ",\"vida\":" + vida + ",\"mana\":" + mana +"}";
+		return "{\"id\":" + id + ",\"x\":" + x + ",\"y\":" + y + ",\"velocityX\":"+velocityX + ",\"velocityY\":"+velocityY + ",\"vida\":" + vida + ",\"mana\":" + mana +"}";
 
 	}
 

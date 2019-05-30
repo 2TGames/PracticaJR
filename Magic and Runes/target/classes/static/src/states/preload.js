@@ -9,6 +9,24 @@ MagicAndRunes.preloadState.prototype = {
         game.load.image('inicio','assets/images/pantalla_inicio.png');
         game.load.image('match','assets/images/fondo magico.png');
         
+      //----------------------------FONDO------------------------------------------//
+        game.load.image('background','assets/images/background_dungeonv2.png');
+        //-----------------------------TILEMAP---------------------------------------//
+        game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
+        //----------------------------MEDIDOR DE NIVEL-------------------------------//
+        game.load.image('nivAct','assets/medidores/medidor_0.png');
+        //---------------------------TILESHEET----------------------------------------//
+        game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
+        //----------------------------SPRITESHEETS MAGOS--------------------------------//
+        game.load.spritesheet('mago_naranja','assets/images/walk_naranja.png',27,49);
+        game.load.spritesheet('mago_verde','assets/images/walk_verde.png',27,49);
+        //-----------------------------IMAGEN HECHIZOS--------------------------------//
+        game.load.image('hechizo','assets/spells/fuegoNaranja.png');
+        game.load.image('hechizoverde','assets/spells/fuegoVerde.png');
+        
+        //----------------------------AUDIO--------------------------------------------//
+        game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
+        
     },
 
     create: function() {

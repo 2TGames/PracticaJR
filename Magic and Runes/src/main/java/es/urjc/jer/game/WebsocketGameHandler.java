@@ -40,6 +40,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		msg.put("mana", player.getMana());
 		msg.put("x", player.getX());
 		msg.put("y", player.getY());
+		msg.put("facing", player.getFacing());
 		arrayPlayers.addPOJO(msg);
 		player.getSession().sendMessage(new TextMessage(msg.toString()));
 	}
@@ -125,18 +126,28 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				case "UPDATE_PLAYER":
 					//System.out.println("mensaje recibido de player " + node.path("id").asInt());
 					ObjectNode jsonPlayer = mapper.createObjectNode();
-					player.setVida(node.get("vida").asInt());
-					player.setMana(node.get("mana").asInt());
-					player.setX(node.get("x").asInt());
-					player.setY(node.get("y").asInt());
-					
+					/*player.setVida(node.path("info").get("vida").asInt());
+					player.setMana(node.path("info").get("mana").asInt());
+					player.setX(node.path("info").get("x").asInt());
+					player.setY(node.path("info").get("y").asInt());
+					player.setVelocityX(node.path("info").get("velocityX").asInt());
+					player.setVelocityY(node.path("info").get("velocityY").asInt());
+					player.setFacing(node.path("info").get("facing").asInt());*/
+					msg.put("id", node.path("info").get("id").asInt());
+					msg.put("vida", node.path("info").get("vida").asInt());
+					msg.put("mana", node.path("info").get("mana").asInt());
+					msg.put("x", node.path("info").get("x").asInt());
+					msg.put("y", node.path("info").get("y").asInt());
+					msg.put("velocityX", node.path("info").get("velocityX").asInt());
+					msg.put("velocityY", node.path("info").get("velocityY").asInt());
+					msg.put("facing", node.path("info").get("facing").asInt());
 					jsonPlayer.put("event", "UPDATED");
-					jsonPlayer.putPOJO("player", player);
+					jsonPlayer.putPOJO("player", msg);
 					
-					this.broadcast(jsonPlayer.toString(), node.path("id").asInt());
+					this.broadcast(jsonPlayer.toString(), node.path("info").path("id").asInt());
 					//player.getSession().sendMessage(new TextMessage(jsonPlayer.toString()));
 					
-					//System.out.println(jsonPlayer.toString());
+					System.out.println("facing player"+node.path("info").get("id").asInt()+":"+node.path("info").get("facing").asInt()+"....."+msg.toString());
 
 					break;
 				case "SPELL":
@@ -147,8 +158,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("velocityX", node.get("velocityX").asInt());
 					msg.put("velocityY", node.get("velocityY").asInt());
 					this.broadcast(msg.toString(), node.get("id").asInt());
-					System.out.println(msg.toString());
-				
+					//System.out.println(msg.toString());
+					break;
 				default:
 					break;
 				}

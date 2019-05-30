@@ -5,6 +5,7 @@ game.global = {
 	hechizo1: new Object(),											//Creación del hechizo 1
 	player2: new Object(),													//Creacion del jugador 2
 	hechizo2: new Object(), 													//Creación del hechizo 2
+	facing:0,
 	numPlayers: 0,													//Número de jugadores
 	gameReady: 0,
 	playerReady: 0,
@@ -53,6 +54,7 @@ ws.onmessage = function(message){
 		game.global.player1.mana = msg.mana
 		game.global.player1.x = msg.x
 		game.global.player1.y = msg.y
+		game.global.player1.facing = msg.facing
 		console.log(game.global.player1)
 		break
 	/*case "PLAYER_CREATED":
@@ -74,11 +76,13 @@ ws.onmessage = function(message){
 	case "UPDATED":
 		
 		if(typeof game.global.player1.image !== 'undefined'){
+			console.log(msg.player)
 			if(game.global.player1.id == msg.player.id){
 				game.global.player1.vida = msg.player.vida
 				game.global.player1.mana = msg.player.mana
 				game.global.player1.x = msg.x
 				game.global.player1.y = msg.y
+				game.global.player1.facing = msg.facing
 			}else{
 				if(typeof game.global.player2.id == 'undefined'){
 					game.global.player2.id = msg.player.id
@@ -87,7 +91,14 @@ ws.onmessage = function(message){
 					}else if(game.global.player1.image.key == 'mago_naranja'){
 						game.global.player2.image = game.add.sprite(msg.player.x,msg.player.y,'mago_verde')
 					}
-					game.global.player2.image.anchor.setTo(0.5,0.5)
+					game.global.player2.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
+			        game.global.player2.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+			        if(game.global.player2.id == 0){
+			        	game.global.player2.image.frame=9;
+			        }else if(game.global.player2.id == 1){
+			        	game.global.player2.image.frame = 0;
+			        }
+					//game.global.player2.image.anchor.setTo(0.5,0.5)
 					game.physics.enable(game.global.player2.image,Phaser.Physics.ARCADE);
 					game.global.player2.image.body.gravity.y=500;											//Gravedad asignada al mago
 			        game.global.player2.image.body.bounce.y=0.1;
@@ -95,17 +106,65 @@ ws.onmessage = function(message){
 					game.global.player2.mana = msg.player.mana
 					game.global.player2.image.x = msg.player.x
 					game.global.player2.image.y = msg.player.y
+					game.global.player2.image.body.velocity.x = msg.player.velocityX
+					game.global.player2.image.body.velocity.y = msg.player.velocityY
+					console.log(msg.player.facing)
+					if(msg.player.facing == -1){
+						game.global.player2.facing = -1
+						game.global.facing = -1
+						game.global.player2.image.animations.play('left');	
+					}else if(msg.player.facing == 1){
+						game.global.player2.facing = 1
+						game.global.facing = 1
+						game.global.player2.image.animations.play('right');
+					}else{
+						if(msg.player.facing == 0){
+							game.global.player2.image.animations.stop();
+							if(game.global.facing == 1){
+								game.global.player2.image.frame = 9
+							}else{
+								game.global.player2.image.frame = 0
+							}
+						}
+					}
 				}else{
 					game.global.player2.id = msg.player.id
+					if(game.global.player2.id == 0){
+						game.global.player2.image.frame = 9
+					}else if(game.global.player2.id == 1){
+						game.global.player2.image.frame = 0
+					}
 					game.global.player2.vida = msg.player.vida
 					game.global.player2.mana = msg.player.mana
 					game.global.player2.image.x = msg.player.x
 					game.global.player2.image.y = msg.player.y
+					game.global.player2.image.body.velocity.x = msg.player.velocityX
+					game.global.player2.image.body.velocity.y = msg.player.velocityY
+					console.log(msg.player.facing)
+					if(msg.player.facing == -1){
+						game.global.player2.facing = -1
+						game.global.facing = -1
+						game.global.player2.image.animations.play('left');	
+					}else if(msg.player.facing == 1){
+						game.global.player2.facing = 1
+						game.global.facing = 1
+						game.global.player2.image.animations.play('right');
+					}else{
+						if(msg.player.facing == 0){
+							game.global.player2.image.animations.stop();
+							if(game.global.facing == 1){
+								game.global.player2.image.frame = 9
+							}else{
+								game.global.player2.image.frame = 0
+							}
+						}
+					}
 				}
 			}
 		}
 		console.log('Jugador actualizado');
 		console.log(game.global.player2);
+		break;
 	case "SPELL_UPDATED":
 		if(typeof game.global.hechizo1.image!='undefined'){
 			if(typeof game.global.hechizo2.image=='undefined'){
@@ -130,7 +189,7 @@ ws.onmessage = function(message){
 			}
 		}
 		
-		
+		break;
 	}
 }
 

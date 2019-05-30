@@ -82,23 +82,7 @@ MagicAndRunes.level0State = function(game) {
         },
 
     preload: function() {
-    	//----------------------------FONDO------------------------------------------//
-        game.load.image('background','assets/images/background_dungeonv2.png');
-        //-----------------------------TILEMAP---------------------------------------//
-        game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
-        //----------------------------MEDIDOR DE NIVEL-------------------------------//
-        game.load.image('nivAct','assets/medidores/medidor_0.png');
-        //---------------------------TILESHEET----------------------------------------//
-        game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
-        //----------------------------SPRITESHEETS MAGOS--------------------------------//
-        game.load.spritesheet('mago_naranja','assets/images/walk_naranja.png',27,49);
-        game.load.spritesheet('mago_verde','assets/images/walk_verde.png',27,49);
-        //-----------------------------IMAGEN HECHIZOS--------------------------------//
-        game.load.image('hechizo','assets/spells/fuegoNaranja.png');
-        game.load.image('hechizoverde','assets/spells/fuegoVerde.png');
-        
-        //----------------------------AUDIO--------------------------------------------//
-        game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
+    	
 
     },
 
@@ -176,14 +160,16 @@ MagicAndRunes.level0State = function(game) {
         //Animaciones personajes
         game.global.player1.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
         game.global.player1.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
-        game.global.player1.image.frame=9;
+        if(game.global.player1.id == 0){
+        	game.global.player1.image.frame=9;
+        }else if(game.global.player1.id == 1){
+        	game.global.player1.image.frame = 0;
+        }
+        
 
         game.global.player1.image.body.gravity.y=500;											//Gravedad asignada al mago
         game.global.player1.image.body.bounce.y=0.1;												//Rebote con el suelo
         
-
-        
-
         //Asignamos los controles a las teclas "W", "A", "S", "D", "V" y "B"
         wkey=game.input.keyboard.addKey(Phaser.Keyboard.W);
         akey=game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -245,7 +231,8 @@ MagicAndRunes.level0State = function(game) {
         	game.global.player1.x = game.global.player1.image.body.x
             direccionIzq=true;														//El mago ahora apunta a la izquierda; si no lo 
             																		//hacía ahora lo hace
-            game.global.player1.facing="left";
+            game.global.player1.facing=-1;
+            
             if(facing_j1!='left'){
             	game.global.player1.image.animations.play('left');										//El conjunto de sprites de la animación es "left"
                 facing_j1='left';
@@ -257,14 +244,14 @@ MagicAndRunes.level0State = function(game) {
         	game.global.player1.x = game.global.player1.image.body.x
             direccionIzq=false;														//El mago ahora apunta a la izquierda; si no lo 
 																					//hacía ahora lo hace
-            game.global.player1.facing="right";
-
+            game.global.player1.facing=1;
             if(facing_j1!='right'){
             	game.global.player1.image.animations.play('right');										//El conjunto de sprites de la animación es "right"
                 facing_j1='right';
             }
             greenLeft = false;
         }else{																		//Se reasigna el frame
+        	game.global.player1.facing = 0
             if(facing_j1!='idle'){
             	game.global.player1.image.animations.stop();
                 if(facing_j1=='right'){
@@ -352,13 +339,17 @@ MagicAndRunes.level0State = function(game) {
         
         hechizoTempo+=0.05;																	//Aumenta la cuenta del temporizador del hechizo
 
-        mensaje = {
-        		event:"UPDATE_PLAYER",
+        let mensaje = new Object();
+        mensaje.event = "UPDATE_PLAYER"
+        mensaje.info = {
         		id: game.global.player1.id,
         		x: game.global.player1.image.x,
         		y: game.global.player1.image.y,
+        		velocityX:game.global.player1.image.body.velocity.x,
+        		velocityY:game.global.player1.image.body.velocity.y,
         		vida: game.global.player1.vida,
-        		mana: game.global.player1.mana
+        		mana: game.global.player1.mana,
+        		facing:game.global.player1.facing
         }
         
         	ws.send(JSON.stringify(mensaje))

@@ -83,7 +83,7 @@ MagicAndRunes.matchmakingState.prototype = {
     	
     	
     	
-    	mensaje = {
+    	/*mensaje = {
         		event:"UPDATE_PLAYER",
         		id: game.global.player1.id,
         		x: game.global.player1.x,
@@ -92,7 +92,7 @@ MagicAndRunes.matchmakingState.prototype = {
         		mana: game.global.player1.mana
         }
         
-        ws.send(JSON.stringify(mensaje));
+        ws.send(JSON.stringify(mensaje));*/
     	
     	/*ws.onmessage = function(message){
     		console.log('entra a onmessage');

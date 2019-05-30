@@ -45,11 +45,13 @@ public class GameController {
 		if(player.getId() == 0) {
 			player.setX(100);
 			player.setY(400);
+			player.setFacing(1);
 			hechizo.setX(player.getX());
 			hechizo.setY(player.getY());
 		}else if (player.getId()== 1) {
 			player.setX(700);
 			player.setY(400);
+			player.setFacing(-1);
 			hechizo.setX(player.getX());
 			hechizo.setY(player.getY());
 		}
