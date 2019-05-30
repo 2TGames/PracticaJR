@@ -126,17 +126,17 @@ MagicAndRunes.level0State = function(game) {
         if(game.global.player1.id==0){
        	 /*vida=new Phaser.Rectangle(25,25,game.global.player1.vida,20);
        	 mana=new Phaser.Rectangle(25,50,game.global.player1.mana,20);*/
-       	 vida = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-       	 vida.anchor.setTo(0.5,0.5)
-       	 mana = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-       	 mana.anchor.setTo(0.5,0.5)
+       	 vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 vidaUI.anchor.setTo(0.5,0.5)
+       	 manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 manaUI.anchor.setTo(0.5,0.5)
         }else if (game.global.player1.id == 1){
        	 /*vida=new Phaser.Rectangle(650,25,game.global.player1.vida,20);
        	 mana=new Phaser.Rectangle(650,50,game.global.player1.mana,20);*/
-       	 vida = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-       	 vida.anchor.setTo(0.5,0.5)
-       	 mana = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-       	 mana.anchor.setTo(0.5,0.5)
+         vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 vidaUI.anchor.setTo(0.5,0.5)
+       	 manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 manaUI.anchor.setTo(0.5,0.5)
         }
         
         vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
@@ -228,8 +228,8 @@ MagicAndRunes.level0State = function(game) {
         	
         game.debug.geom(mana,'rgba(0,0,255,1)');									//Maná
         game.debug.geom(mana2,'rgba(0,0,255,1)');*/
-        vida.setText("Vida: " + game.global.player1.vida)
-        mana.setText("Mana: " + game.global.player1.mana)
+        vidaUI.setText("Vida: " + game.global.player1.vida)
+        manaUI.setText("Mana: " + game.global.player1.mana)
         
         //--------------------------------MOVIMIENTO DEL MAGO-----------------------------------//
         
@@ -287,6 +287,7 @@ MagicAndRunes.level0State = function(game) {
             hechizoTempo=0;															//Se reinicia el temporizador del hechizo
             if(game.global.player1.mana>0){
                 fireHechizo();														//Función de disparo del hechizo
+               
                 //game.player1.mana-=spellCost;
                 if(game.global.player1.id==1){
                 	mana=new Phaser.Rectangle(25,50,game.global.player1.mana-spellCost,20);

@@ -102,15 +102,15 @@ ws.onmessage = function(message){
 			        
 			        //Para las barras de vida y mana segun el id
 			        if(game.global.player1.id==0){
-			          	 vida2 = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player2.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-			          	 vida2.anchor.setTo(0.5,0.5)
-			          	 mana2 = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player2.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-			          	 mana2.anchor.setTo(0.5,0.5)
+			        	 game.global.player2.vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player2.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+			          	 game.global.player2.vidaUI.anchor.setTo(0.5,0.5)
+			          	 game.global.player2.manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player2.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+			          	 game.global.player2.manaUI.anchor.setTo(0.5,0.5)
 			           }else if (game.global.player1.id == 1){
-			          	 vida2 = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player2.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-			          	 vida2.anchor.setTo(0.5,0.5)
-			          	 mana2 = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player2.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-			          	 mana2.anchor.setTo(0.5,0.5)
+			        	 game.global.player2.vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player2.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+			          	 game.global.player2.vidaUI.anchor.setTo(0.5,0.5)
+			          	 game.global.player2.manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player2.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+			          	 game.global.player2.manaUI.anchor.setTo(0.5,0.5)
 			           }
 					//game.global.player2.image.anchor.setTo(0.5,0.5)
 					game.physics.enable(game.global.player2.image,Phaser.Physics.ARCADE);
@@ -148,18 +148,18 @@ ws.onmessage = function(message){
 					
 					game.global.player2.vida = msg.player.vida
 					game.global.player2.mana = msg.player.mana
-					vida2.setText("Vida: "+game.global.player2.vida)
-					mana2.setText("Mana: "+game.global.player2.mana)
+					game.global.player2.vidaUI.setText("Vida: "+game.global.player2.vida)
+					game.global.player2.manaUI.setText("Mana: "+game.global.player2.mana)
 					if(game.global.player2.id == 0){
-						vida2.x = game.world.centerX-300
-						vida2.y = 25
-						mana2.x = game.world.centerX - 300
-						mana2.y = 50
+						game.global.player2.vidaUI.x = game.world.centerX-300
+						game.global.player2.vidaUI.y = 25
+						game.global.player2.manaUI.x = game.world.centerX - 300
+						game.global.player2.manaUI.y = 50
 					}else if(game.global.player2.id == 1){
-						vida2.x = game.world.centerX+300
-						vida2.y = 25
-						mana2.x = game.world.centerX + 300
-						mana2.y = 50
+						game.global.player2.vidaUI.x = game.world.centerX+300
+						game.global.player2.vidaUI.y = 25
+						game.global.player2.manaUI.x = game.world.centerX + 300
+						game.global.player2.manaUI.y = 50
 					}
 					game.global.player2.image.x = msg.player.x
 					game.global.player2.image.y = msg.player.y
