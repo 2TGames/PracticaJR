@@ -17,7 +17,7 @@ debug={
 	ws:1
 }
 var ws = new WebSocket('ws://'+window.location.host+'/game')
-
+var vida2,mana2
 
 //--------------------------AÑADIMOS AL JUEGO TODOS LOS ESTADOS----------------------------//
 game.state.add('bootState', MagicAndRunes.bootState)
@@ -93,11 +93,25 @@ ws.onmessage = function(message){
 					}
 					game.global.player2.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 			        game.global.player2.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+			        //Para asignar el frame correcto segun el id
 			        if(game.global.player2.id == 0){
 			        	game.global.player2.image.frame=9;
 			        }else if(game.global.player2.id == 1){
 			        	game.global.player2.image.frame = 0;
 			        }
+			        
+			        //Para las barras de vida y mana segun el id
+			        if(game.global.player1.id==0){
+			          	 vida2 = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player2.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+			          	 vida2.anchor.setTo(0.5,0.5)
+			          	 mana2 = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player2.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+			          	 mana2.anchor.setTo(0.5,0.5)
+			           }else if (game.global.player1.id == 1){
+			          	 vida2 = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player2.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+			          	 vida2.anchor.setTo(0.5,0.5)
+			          	 mana2 = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player2.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+			          	 mana2.anchor.setTo(0.5,0.5)
+			           }
 					//game.global.player2.image.anchor.setTo(0.5,0.5)
 					game.physics.enable(game.global.player2.image,Phaser.Physics.ARCADE);
 					game.global.player2.image.body.gravity.y=500;											//Gravedad asignada al mago
@@ -129,13 +143,24 @@ ws.onmessage = function(message){
 					}
 				}else{
 					game.global.player2.id = msg.player.id
-					if(game.global.player2.id == 0){
-						game.global.player2.image.frame = 9
-					}else if(game.global.player2.id == 1){
-						game.global.player2.image.frame = 0
-					}
+					//Para las barras de vida y mana segun el id
+					
+					
 					game.global.player2.vida = msg.player.vida
 					game.global.player2.mana = msg.player.mana
+					vida2.setText("Vida: "+game.global.player2.vida)
+					mana2.setText("Mana: "+game.global.player2.mana)
+					if(game.global.player2.id == 0){
+						vida2.x = game.world.centerX-300
+						vida2.y = 25
+						mana2.x = game.world.centerX - 300
+						mana2.y = 50
+					}else if(game.global.player2.id == 1){
+						vida2.x = game.world.centerX+300
+						vida2.y = 25
+						mana2.x = game.world.centerX + 300
+						mana2.y = 50
+					}
 					game.global.player2.image.x = msg.player.x
 					game.global.player2.image.y = msg.player.y
 					game.global.player2.image.body.velocity.x = msg.player.velocityX

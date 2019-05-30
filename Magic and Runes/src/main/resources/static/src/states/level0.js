@@ -12,10 +12,11 @@ MagicAndRunes.level0State = function(game) {
     var vidaEnemigo,manaEnemigo;									//Empleadas para pintar la vida y el maná del enemigo
     																//en las barras correspondientes de vida y de maná
     var lanzamiento=false;											//Se pone a true para disparar un hechizo
-    var vidaLocal;													//Almacena la vida del jugador de forma que se pueda
+    var vidaLocal												//Almacena la vida del jugador de forma que se pueda
     																//trabajar sin usar game.player1.vida
     var nivel;														//Almacena todo lo referente al nivel
     var facing_j1='right',facing_j2='left';							//Almacena a dónde apinta el jugador 1 y el jugador 2
+    var vida,mana;
 
     
     
@@ -99,18 +100,8 @@ MagicAndRunes.level0State = function(game) {
          																	//cargado hasta que sea destruido
         music.play();														//Iniciamos la música
          
-         //----------------------------BARRAS PLAYER 1-------------------------------//
-         //Creamos las barras de vida y maná del jugador local dependiendo de su ID
-         if(game.global.player1.id==0){
-        	 vida=new Phaser.Rectangle(25,25,game.global.player1.vida,20);
-        	 mana=new Phaser.Rectangle(25,50,game.global.player1.mana,20);
-         }else if (game.global.player1.id == 1){
-        	 vida=new Phaser.Rectangle(650,25,game.global.player1.vida,20);
-        	 mana=new Phaser.Rectangle(650,50,game.global.player1.mana,20);
-         }
-         
-         vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
-         
+        
+       
          //---------------------ELEMENTOS BÁSICOS DEL NIVEL------------------------//
         background= game.add.sprite(0,0,'background');						//Asignamos el background a su variable
         nivel=this.add.tilemap('nivel0',16,16);								//   ""    el tilemap  ""
@@ -129,6 +120,26 @@ MagicAndRunes.level0State = function(game) {
         	game.global.player1.image =game.add.sprite(game.global.player1.x,game.global.player1.y,'mago_naranja');
         	//mago.scale.x=-1;
         }
+        
+        //----------------------------BARRAS PLAYER 1-------------------------------//
+        //Creamos las barras de vida y maná del jugador local dependiendo de su ID
+        if(game.global.player1.id==0){
+       	 /*vida=new Phaser.Rectangle(25,25,game.global.player1.vida,20);
+       	 mana=new Phaser.Rectangle(25,50,game.global.player1.mana,20);*/
+       	 vida = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 vida.anchor.setTo(0.5,0.5)
+       	 mana = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 mana.anchor.setTo(0.5,0.5)
+        }else if (game.global.player1.id == 1){
+       	 /*vida=new Phaser.Rectangle(650,25,game.global.player1.vida,20);
+       	 mana=new Phaser.Rectangle(650,50,game.global.player1.mana,20);*/
+       	 vida = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 vida.anchor.setTo(0.5,0.5)
+       	 mana = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 mana.anchor.setTo(0.5,0.5)
+        }
+        
+        vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
         
         game.physics.enable(game.global.player1.image,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
         
@@ -212,12 +223,13 @@ MagicAndRunes.level0State = function(game) {
     	}
     	//------------------------------BARRAS DE VIDA Y MANÁ-----------------------------------//
     	//Volvemos a pintar las barras con las variables actualizadas
-    	game.debug.geom(vida,'rgba(0,255,0,1)');									//Vida
-    	game.debug.geom(vidaEnemigo,'rgba(0,255,0,1)');
+    	/*game.debug.geom(vida,'rgba(0,255,0,1)');									//Vida
+    	game.debug.geom(vida2,'rgba(0,255,0,1)');
         	
         game.debug.geom(mana,'rgba(0,0,255,1)');									//Maná
-        game.debug.geom(manaEnemigo,'rgba(0,0,255,1)');
-        
+        game.debug.geom(mana2,'rgba(0,0,255,1)');*/
+        vida.setText("Vida: " + game.global.player1.vida)
+        mana.setText("Mana: " + game.global.player1.mana)
         
         //--------------------------------MOVIMIENTO DEL MAGO-----------------------------------//
         
