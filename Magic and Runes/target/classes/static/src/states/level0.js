@@ -95,7 +95,8 @@ MagicAndRunes.level0State = function(game) {
         game.load.spritesheet('mago_verde','assets/images/walk_verde.png',27,49);
         //-----------------------------IMAGEN HECHIZOS--------------------------------//
         game.load.image('hechizo','assets/spells/fuegoNaranja.png');
-        game.load.image('hechizo2','assets/spells/fuegoNaranja.png');
+        game.load.image('hechizoverde','assets/spells/fuegoVerde.png');
+        
         //----------------------------AUDIO--------------------------------------------//
         game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
 
@@ -161,9 +162,9 @@ MagicAndRunes.level0State = function(game) {
         })*/
         
         //Creamos un hechizo invisible y le asignamos las físicas ARCADE
-    	hechizo=game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
-    	game.physics.enable(hechizo,Phaser.Physics.ARCADE);
-    	hechizo.visible=false;
+    	game.global.hechizo1.image =game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
+    	game.physics.enable(game.global.hechizo1.image,Phaser.Physics.ARCADE);
+    	game.global.hechizo1.image.visible=false;
 		//Obtenemos el hechizo del jugador enemigo
         /*this.getHechizo(function(hechizo2Data){
         	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2Data));
@@ -208,19 +209,19 @@ MagicAndRunes.level0State = function(game) {
     		//Después, lo hacemos visible y le asignamos velocidad en x y en y.
     		if(direccionIzq==true){
     			lanzamiento=true;
-    			hechizo=game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
-    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
-    			hechizo.visible=true;
-    			hechizo.body.velocity.x=-400;
-    			hechizo.body.velocity.y=-50;
+    			game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizo');
+    			game.physics.enable(game.global.hechizo1.image,Phaser.Physics.ARCADE);
+    			game.global.hechizo1.image.visible=true;
+    			game.global.hechizo1.image.body.velocity.x=-400;
+    			game.global.hechizo1.image.body.velocity.y=-50;
     		}else if(direccionIzq==false){
     			lanzamiento=true;
     			console.log("Direccion derecha");
-    			hechizo=game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
-    			game.physics.enable(hechizo,Phaser.Physics.ARCADE);
-    			hechizo.visible=true;
-    			hechizo.body.velocity.x=400;
-    			hechizo.body.velocity.y=-50;
+    			game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizo');
+    			game.physics.enable(game.global.hechizo1.image,Phaser.Physics.ARCADE);
+    			game.global.hechizo1.image.visible=true;
+    			game.global.hechizo1.image.body.velocity.x=400;
+    			game.global.hechizo1.image.body.velocity.y=-50;
     		}
     	}
     	//------------------------------BARRAS DE VIDA Y MANÁ-----------------------------------//
@@ -362,7 +363,16 @@ MagicAndRunes.level0State = function(game) {
         
         	ws.send(JSON.stringify(mensaje))
        
-        
+        mensaje2 = {
+        	event:"SPELL",
+        	id:game.global.player1.id,
+        	x:game.global.hechizo1.image.x,
+        	y:game.global.hechizo1.image.y,
+        	visible:game.global.hechizo1.image.visible,
+        	velocityX:game.global.hechizo1.image.body.velocity.x,
+        	velocityY:game.global.hechizo1.image.body.velocity.y
+        }
+        ws.send(JSON.stringify(mensaje2))
     },
     
     

@@ -123,7 +123,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					}
 					break;
 				case "UPDATE_PLAYER":
-					System.out.println("mensaje recibido de player " + node.path("id").asInt());
+					//System.out.println("mensaje recibido de player " + node.path("id").asInt());
 					ObjectNode jsonPlayer = mapper.createObjectNode();
 					player.setVida(node.get("vida").asInt());
 					player.setMana(node.get("mana").asInt());
@@ -136,10 +136,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					this.broadcast(jsonPlayer.toString(), node.path("id").asInt());
 					//player.getSession().sendMessage(new TextMessage(jsonPlayer.toString()));
 					
-					System.out.println(jsonPlayer.toString());
+					//System.out.println(jsonPlayer.toString());
 
 					break;
-
+				case "SPELL":
+					msg.put("event", "SPELL_UPDATED");
+					msg.put("x", node.get("x").asInt());
+					msg.put("y", node.get("y").asInt());
+					msg.put("visible", node.get("visible").asBoolean());
+					msg.put("velocityX", node.get("velocityX").asInt());
+					msg.put("velocityY", node.get("velocityY").asInt());
+					this.broadcast(msg.toString(), node.get("id").asInt());
+					System.out.println(msg.toString());
+				
 				default:
 					break;
 				}

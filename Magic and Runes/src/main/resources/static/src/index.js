@@ -104,9 +104,33 @@ ws.onmessage = function(message){
 				}
 			}
 		}
-		
 		console.log('Jugador actualizado');
 		console.log(game.global.player2);
+	case "SPELL_UPDATED":
+		if(typeof game.global.hechizo1.image!='undefined'){
+			if(typeof game.global.hechizo2.image=='undefined'){
+				if(game.global.player1.image.key == 'mago_verde'){
+					game.global.hechizo2.image = game.add.sprite(msg.x,msg.y,'hechizo')
+				}else if(game.global.player1.image.key == 'mago_naranja'){
+					game.global.hechizo2.image = game.add.sprite(msg.x,msg.y,'hechizoverde')
+				}
+				game.global.hechizo2.image.anchor.setTo(0.5,0.5)
+				game.physics.enable(game.global.hechizo2.image,Phaser.Physics.ARCADE)
+				game.global.hechizo2.image.x = msg.x
+				game.global.hechizo2.image.y = msg.y
+				game.global.hechizo2.image.visible = msg.visible
+				game.global.hechizo2.image.body.velocity.x = msg.velocityX
+				game.global.hechizo2.image.body.velocity.y = msg.velocityY
+			}else{
+				game.global.hechizo2.image.x = msg.x
+				game.global.hechizo2.image.y = msg.y
+				game.global.hechizo2.image.visible = msg.visible
+				game.global.hechizo2.image.body.velocity.x = msg.velocityX
+				game.global.hechizo2.image.body.velocity.y = msg.velocityY
+			}
+		}
+		
+		
 	}
 }
 
