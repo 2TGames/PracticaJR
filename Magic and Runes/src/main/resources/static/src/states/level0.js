@@ -17,6 +17,7 @@ MagicAndRunes.level0State = function(game) {
     var nivel;														//Almacena todo lo referente al nivel
     var facing_j1='right',facing_j2='left';							//Almacena a dónde apinta el jugador 1 y el jugador 2
     var vida,mana;
+    var isHit = false;												//Para controllar si se ha golpeado al enemigo con el hechizo
 
     
     
@@ -157,7 +158,12 @@ MagicAndRunes.level0State = function(game) {
         })*/
         
         //Creamos un hechizo invisible y le asignamos las físicas ARCADE
-    	game.global.hechizo1.image =game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
+        if(game.global.player1.id == 0){
+        	game.global.hechizo1.image =game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizoverde');
+        }else if(game.global.player1.id == 1){
+        	game.global.hechizo1.image =game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizo');
+        }
+    	
     	game.physics.enable(game.global.hechizo1.image,Phaser.Physics.ARCADE);
     	game.global.hechizo1.image.visible=false;
 		//Obtenemos el hechizo del jugador enemigo
@@ -206,7 +212,11 @@ MagicAndRunes.level0State = function(game) {
     		//Después, lo hacemos visible y le asignamos velocidad en x y en y.
     		if(direccionIzq==true){
     			lanzamiento=true;
-    			game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizo');
+    			if(game.global.player1.id == 0){
+    				game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizoverde');
+    			}else if(game.global.player1.id == 1){
+    				game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizo');
+    			}
     			game.physics.enable(game.global.hechizo1.image,Phaser.Physics.ARCADE);
     			game.global.hechizo1.image.visible=true;
     			game.global.hechizo1.image.body.velocity.x=-400;
@@ -214,7 +224,11 @@ MagicAndRunes.level0State = function(game) {
     		}else if(direccionIzq==false){
     			lanzamiento=true;
     			console.log("Direccion derecha");
-    			game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizo');
+    			if(game.global.player1.id == 0){
+    				game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizoverde');
+    			}else if(game.global.player1.id == 1){
+    				game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizo');
+    			}
     			game.physics.enable(game.global.hechizo1.image,Phaser.Physics.ARCADE);
     			game.global.hechizo1.image.visible=true;
     			game.global.hechizo1.image.body.velocity.x=400;
@@ -287,13 +301,6 @@ MagicAndRunes.level0State = function(game) {
             hechizoTempo=0;															//Se reinicia el temporizador del hechizo
             if(game.global.player1.mana>0){
                 fireHechizo();														//Función de disparo del hechizo
-               
-                //game.player1.mana-=spellCost;
-                if(game.global.player1.id==1){
-                	mana=new Phaser.Rectangle(25,50,game.global.player1.mana-spellCost,20);
-                }else{
-                	mana=new Phaser.Rectangle(650,50,game.global.player1.mana-spellCost,20);
-                }
                 game.global.player1.mana-=spellCost;
             }
         }
@@ -334,21 +341,31 @@ MagicAndRunes.level0State = function(game) {
     		});*/
         	
        //------------------------------COLISIÓN CON EL HECHIZO------------------------------------------//
-        var micolision=game.physics.arcade.collide(game.global.player1,game.global.hechizo2);				//Colisión del jugador con el hechizo enemigo almacenado en un boolean
+        /*var micolision=game.physics.arcade.collide(game.global.player1.image,game.global.hechizo2.image);				//Colisión del jugador con el hechizo enemigo almacenado en un boolean
+        var hit = game.physics.arcade.collide(game.global.hechizo1.image,game.global.player2.image);
+        
+        if(hit){
+        	console.log('hola')
+        	//game.global.hechizo1.image.visible = false;
+        }
         //console.log(micolision);
         if(micolision){																		//Si han colisionado el hechizo tiene efecto
         	console.log("yes");
-        	hechizo2.kill();
+        	//game.global.hechizo2.image.visible = false;
         	game.global.player1.vida-=20;
-        }else{																				//Si no, se llama al update del hechizo 2
-        	/*this.getHechizo(function(updateHechizo2){
-        		game.hechizo2.x=updateHechizo2.x;
-        		game.hechizo2.y=updateHechizo2.y;
-        	})*/
-        }
+        }*/
 
         game.physics.arcade.collide(game.global.player1.image,layer,colisionMapaMagoVerde,null,this);			//Activa la colisión entre el mapa y el mago
         game.physics.arcade.collide(game.global.player2.image,layer,colisionMapaMagoVerde,null,this);
+        
+        game.physics.arcade.overlap(game.global.hechizo1.image,game.global.player2.image,collisionHandler,null,this)
+        
+        function collisionHandler(hechizo,player2){
+        	game.global.hechizo1.image.kill();
+        	isHit = true;
+        }
+        
+        
         
         hechizoTempo+=0.05;																	//Aumenta la cuenta del temporizador del hechizo
 
@@ -374,9 +391,12 @@ MagicAndRunes.level0State = function(game) {
         	y:game.global.hechizo1.image.y,
         	visible:game.global.hechizo1.image.visible,
         	velocityX:game.global.hechizo1.image.body.velocity.x,
-        	velocityY:game.global.hechizo1.image.body.velocity.y
+        	velocityY:game.global.hechizo1.image.body.velocity.y,
+        	isHit:isHit
         }
         ws.send(JSON.stringify(mensaje2))
+        
+        isHit = false;
     },
     
     

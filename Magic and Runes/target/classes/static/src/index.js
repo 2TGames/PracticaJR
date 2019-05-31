@@ -56,13 +56,7 @@ ws.onmessage = function(message){
 		game.global.player1.y = msg.y
 		game.global.player1.facing = msg.facing
 		console.log(game.global.player1)
-		break
-	/*case "PLAYER_CREATED":
-		console.log("******PLAYER CREATED******");
-		console.log("id: "+msg.id);
-		game.player1 = msg.player;
-		console.log(game.player1);
-		break;*/
+		break;
 	case "MAX_PLAYERS":
 		console.log("El servidor esta lleno, vuelve a intentarlo mas tarde");
 		break;
@@ -198,19 +192,25 @@ ws.onmessage = function(message){
 				}else if(game.global.player1.image.key == 'mago_naranja'){
 					game.global.hechizo2.image = game.add.sprite(msg.x,msg.y,'hechizoverde')
 				}
-				game.global.hechizo2.image.anchor.setTo(0.5,0.5)
+				//game.global.hechizo2.image.anchor.setTo(0.5,0.5)
 				game.physics.enable(game.global.hechizo2.image,Phaser.Physics.ARCADE)
 				game.global.hechizo2.image.x = msg.x
 				game.global.hechizo2.image.y = msg.y
 				game.global.hechizo2.image.visible = msg.visible
 				game.global.hechizo2.image.body.velocity.x = msg.velocityX
 				game.global.hechizo2.image.body.velocity.y = msg.velocityY
+				if(msg.isHit){
+					game.global.player1.vida -= 20
+				}
 			}else{
 				game.global.hechizo2.image.x = msg.x
 				game.global.hechizo2.image.y = msg.y
 				game.global.hechizo2.image.visible = msg.visible
 				game.global.hechizo2.image.body.velocity.x = msg.velocityX
 				game.global.hechizo2.image.body.velocity.y = msg.velocityY
+				if(msg.isHit){
+					game.global.player1.vida -= 20
+				}
 			}
 		}
 		

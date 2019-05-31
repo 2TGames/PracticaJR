@@ -157,6 +157,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("visible", node.get("visible").asBoolean());
 					msg.put("velocityX", node.get("velocityX").asInt());
 					msg.put("velocityY", node.get("velocityY").asInt());
+					msg.put("isHit", node.get("isHit").asBoolean());
 					this.broadcast(msg.toString(), node.get("id").asInt());
 					//System.out.println(msg.toString());
 					break;
