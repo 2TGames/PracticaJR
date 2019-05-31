@@ -24,6 +24,7 @@ MagicAndRunes.level0State = function(game) {
     //Variables de los hechizos
     var hechizo,hechizo2;											//Hechizos del jugador y del enemigo, respectivamente
     var fire2Button;												//Tecla a pulsar que dispara los hechizos
+    var isfiring = false;
     var hechizoTempo=0;												//Temporizador que regula la cadencia de los hechizos
     var direccionIzq =false;										//Variable que almacena la dirección del 
     																//hechizo en función de si mira a la izquierda
@@ -200,14 +201,12 @@ MagicAndRunes.level0State = function(game) {
     	//Muerte por caida
     	if(game.global.player1.image.body.y>540){
     		game.global.player1.vida=0;
+    		this.game.state.start('endingState')
     	}
     	
     	if(game.global.player1.vida <= 0){
     		this.game.state.start('endingState')
     	}
-    	/*if(game.player1.vida == 0 || game.player2.vida == 0){
-    		this.game.state.start("endingState");
-    	}*/
 
         //funcion de disparo para el mago verde
     	function fireHechizo(){
@@ -301,11 +300,14 @@ MagicAndRunes.level0State = function(game) {
 
         if (fire2Button.isDown && hechizoTempo>3)
         {
+        	isfiring = true
             hechizoTempo=0;															//Se reinicia el temporizador del hechizo
             if(game.global.player1.mana>0){
                 fireHechizo();														//Función de disparo del hechizo
                 game.global.player1.mana-=spellCost;
             }
+        }else{
+        	isfiring= false;
         }
         
         /*this.putPlayer();															//Envía los datos del jugador al servidor
@@ -387,17 +389,20 @@ MagicAndRunes.level0State = function(game) {
         
         	ws.send(JSON.stringify(mensaje))
        
-        mensaje2 = {
-        	event:"SPELL",
-        	id:game.global.player1.id,
-        	x:game.global.hechizo1.image.x,
-        	y:game.global.hechizo1.image.y,
-        	visible:game.global.hechizo1.image.visible,
-        	velocityX:game.global.hechizo1.image.body.velocity.x,
-        	velocityY:game.global.hechizo1.image.body.velocity.y,
-        	isHit:isHit
+        if(isfiring){
+        	mensaje2 = {
+                	event:"SPELL",
+                	id:game.global.player1.id,
+                	x:game.global.hechizo1.image.x,
+                	y:game.global.hechizo1.image.y,
+                	visible:game.global.hechizo1.image.visible,
+                	velocityX:game.global.hechizo1.image.body.velocity.x,
+                	velocityY:game.global.hechizo1.image.body.velocity.y,
+                	isHit:isHit
+                }
+                ws.send(JSON.stringify(mensaje2))
         }
-        ws.send(JSON.stringify(mensaje2))
+        
         
         isHit = false;
     },

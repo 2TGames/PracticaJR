@@ -6,18 +6,11 @@ MagicAndRunes.endingState.prototype = {
 
 	// Elimina el cazador que ha creado este cliente.
 	init: function() {
-		if (game.player1 != null) {
-			$.ajax({
-	            method: "DELETE",
-	            url: 'http://10.0.70.215:8080/game/' + game.player1.id,
-	            processData: false,
-	            headers: {
-	                "Content-Type": "application/json"
-	            },
-	        }).done(function (data) {
-	            //console.log("Player removed: " + JSON.stringify(data));
-	        })
+		mensaje = {
+				event:"GAME OVER",
+				id:game.global.player1.id
 		}
+		ws.send(JSON.stringify(mensaje))
 	},
 	
 	// Habría que hacer pequeños cambios para indicar que ha ganado uno u otro la partida.

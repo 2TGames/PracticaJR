@@ -218,6 +218,8 @@ ws.onmessage = function(message){
 		}
 		
 		break;
+	case "END":
+		game.state.start('endingState');
 	}
 }
 
