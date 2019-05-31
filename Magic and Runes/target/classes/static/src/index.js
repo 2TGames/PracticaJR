@@ -111,6 +111,9 @@ ws.onmessage = function(message){
 					game.global.player2.image.body.gravity.y=500;											//Gravedad asignada al mago
 			        game.global.player2.image.body.bounce.y=0.1;
 					game.global.player2.vida = msg.player.vida
+					if(game.global.player2.vida <= 0){
+						this.game.state.start('endingState');
+					}
 					game.global.player2.mana = msg.player.mana
 					game.global.player2.image.x = msg.player.x
 					game.global.player2.image.y = msg.player.y

@@ -202,6 +202,9 @@ MagicAndRunes.level0State = function(game) {
     		game.global.player1.vida=0;
     	}
     	
+    	if(game.global.player1.vida <= 0){
+    		this.game.state.start('endingState')
+    	}
     	/*if(game.player1.vida == 0 || game.player2.vida == 0){
     		this.game.state.start("endingState");
     	}*/
