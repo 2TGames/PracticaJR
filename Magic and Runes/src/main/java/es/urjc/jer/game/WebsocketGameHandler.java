@@ -161,9 +161,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					this.broadcast(msg.toString(), node.get("id").asInt());
 					//System.out.println(msg.toString());
 					break;
+				case "ENCH":
+					msg.put("event", "ENCH_UPDATED");
+					msg.put("x", node.get("x").asInt());
+					msg.put("y", node.get("y").asInt());
+					msg.put("visible", node.get("visible").asBoolean());
+					msg.put("isHitEnch", node.get("isHitEnch").asBoolean());
+					this.broadcast(msg.toString(), node.get("id").asInt());
+					break;
 				case "GAME OVER":
 					msg.put("event", "END");
 					this.broadcast(msg.toString(), node.get("id").asInt());
+					break;
 				default:
 					break;
 				}

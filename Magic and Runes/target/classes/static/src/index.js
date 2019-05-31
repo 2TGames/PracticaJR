@@ -5,6 +5,8 @@ game.global = {
 	hechizo1: new Object(),											//Creación del hechizo 1
 	player2: new Object(),													//Creacion del jugador 2
 	hechizo2: new Object(), 													//Creación del hechizo 2
+	encantamiento1:new Object(),
+	encantamiento2:new Object(),
 	facing:0,
 	numPlayers: 0,													//Número de jugadores
 	gameReady: 0,
@@ -213,10 +215,46 @@ ws.onmessage = function(message){
 				game.global.hechizo2.image.body.velocity.y = msg.velocityY
 				if(msg.isHit){
 					game.global.player1.vida -= 20
+					
 				}
 			}
 		}
 		
+		break;
+	case "ENCH_UPDATED":
+		if(typeof game.global.encantamiento1.image!='undefined'){
+			if(typeof game.global.encantamiento2.image == 'undefined'){
+				if(game.global.player1.image.key == 'mago_verde'){
+					game.global.encantamiento2.image = game.add.sprite(msg.x + 10,msg.y + 30,'nubeNaranja')
+				}else if(game.global.player1.image.key == 'mago_naranja'){
+					game.global.encantamiento2.image = game.add.sprite(msg.x + 10 ,msg.y + 30,'nubeVerde')
+				}
+				game.global.encantamiento2.image.scale.setTo(0.5,0.5)
+				game.global.encantamiento2.image.anchor.setTo(0.5,0.5)
+				game.global.encantamiento2.image.visible = msg.visible
+				game.global.encantamiento2.image.x = msg.x
+				game.global.encantamiento2.image.y = msg.y
+				if(msg.isHitEnch){
+					game.global.player1.vida -= 20
+					game.global.encantamiento2.image.destroy()
+				}
+			}else{
+				if(game.global.player1.image.key == 'mago_verde'){
+					game.global.encantamiento2.image = game.add.sprite(msg.x + 10,msg.y + 30,'nubeNaranja')
+				}else if(game.global.player1.image.key == 'mago_naranja'){
+					game.global.encantamiento2.image = game.add.sprite(msg.x + 10 ,msg.y + 30,'nubeVerde')
+				}
+				game.global.encantamiento2.image.scale.setTo(0.5,0.5)
+				game.global.encantamiento2.image.anchor.setTo(0.5,0.5)
+				game.global.encantamiento2.image.x = msg.x
+				game.global.encantamiento2.image.y = msg.y
+				game.global.encantamiento2.image.visible = msg.visible
+				if(msg.isHitEnch){
+					game.global.player1.vida -= 20
+					game.global.encantamiento2.image.destroy()
+				}
+			}
+		}
 		break;
 	case "END":
 		game.state.start('endingState');

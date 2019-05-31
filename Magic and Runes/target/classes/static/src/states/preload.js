@@ -23,7 +23,8 @@ MagicAndRunes.preloadState.prototype = {
         //-----------------------------IMAGEN HECHIZOS--------------------------------//
         game.load.image('hechizo','assets/spells/fuegoNaranja.png');
         game.load.image('hechizoverde','assets/spells/fuegoVerde.png');
-        
+        game.load.spritesheet('nubeVerde','assets/spells/Nube_verde.png',180.5,60)
+        game.load.spritesheet('nubeNaranja','assets/spells/Nube_naranja.png',180.5,60)
         //----------------------------AUDIO--------------------------------------------//
         game.load.audio('ATA', 'assets/music/Ancient-Troops-Amassing.mp3');
         

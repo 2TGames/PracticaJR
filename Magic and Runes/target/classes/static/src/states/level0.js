@@ -18,13 +18,16 @@ MagicAndRunes.level0State = function(game) {
     var facing_j1='right',facing_j2='left';							//Almacena a dónde apinta el jugador 1 y el jugador 2
     var vida,mana;
     var isHit = false;												//Para controllar si se ha golpeado al enemigo con el hechizo
+    var isHitEnch = false;
+    var play = false;
 
     
     
     //Variables de los hechizos
     var hechizo,hechizo2;											//Hechizos del jugador y del enemigo, respectivamente
-    var fire2Button;												//Tecla a pulsar que dispara los hechizos
+    var fire2Button,ench2Button;												//Tecla a pulsar que dispara los hechizos
     var isfiring = false;
+    var isfiringEnch = false;
     var hechizoTempo=0;												//Temporizador que regula la cadencia de los hechizos
     var direccionIzq =false;										//Variable que almacena la dirección del 
     																//hechizo en función de si mira a la izquierda
@@ -123,6 +126,8 @@ MagicAndRunes.level0State = function(game) {
         	//mago.scale.x=-1;
         }
         
+        
+        
         //----------------------------BARRAS PLAYER 1-------------------------------//
         //Creamos las barras de vida y maná del jugador local dependiendo de su ID
         if(game.global.player1.id==0){
@@ -174,6 +179,17 @@ MagicAndRunes.level0State = function(game) {
         	hechizo2.visible=false;
         	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
         })*/
+    	
+    	if(game.global.player1.id == 0){
+        	game.global.encantamiento1.image = game.add.sprite(game.global.player1.x,game.global.player1.y,'nubeVerde')
+        }else if(game.global.player1.id == 1){
+        	game.global.encantamiento1.image = game.add.sprite(game.global.player1.x,game.global.player1.y,'nubeNaranja')
+        }
+    	game.physics.enable(game.global.encantamiento1.image,Phaser.Physics.ARCADE);
+    	game.global.encantamiento1.image.visible = false
+    	game.global.encantamiento1.image.scale.setTo(0.5,0.5)
+    	game.global.encantamiento1.image.anchor.setTo(0.5,0.5)
+    	game.global.encantamiento1.image.animations.add('start')
         
         //Animaciones personajes
         game.global.player1.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
@@ -236,6 +252,21 @@ MagicAndRunes.level0State = function(game) {
     			game.global.hechizo1.image.body.velocity.x=400;
     			game.global.hechizo1.image.body.velocity.y=-50;
     		}
+    	}
+    	
+    	function fireEncantamiento(){
+    		if(game.global.player1.id == 0){
+            	game.global.encantamiento1.image = game.add.sprite(game.global.player1.image.x + 10,game.global.player1.image.y + 30,'nubeVerde')
+            }else if(game.global.player1.id == 1){
+            	game.global.encantamiento1.image = game.add.sprite(game.global.player1.image.x + 10,game.global.player1.image.y + 30,'nubeNaranja')
+            }
+    		game.physics.enable(game.global.encantamiento1.image,Phaser.Physics.ARCADE)
+    		game.global.encantamiento1.image.body.allowGravity = false
+    		game.global.encantamiento1.image.scale.setTo(0.5,0.5)
+    		game.global.encantamiento1.image.anchor.setTo(0.5,0.5)
+    		game.global.encantamiento1.image.visible = true;
+    		game.global.encantamiento1.image.animations.add('start')
+    		
     	}
     	//------------------------------BARRAS DE VIDA Y MANÁ-----------------------------------//
     	//Volvemos a pintar las barras con las variables actualizadas
@@ -310,6 +341,20 @@ MagicAndRunes.level0State = function(game) {
         	isfiring= false;
         }
         
+        if(ench2Button.isDown && hechizoTempo>3){
+        	isfiringEnch = true
+        	hechizoTempo = 0;
+        	if(game.global.player1.mana > 0){
+        		fireEncantamiento();
+        		play = true
+        		game.global.player1.mana -= spellCost;
+        	}
+        }
+        
+        if(play){
+        	game.global.encantamiento1.image.animations.play('start',15,true)
+        }
+        
         /*this.putPlayer();															//Envía los datos del jugador al servidor
 
         this.getPlayer(function(updatePlayer2){										//Obtiene la posición del jugador 2
@@ -364,10 +409,16 @@ MagicAndRunes.level0State = function(game) {
         game.physics.arcade.collide(game.global.player2.image,layer,colisionMapaMagoVerde,null,this);
         
         game.physics.arcade.overlap(game.global.hechizo1.image,game.global.player2.image,collisionHandler,null,this)
+        game.physics.arcade.overlap(game.global.encantamiento1.image,game.global.player2.image,collisionHandlerEnch,null,this)
         
         function collisionHandler(hechizo,player2){
         	game.global.hechizo1.image.kill();
         	isHit = true;
+        }
+        
+        function collisionHandlerEnch(encatamiento,player2){
+        	game.global.encantamiento1.image.kill();
+        	isHitEnch = true;
         }
         
         
@@ -403,8 +454,21 @@ MagicAndRunes.level0State = function(game) {
                 ws.send(JSON.stringify(mensaje2))
         }
         
+        if(isfiringEnch){
+        	mensaje3 = {
+        			event:"ENCH",
+        			id:game.global.player1.id,
+        			x:game.global.encantamiento1.image.x,
+        			y:game.global.encantamiento1.image.y,
+        			visible:game.global.encantamiento1.image.visible,
+        			isHitEnch:isHitEnch
+        	}
+        	ws.send(JSON.stringify(mensaje3))
+        }
+        
         
         isHit = false;
+        isHitEnch = false;
     },
     
     
