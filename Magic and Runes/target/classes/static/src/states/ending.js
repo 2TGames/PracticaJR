@@ -25,6 +25,10 @@ MagicAndRunes.endingState.prototype = {
     },
 
     create: function() {
+    	//eliminamos la música para que no se superponga a la del menú de inicio
+    	music.destroy();
+    	game.cache.removeSound('ATA');
+    	
         //Iniciamos tecla 'm'
         this.mKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
     },
