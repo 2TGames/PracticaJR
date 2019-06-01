@@ -50,14 +50,12 @@ ws.onmessage = function(message){
 	console.log('INFO RECIBIDA '+msg.event);
 	switch(msg.event){
 	case "JOIN":
-		console.log('Conexion stablished, player created')
 		game.global.player1.id = msg.id
 		game.global.player1.vida = msg.vida
 		game.global.player1.mana = msg.mana
 		game.global.player1.x = msg.x
 		game.global.player1.y = msg.y
 		game.global.player1.facing = msg.facing
-		console.log(game.global.player1)
 		break;
 	case "MAX_PLAYERS":
 		console.log("El servidor esta lleno, vuelve a intentarlo mas tarde");
@@ -164,7 +162,6 @@ ws.onmessage = function(message){
 					game.global.player2.image.y = msg.player.y
 					game.global.player2.image.body.velocity.x = msg.player.velocityX
 					game.global.player2.image.body.velocity.y = msg.player.velocityY
-					console.log(msg.player.facing)
 					if(msg.player.facing == -1){
 						game.global.player2.facing = -1
 						game.global.facing = -1
@@ -186,8 +183,6 @@ ws.onmessage = function(message){
 				}
 			}
 		}
-		console.log('Jugador actualizado');
-		console.log(game.global.player2);
 		break;
 	case "SPELL_UPDATED":
 		if(typeof game.global.hechizo1.image!='undefined'){
@@ -197,7 +192,6 @@ ws.onmessage = function(message){
 				}else if(game.global.player1.image.key == 'mago_naranja'){
 					game.global.hechizo2.image = game.add.sprite(msg.x,msg.y,'hechizoverde')
 				}
-				//game.global.hechizo2.image.anchor.setTo(0.5,0.5)
 				game.physics.enable(game.global.hechizo2.image,Phaser.Physics.ARCADE)
 				game.global.hechizo2.image.x = msg.x
 				game.global.hechizo2.image.y = msg.y
@@ -229,6 +223,8 @@ ws.onmessage = function(message){
 				}else if(game.global.player1.image.key == 'mago_naranja'){
 					game.global.encantamiento2.image = game.add.sprite(msg.x + 10 ,msg.y + 30,'nubeVerde')
 				}
+				game.physics.enable(game.global.encantamiento2.image,Phaser.Physics.ARCADE)
+				game.global.encantamiento2.image.body.allowGravity = false
 				game.global.encantamiento2.image.scale.setTo(0.5,0.5)
 				game.global.encantamiento2.image.anchor.setTo(0.5,0.5)
 				game.global.encantamiento2.image.visible = msg.visible
@@ -236,14 +232,8 @@ ws.onmessage = function(message){
 				game.global.encantamiento2.image.y = msg.y
 				if(msg.isHitEnch){
 					game.global.player1.vida -= 20
-					game.global.encantamiento2.image.destroy()
 				}
 			}else{
-				if(game.global.player1.image.key == 'mago_verde'){
-					game.global.encantamiento2.image = game.add.sprite(msg.x + 10,msg.y + 30,'nubeNaranja')
-				}else if(game.global.player1.image.key == 'mago_naranja'){
-					game.global.encantamiento2.image = game.add.sprite(msg.x + 10 ,msg.y + 30,'nubeVerde')
-				}
 				game.global.encantamiento2.image.scale.setTo(0.5,0.5)
 				game.global.encantamiento2.image.anchor.setTo(0.5,0.5)
 				game.global.encantamiento2.image.x = msg.x
@@ -251,7 +241,6 @@ ws.onmessage = function(message){
 				game.global.encantamiento2.image.visible = msg.visible
 				if(msg.isHitEnch){
 					game.global.player1.vida -= 20
-					game.global.encantamiento2.image.destroy()
 				}
 			}
 		}

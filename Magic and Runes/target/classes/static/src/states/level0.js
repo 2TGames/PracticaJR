@@ -2,59 +2,30 @@ MagicAndRunes.level0State = function(game) {
     
 }
 
-
-    var mago;														//Mago controlado
-    var mago2;														//Mago enemigo
     var layer;														//Capa actual del mapa
     var medidor;													//Imagen correspondiente al "mapa", en la parte superior
     																//de la pantalla
     var temp2=0;													//Temporizador para el salto
-    var vidaEnemigo,manaEnemigo;									//Empleadas para pintar la vida y el maná del enemigo
     																//en las barras correspondientes de vida y de maná
     var lanzamiento=false;											//Se pone a true para disparar un hechizo
-    var vidaLocal												//Almacena la vida del jugador de forma que se pueda
     																//trabajar sin usar game.player1.vida
     var nivel;														//Almacena todo lo referente al nivel
     var facing_j1='right',facing_j2='left';							//Almacena a dónde apinta el jugador 1 y el jugador 2
     var vida,mana;
-    var isHit = false;												//Para controllar si se ha golpeado al enemigo con el hechizo
-    var isHitEnch = false;
-    var play = false;
+    var isHit = false;												//Para controlar si se ha golpeado al enemigo con el hechizo
+    var isHitEnch = false;											//Para controlar si el enemigo colisiona con el encantamiento
+    var play = false;												//Variable para controllar la animacion del encantamiento
 
     
     
     //Variables de los hechizos
     var hechizo,hechizo2;											//Hechizos del jugador y del enemigo, respectivamente
     var fire2Button,ench2Button;												//Tecla a pulsar que dispara los hechizos
-    var isfiring = false;
-    var isfiringEnch = false;
     var hechizoTempo=0;												//Temporizador que regula la cadencia de los hechizos
     var direccionIzq =false;										//Variable que almacena la dirección del 
     																//hechizo en función de si mira a la izquierda
     var spellCost=2;												//Coste en maná de disparar un hechizo
-    
-    /*function micolision(vidaLocal,game.hechizo2){
-        console.log("yes");
-        vidaLocal-=20;
-        vida=new Phaser.Rectangle(25,25,vidaLocal,20);
-        //game.debug.geom(vidaizq,'rgba(250,255,10,1');
-        /*if(mago_izquierda.vida<=0){
-            mago_izquierda.vida=100;
-            mago_derecha.mana=100;
-            mago_izquierda.mana=100;
-            mago_derecha.vida=100;
-            facing_j1='right';
-            facing_j2='left';
-            mago_derecha.scale.x=1;
-            mago_izquierda.scale.x=1;
-            game.state.start("level_izq1State");
-        }
-        //dañoJ2+=20;
-        
-        hechizo2.kill();
-        /*caugth++;
-        score.setText("Score: " + caugth);
-    }*/
+   
 
 //-------------------------------------Si el mago entra en contacto con el mapa, este actúa 
 //-------------------------------------como suelo sobre el que se puede saltar.
@@ -69,23 +40,7 @@ MagicAndRunes.level0State = function(game) {
 
     
     MagicAndRunes.level0State.prototype = {
-        init() {
-        	
-        	//El jugador empieza mirando a izquierda o derecha dependiendo de su IP
-            /*if(game.player1.id==1){
-                game.player2 = {id:2,
-                				facing:"left"};
-            }else if(game.player1.id==2){
-                game.player2 = {id: 1,
-                				facing:"right"};
-            }
-            //Se crea la ID del hechizo 2 en base a la del hechizo 1
-            if(game.hechizo1.id==1){
-            	game.hechizo2 = {id:2};
-            }else{
-            	game.hechizo2 = {id:1};
-            }*/
-        },
+
 
     preload: function() {
     	
@@ -131,15 +86,11 @@ MagicAndRunes.level0State = function(game) {
         //----------------------------BARRAS PLAYER 1-------------------------------//
         //Creamos las barras de vida y maná del jugador local dependiendo de su ID
         if(game.global.player1.id==0){
-       	 /*vida=new Phaser.Rectangle(25,25,game.global.player1.vida,20);
-       	 mana=new Phaser.Rectangle(25,50,game.global.player1.mana,20);*/
        	 vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
        	 vidaUI.anchor.setTo(0.5,0.5)
        	 manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
        	 manaUI.anchor.setTo(0.5,0.5)
         }else if (game.global.player1.id == 1){
-       	 /*vida=new Phaser.Rectangle(650,25,game.global.player1.vida,20);
-       	 mana=new Phaser.Rectangle(650,50,game.global.player1.mana,20);*/
          vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
        	 vidaUI.anchor.setTo(0.5,0.5)
        	 manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
@@ -150,19 +101,6 @@ MagicAndRunes.level0State = function(game) {
         
         game.physics.enable(game.global.player1.image,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
         
-        //---------------------------------Cogemos la posición inicial del jugador 2
-       
-        
-        /*this.getPlayer(function(player2Data){
-            game.player2 = JSON.parse(JSON.stringify(player2Data));
-            if(game.player2.id==1){
-            	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_verde');
-            }else if(game.player2.id==2){
-            	mago2=game.add.sprite(game.player2.x,game.player2.y,'mago_naranja');
-            }
-            //console.log(JSON.stringify(game.player2));
-        })*/
-        
         //Creamos un hechizo invisible y le asignamos las físicas ARCADE
         if(game.global.player1.id == 0){
         	game.global.hechizo1.image =game.add.sprite(game.global.player1.x,game.global.player1.y+10,'hechizoverde');
@@ -172,14 +110,8 @@ MagicAndRunes.level0State = function(game) {
     	
     	game.physics.enable(game.global.hechizo1.image,Phaser.Physics.ARCADE);
     	game.global.hechizo1.image.visible=false;
-		//Obtenemos el hechizo del jugador enemigo
-        /*this.getHechizo(function(hechizo2Data){
-        	game.hechizo2 = JSON.parse(JSON.stringify(hechizo2Data));
-        	hechizo2=game.add.sprite(game.player2.x,game.player2.y,'hechizo2');
-        	hechizo2.visible=false;
-        	//console.log("Informacion el hechizo: "+JSON.stringify(game.hechizo2));
-        })*/
     	
+    	//Creamo un encantamiento invisible y le asignamos las fisicas ARCADE
     	if(game.global.player1.id == 0){
         	game.global.encantamiento1.image = game.add.sprite(game.global.player1.x,game.global.player1.y,'nubeVerde')
         }else if(game.global.player1.id == 1){
@@ -187,6 +119,7 @@ MagicAndRunes.level0State = function(game) {
         }
     	game.physics.enable(game.global.encantamiento1.image,Phaser.Physics.ARCADE);
     	game.global.encantamiento1.image.visible = false
+    	game.global.encantamiento1.isAlive = false;
     	game.global.encantamiento1.image.scale.setTo(0.5,0.5)
     	game.global.encantamiento1.image.anchor.setTo(0.5,0.5)
     	game.global.encantamiento1.image.animations.add('start')
@@ -223,6 +156,16 @@ MagicAndRunes.level0State = function(game) {
     	if(game.global.player1.vida <= 0){
     		this.game.state.start('endingState')
     	}
+    	
+    	//*****Implementar aquí la funcionalidad de pasar de nivel y de pasar al endingState cuando se llegue al final de todos los niveles*****/
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
 
         //funcion de disparo para el mago verde
     	function fireHechizo(){
@@ -265,16 +208,12 @@ MagicAndRunes.level0State = function(game) {
     		game.global.encantamiento1.image.scale.setTo(0.5,0.5)
     		game.global.encantamiento1.image.anchor.setTo(0.5,0.5)
     		game.global.encantamiento1.image.visible = true;
+    		game.global.encantamiento1.isAlive = true;
     		game.global.encantamiento1.image.animations.add('start')
     		
     	}
     	//------------------------------BARRAS DE VIDA Y MANÁ-----------------------------------//
-    	//Volvemos a pintar las barras con las variables actualizadas
-    	/*game.debug.geom(vida,'rgba(0,255,0,1)');									//Vida
-    	game.debug.geom(vida2,'rgba(0,255,0,1)');
-        	
-        game.debug.geom(mana,'rgba(0,0,255,1)');									//Maná
-        game.debug.geom(mana2,'rgba(0,0,255,1)');*/
+    	//Volvemos a pintar la informacion con las variables actualizadas
         vidaUI.setText("Vida: " + game.global.player1.vida)
         manaUI.setText("Mana: " + game.global.player1.mana)
         
@@ -328,21 +267,18 @@ MagicAndRunes.level0State = function(game) {
         }
 
         
-
+        //Funcion para lanzar el hechizo
         if (fire2Button.isDown && hechizoTempo>3)
         {
-        	isfiring = true
             hechizoTempo=0;															//Se reinicia el temporizador del hechizo
             if(game.global.player1.mana>0){
                 fireHechizo();														//Función de disparo del hechizo
                 game.global.player1.mana-=spellCost;
             }
-        }else{
-        	isfiring= false;
         }
         
-        if(ench2Button.isDown && hechizoTempo>3){
-        	isfiringEnch = true
+        //Funcion para lanzar el encatamiento, no puede volver a lanzarse otro encantamiento mientras haya un encantamiento vivo (isAlive)
+        if(ench2Button.isDown && hechizoTempo>3 && game.global.encantamiento1.isAlive == false){
         	hechizoTempo = 0;
         	if(game.global.player1.mana > 0){
         		fireEncantamiento();
@@ -355,61 +291,14 @@ MagicAndRunes.level0State = function(game) {
         	game.global.encantamiento1.image.animations.play('start',15,true)
         }
         
-        /*this.putPlayer();															//Envía los datos del jugador al servidor
-
-        this.getPlayer(function(updatePlayer2){										//Obtiene la posición del jugador 2
-            game.player2 = JSON.parse(JSON.stringify(updatePlayer2));
-            mago2.x =game.player2.x;
-            mago2.y=game.player2.y;
-            if(game.player2.id==2){													//Pinta la vida y el maná del enemigo
-            	vidaEnemigo=new Phaser.Rectangle(650,25,game.player2.vida,20);
-            	manaEnemigo=new Phaser.Rectangle(650,50,game.player2.mana,20);
-            }else if(game.player2.id==1){
-            	vidaEnemigo=new Phaser.Rectangle(25,25,game.player2.vida,20);
-            	manaEnemigo=new Phaser.Rectangle(25,50,game.player2.mana,20);
-            }
-           
-            if(game.player2.id==1){
-            	mago2.scale.x=-1;
-            }
-
-        })*/
-        
-       /* if(lanzamiento==true){
-        	this.putHechizo();											//Si se ha lanzado un hechizo, se añade un hechizo al servidor
-        }*/
-        
-        /*this.getHechizo(function(updateHechizo2){						//Obtiene el hechizo del jugador 2
-    		console.log("Entra en la funcion getHechizoIzquierda");
-    		game.hechizo2 = JSON.parse(JSON.stringify(updateHechizo2));
-    		
-    		hechizo2.visible=true;
-        		hechizo2.x=game.hechizo2.x;
-        		hechizo2.y=game.hechizo2.y;
-        		hechizo2.visible=true;
-    		
-    		});*/
         	
        //------------------------------COLISIÓN CON EL HECHIZO------------------------------------------//
-        /*var micolision=game.physics.arcade.collide(game.global.player1.image,game.global.hechizo2.image);				//Colisión del jugador con el hechizo enemigo almacenado en un boolean
-        var hit = game.physics.arcade.collide(game.global.hechizo1.image,game.global.player2.image);
-        
-        if(hit){
-        	console.log('hola')
-        	//game.global.hechizo1.image.visible = false;
-        }
-        //console.log(micolision);
-        if(micolision){																		//Si han colisionado el hechizo tiene efecto
-        	console.log("yes");
-        	//game.global.hechizo2.image.visible = false;
-        	game.global.player1.vida-=20;
-        }*/
 
         game.physics.arcade.collide(game.global.player1.image,layer,colisionMapaMagoVerde,null,this);			//Activa la colisión entre el mapa y el mago
-        game.physics.arcade.collide(game.global.player2.image,layer,colisionMapaMagoVerde,null,this);
+        game.physics.arcade.collide(game.global.player2.image,layer,colisionMapaMagoVerde,null,this);			//Activa la colisión entre el mapa y el mago2
         
-        game.physics.arcade.overlap(game.global.hechizo1.image,game.global.player2.image,collisionHandler,null,this)
-        game.physics.arcade.overlap(game.global.encantamiento1.image,game.global.player2.image,collisionHandlerEnch,null,this)
+        game.physics.arcade.overlap(game.global.hechizo1.image,game.global.player2.image,collisionHandler,null,this) //Para comprobar la colision del hechizo con el enemigo
+        game.physics.arcade.overlap(game.global.encantamiento1.image,game.global.player2.image,collisionHandlerEnch,null,this) //Para comprobar la colision del encantamiento con el enemigo
         
         function collisionHandler(hechizo,player2){
         	game.global.hechizo1.image.kill();
@@ -418,6 +307,7 @@ MagicAndRunes.level0State = function(game) {
         
         function collisionHandlerEnch(encatamiento,player2){
         	game.global.encantamiento1.image.kill();
+        	game.global.encantamiento1.isAlive = false;
         	isHitEnch = true;
         }
         
@@ -425,6 +315,7 @@ MagicAndRunes.level0State = function(game) {
         
         hechizoTempo+=0.05;																	//Aumenta la cuenta del temporizador del hechizo
 
+        //Mensaje de actualizacion del jugador
         let mensaje = new Object();
         mensaje.event = "UPDATE_PLAYER"
         mensaje.info = {
@@ -440,7 +331,7 @@ MagicAndRunes.level0State = function(game) {
         
         	ws.send(JSON.stringify(mensaje))
        
-        if(isfiring){
+        	//Mensaje de actualizacion del hechizo
         	mensaje2 = {
                 	event:"SPELL",
                 	id:game.global.player1.id,
@@ -452,9 +343,8 @@ MagicAndRunes.level0State = function(game) {
                 	isHit:isHit
                 }
                 ws.send(JSON.stringify(mensaje2))
-        }
-        
-        if(isfiringEnch){
+             
+            //Mensaje de actualizacion del encatamiento
         	mensaje3 = {
         			event:"ENCH",
         			id:game.global.player1.id,
@@ -464,11 +354,9 @@ MagicAndRunes.level0State = function(game) {
         			isHitEnch:isHitEnch
         	}
         	ws.send(JSON.stringify(mensaje3))
-        }
-        
-        
-        isHit = false;
-        isHitEnch = false;
+        	
+        	isHit = false
+        	isHitEnch = false
     },
     
     
