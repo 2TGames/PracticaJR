@@ -43,13 +43,13 @@ public class GameController {
 		
 		Hechizo hechizo = new Hechizo();
 		if(player.getId() == 0) {
-			player.setX(100);
+			player.setX(50);
 			player.setY(400);
 			player.setFacing(1);
 			hechizo.setX(player.getX());
 			hechizo.setY(player.getY());
 		}else if (player.getId()== 1) {
-			player.setX(700);
+			player.setX(750);
 			player.setY(400);
 			player.setFacing(-1);
 			hechizo.setX(player.getX());

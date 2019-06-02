@@ -126,28 +126,28 @@ ws.onmessage = function(message){
 					game.global.player2.vida = msg.player.vida
 					if(game.global.player2.vida <= 0){
 						if(game.global.player2.image.key == 'mago_naranja'){
-							/*game.global.hechizo1 = new Object();
+							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
 							game.global.player2 = new Object();
 							//game.global.player1 = new Object();
 							game.global.encantamiento1 = new Object();
-							game.global.encantamiento2 = new Object();*/
-							game.global.player2.vidaUI.destroy()
+							game.global.encantamiento2 = new Object();
+							/*game.global.player2.vidaUI.destroy()
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
-							game.global.player1.manaUI.destroy()
+							game.global.player1.manaUI.destroy()*/
 							game.state.start('level1State')
 						}else if(game.global.player2.image.key == 'mago_verde'){
-							/*game.global.hechizo1 = new Object();
+							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
 							game.global.player2 = new Object();
 							//game.global.player1 = new Object();
 							game.global.encantamiento1 = new Object();
-							game.global.encantamiento2 = new Object();*/
-							game.global.player2.vidaUI.destroy()
+							game.global.encantamiento2 = new Object();
+							/*game.global.player2.vidaUI.destroy()
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
-							game.global.player1.manaUI.destroy()
+							game.global.player1.manaUI.destroy()*/
 							game.state.start('level_1State')
 						}
 					}
@@ -237,28 +237,28 @@ ws.onmessage = function(message){
 					}
 					if(game.global.player2.vida <= 0){
 						if(game.global.player2.image.key == 'mago_naranja'){
-							/*game.global.hechizo1 = new Object();
+							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
 							game.global.player2 = new Object();
 							//game.global.player1 = new Object();
 							game.global.encantamiento1 = new Object();
-							game.global.encantamiento2 = new Object();*/
-							game.global.player2.vidaUI.destroy()
+							game.global.encantamiento2 = new Object();
+							/*game.global.player2.vidaUI.destroy()
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
-							game.global.player1.manaUI.destroy()
+							game.global.player1.manaUI.destroy()*/
 							game.state.start('level1State')
 						}else if(game.global.player2.image.key == 'mago_verde'){
-							/*game.global.hechizo1 = new Object();
+							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
 							game.global.player2 = new Object();
 							//game.global.player1 = new Object();
 							game.global.encantamiento1 = new Object();
-							game.global.encantamiento2 = new Object();*/
-							game.global.player2.vidaUI.destroy()
+							game.global.encantamiento2 = new Object();
+							/*game.global.player2.vidaUI.destroy()
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
-							game.global.player1.manaUI.destroy()
+							game.global.player1.manaUI.destroy()*/
 							game.state.start('level_1State')
 						}
 					}
@@ -284,6 +284,13 @@ ws.onmessage = function(message){
 					game.global.player1.vida -= 20
 				}
 			}else{
+				if(game.global.player1.image.key == 'mago_verde'){
+					game.global.hechizo2.image.destroy()
+					game.global.hechizo2.image = game.add.sprite(msg.x,msg.y,'hechizo')
+				}else if(game.global.player1.image.key == 'mago_naranja'){
+					game.global.hechizo2.image.destroy()
+					game.global.hechizo2.image = game.add.sprite(msg.x,msg.y,'hechizoverde')
+				}
 				game.physics.enable(game.global.hechizo2.image,Phaser.Physics.ARCADE)
 				game.global.hechizo2.image.x = msg.x
 				game.global.hechizo2.image.y = msg.y

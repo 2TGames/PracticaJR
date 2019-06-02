@@ -141,18 +141,7 @@ MagicAndRunes.level1State = function(game) {
         game.global.player1.vida = 100;
         game.global.player1.mana = 100;
         
-        if(game.global.player1.id==0){
-          	 vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-          	 vidaUI.anchor.setTo(0.5,0.5)
-          	 manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-          	 manaUI.anchor.setTo(0.5,0.5)
-           }else if (game.global.player1.id == 1){
-            vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-          	 vidaUI.anchor.setTo(0.5,0.5)
-          	 manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-          	 manaUI.anchor.setTo(0.5,0.5)
-           }
-        
+       
         //Asignamos los controles a las teclas "W", "A", "S", "D", "V" y "B"
         wkey=game.input.keyboard.addKey(Phaser.Keyboard.W);
         akey=game.input.keyboard.addKey(Phaser.Keyboard.A);
