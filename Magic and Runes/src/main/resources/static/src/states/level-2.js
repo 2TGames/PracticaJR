@@ -1,4 +1,4 @@
-MagicAndRunes.level-2State = function(game) {
+MagicAndRunes.level_2State = function(game) {
     
 }
 
@@ -39,7 +39,7 @@ MagicAndRunes.level-2State = function(game) {
     }
 
     
-    MagicAndRunes.level-2State.prototype = {
+    MagicAndRunes.level_2State.prototype = {
 
 
     preload: function() {

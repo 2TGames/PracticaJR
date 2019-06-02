@@ -60,7 +60,7 @@ MagicAndRunes.level0State = function(game) {
          																	//cargado hasta que sea destruido
         music.play();														//Iniciamos la música
          
-        
+     
        
          //---------------------ELEMENTOS BÁSICOS DEL NIVEL------------------------//
         background= game.add.sprite(0,0,'background');						//Asignamos el background a su variable
@@ -82,19 +82,18 @@ MagicAndRunes.level0State = function(game) {
         }
         
         
-        
         //----------------------------BARRAS PLAYER 1-------------------------------//
         //Creamos las barras de vida y maná del jugador local dependiendo de su ID
         if(game.global.player1.id==0){
-       	 vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-       	 vidaUI.anchor.setTo(0.5,0.5)
-       	 manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-       	 manaUI.anchor.setTo(0.5,0.5)
+       	 game.global.player1.vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 game.global.player1.vidaUI.anchor.setTo(0.5,0.5)
+       	 game.global.player1.manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 game.global.player1.manaUI.anchor.setTo(0.5,0.5)
         }else if (game.global.player1.id == 1){
-         vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-       	 vidaUI.anchor.setTo(0.5,0.5)
-       	 manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-       	 manaUI.anchor.setTo(0.5,0.5)
+         game.global.player1.vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 game.global.player1.vidaUI.anchor.setTo(0.5,0.5)
+       	 game.global.player1.manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 game.global.player1.manaUI.anchor.setTo(0.5,0.5)
         }
         
         vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
@@ -160,15 +159,15 @@ MagicAndRunes.level0State = function(game) {
     	//*****Implementar aquí la funcionalidad de pasar de nivel y de pasar al endingState cuando se llegue al final de todos los niveles*****/
     	
     	
-    	if(game.global.player1.id=0){		//Mago verde
+    	if(game.global.player1.id==0){		//Mago verde
     		//Muerte por caida
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;
-        		this.game.state.start('level-1State')
+        		this.game.state.start('level_1State')
         	}
         	
         	if(game.global.player1.vida <= 0){
-        		this.game.state.start('level-1State')
+        		this.game.state.start('level_1State')
         	}
     	}else{								//Mago naranja
     		//Muerte por caida
@@ -181,10 +180,6 @@ MagicAndRunes.level0State = function(game) {
         		this.game.state.start('level1State')
         	}
     	}
-    	
-    	
-    	
-    	
     	
 
         //funcion de disparo para el mago verde
@@ -234,8 +229,8 @@ MagicAndRunes.level0State = function(game) {
     	}
     	//------------------------------BARRAS DE VIDA Y MANÁ-----------------------------------//
     	//Volvemos a pintar la informacion con las variables actualizadas
-        vidaUI.setText("Vida: " + game.global.player1.vida)
-        manaUI.setText("Mana: " + game.global.player1.mana)
+        game.global.player1.vidaUI.setText("Vida: " + game.global.player1.vida)
+        game.global.player1.manaUI.setText("Mana: " + game.global.player1.mana)
         
         //--------------------------------MOVIMIENTO DEL MAGO-----------------------------------//
         
@@ -350,7 +345,8 @@ MagicAndRunes.level0State = function(game) {
         }
         
         	ws.send(JSON.stringify(mensaje))
-       
+      
+        
         	//Mensaje de actualizacion del hechizo
         	mensaje2 = {
                 	event:"SPELL",
@@ -377,6 +373,8 @@ MagicAndRunes.level0State = function(game) {
         	
         	isHit = false
         	isHitEnch = false
+        
+        	
     },
     
     

@@ -41,7 +41,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		msg.put("x", player.getX());
 		msg.put("y", player.getY());
 		msg.put("facing", player.getFacing());
+		msg.put("puntuacion", player.getPuntuacion());
 		arrayPlayers.addPOJO(msg);
+		System.out.println("jugador creado: " +msg.toString());
 		player.getSession().sendMessage(new TextMessage(msg.toString()));
 	}
 
@@ -59,6 +61,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		for(Player player: gameController.getPlayers()) {
 			try {
 				if(player.getId() != id) {
+					System.out.println("enviando mensaje al otro jugador: " +player.getId());
 					player.getSession().sendMessage(new TextMessage(message.toString()));
 				}
 			}catch(Exception e) {
@@ -71,8 +74,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
 		synchronized (sessions) {
+			JsonNode node = mapper.readTree(message.getPayload());
 			try {
-				JsonNode node = mapper.readTree(message.getPayload());
+				
 				ObjectNode msg = mapper.createObjectNode();
 				Player player = (Player) session.getAttributes().get(PLAYER_ATTRIBUTE);
 
@@ -88,6 +92,16 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				 * 
 				 * if (debug) System.out.println("[DEBUG] " + msg.toString()); break;
 				 */
+				case "CREATE_PLAYER":
+					msg.put("event", "CREATED");
+					msg.put("id", node.get("id").asInt());
+					msg.put("vida", player.getVida());
+					msg.put("mana", player.getMana());
+					msg.put("x", player.getX());
+					msg.put("y", player.getY());
+					msg.put("facing", player.getFacing());
+					player.getSession().sendMessage(new TextMessage(msg.toString()));
+					break;
 				case "PLAYERS":
 
 					if (gameController.getPlayers().size() < 2) {
@@ -146,8 +160,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					
 					this.broadcast(jsonPlayer.toString(), node.path("info").path("id").asInt());
 					//player.getSession().sendMessage(new TextMessage(jsonPlayer.toString()));
-					
-					System.out.println("facing player"+node.path("info").get("id").asInt()+":"+node.path("info").get("facing").asInt()+"....."+msg.toString());
+					System.out.println(msg.toString());
 
 					break;
 				case "SPELL":
@@ -177,6 +190,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					break;
 				}
 			}catch(Exception e) {
+				System.out.println(node.path("info").get("puntuacion"));
 				System.err.println("Error processing message: " + message.getPayload());
 				e.printStackTrace();
 			}

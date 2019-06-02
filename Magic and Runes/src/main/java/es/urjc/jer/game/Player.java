@@ -9,12 +9,22 @@ public class Player {
 	private int id;
 	private int x, y, vida, mana,velocityX,velocityY;
 	private int facing;
+	private int puntuacion;
 	
 	public Player(int playerId, WebSocketSession session) {
 		this.id = playerId;
 		this.vida = 100;
 		this.mana = 100;
 		this.session = session;
+		this.puntuacion = 0;
+	}
+	
+	public int getPuntuacion() {
+		return puntuacion;
+	}
+	
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
 	}
 
 	public int getVelocityX() {

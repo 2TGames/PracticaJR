@@ -67,33 +67,52 @@ MagicAndRunes.level1State = function(game) {
 
         medidor=game.add.sprite(292,20,'nivAct');							//Le asignamos la imagn al medidor
         
+        /*msg = {
+        		event:"CREATE_PLAYER"
+        }
+        ws.send(JSON.stringify(msg))*/
+        
         //Añadimos el personaje del jugador 1
+        
         if(game.global.player1.id==0){
         	game.global.player1.image = game.add.sprite(game.global.player1.x,game.global.player1.y,'mago_verde');
         }else if(game.global.player1.id==1){
         	game.global.player1.image =game.add.sprite(game.global.player1.x,game.global.player1.y,'mago_naranja');
-        	//mago.scale.x=-1;
         }
-        
-        
         
         //----------------------------BARRAS PLAYER 1-------------------------------//
         //Creamos las barras de vida y maná del jugador local dependiendo de su ID
         if(game.global.player1.id==0){
-       	 vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-       	 vidaUI.anchor.setTo(0.5,0.5)
-       	 manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-       	 manaUI.anchor.setTo(0.5,0.5)
+       	 game.global.player1.vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 game.global.player1.vidaUI.anchor.setTo(0.5,0.5)
+       	 game.global.player1.manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 game.global.player1.manaUI.anchor.setTo(0.5,0.5)
         }else if (game.global.player1.id == 1){
-         vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
-       	 vidaUI.anchor.setTo(0.5,0.5)
-       	 manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
-       	 manaUI.anchor.setTo(0.5,0.5)
+         game.global.player1.vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+       	 game.global.player1.vidaUI.anchor.setTo(0.5,0.5)
+       	 game.global.player1.manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+       	 game.global.player1.manaUI.anchor.setTo(0.5,0.5)
         }
         
         vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
         
         game.physics.enable(game.global.player1.image,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
+        
+        //Animaciones personajes
+        game.global.player1.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
+        game.global.player1.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+        
+        if(game.global.player1.id == 0){
+        	game.global.player1.image.frame=9;
+        }else if(game.global.player1.id == 1){
+        	game.global.player1.image.frame = 0;
+        }
+        
+
+        game.global.player1.image.body.gravity.y=500;											//Gravedad asignada al mago
+        game.global.player1.image.body.bounce.y=0.1;												//Rebote con el suelo
+        
+        
         
         //Creamos un hechizo invisible y le asignamos las físicas ARCADE
         if(game.global.player1.id == 0){
@@ -118,18 +137,21 @@ MagicAndRunes.level1State = function(game) {
     	game.global.encantamiento1.image.anchor.setTo(0.5,0.5)
     	game.global.encantamiento1.image.animations.add('start')
         
-        //Animaciones personajes
-        game.global.player1.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
-        game.global.player1.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
-        if(game.global.player1.id == 0){
-        	game.global.player1.image.frame=9;
-        }else if(game.global.player1.id == 1){
-        	game.global.player1.image.frame = 0;
-        }
         
-
-        game.global.player1.image.body.gravity.y=500;											//Gravedad asignada al mago
-        game.global.player1.image.body.bounce.y=0.1;												//Rebote con el suelo
+        game.global.player1.vida = 100;
+        game.global.player1.mana = 100;
+        
+        if(game.global.player1.id==0){
+          	 vidaUI = game.add.text(game.world.centerX-300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+          	 vidaUI.anchor.setTo(0.5,0.5)
+          	 manaUI = game.add.text(game.world.centerX-300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+          	 manaUI.anchor.setTo(0.5,0.5)
+           }else if (game.global.player1.id == 1){
+            vidaUI = game.add.text(game.world.centerX+300,25,'Vida: '+game.global.player1.vida,{font:"20px Arial",fill:"#08FF00",align:"center"})
+          	 vidaUI.anchor.setTo(0.5,0.5)
+          	 manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
+          	 manaUI.anchor.setTo(0.5,0.5)
+           }
         
         //Asignamos los controles a las teclas "W", "A", "S", "D", "V" y "B"
         wkey=game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -154,7 +176,7 @@ MagicAndRunes.level1State = function(game) {
     	
     	//*****Implementar aquí la funcionalidad de pasar de nivel y de pasar al endingState cuando se llegue al final de todos los niveles*****/
     	
-    	if(game.global.player1.id=0){
+    	if(game.global.player1.id==0){
     		//Muerte por caida
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;
@@ -176,12 +198,6 @@ MagicAndRunes.level1State = function(game) {
         	}
     	}
     	
-    	
-    	
-    	
-    	
-    	
-
         //funcion de disparo para el mago verde
     	function fireHechizo(){
     		//Aquí comprobamos hacia dónde mira el jugador a la hora de asignarle una dirección al hechizo
@@ -229,8 +245,8 @@ MagicAndRunes.level1State = function(game) {
     	}
     	//------------------------------BARRAS DE VIDA Y MANÁ-----------------------------------//
     	//Volvemos a pintar la informacion con las variables actualizadas
-        vidaUI.setText("Vida: " + game.global.player1.vida)
-        manaUI.setText("Mana: " + game.global.player1.mana)
+        game.global.player1.vidaUI.setText("Vida: " + game.global.player1.vida)
+        game.global.player1.manaUI.setText("Mana: " + game.global.player1.mana)
         
         //--------------------------------MOVIMIENTO DEL MAGO-----------------------------------//
         
@@ -372,6 +388,8 @@ MagicAndRunes.level1State = function(game) {
         	
         	isHit = false
         	isHitEnch = false
+        
+        	
     },
     
     
