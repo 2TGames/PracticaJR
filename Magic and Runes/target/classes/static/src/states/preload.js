@@ -12,11 +12,11 @@ MagicAndRunes.preloadState.prototype = {
       //----------------------------FONDO------------------------------------------//
         game.load.image('background','assets/images/background_dungeonv2.png');
         //-----------------------------TILEMAPS---------------------------------------//
-        game.load.tilemap('nivel0','assets/scenarios/prueba-2.csv');
-        game.load.tilemap('nivel0','assets/scenarios/prueba-1.csv');
+        game.load.tilemap('nivel-2','assets/scenarios/prueba-2.csv');
+        game.load.tilemap('nivel-1','assets/scenarios/prueba-1.csv');
         game.load.tilemap('nivel0','assets/scenarios/prueba.csv');
-        game.load.tilemap('nivel0','assets/scenarios/prueba+1.csv');
-        game.load.tilemap('nivel0','assets/scenarios/prueba+2.csv');
+        game.load.tilemap('nivel+1','assets/scenarios/prueba+1.csv');
+        game.load.tilemap('nivel+2','assets/scenarios/prueba+2.csv');
         //----------------------------MEDIDOR DE NIVEL-------------------------------//
         game.load.image('nivAct','assets/medidores/medidor_0.png');
         //---------------------------TILESHEET----------------------------------------//

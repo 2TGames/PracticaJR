@@ -1,4 +1,4 @@
-MagicAndRunes.level0State = function(game) {
+MagicAndRunes.level2State = function(game) {
     
 }
 
@@ -39,7 +39,7 @@ MagicAndRunes.level0State = function(game) {
     }
 
     
-    MagicAndRunes.level0State.prototype = {
+    MagicAndRunes.level2State.prototype = {
 
 
     preload: function() {
@@ -52,19 +52,13 @@ MagicAndRunes.level0State = function(game) {
     	 lanzamiento=false;													//Inicializamos lanzamiento a false
     	 
     	 //----------------------------MÚSICA-----------------------------------------//
-         music.destroy();													//Destruimos la música del menú principal
-         game.cache.removeSound('NoN');
-
-         music = game.add.audio('ATA');										//Añadimos el audio cargado en preload
-         music.loopFull()													//Obligamos a la música a repetir el loop
-         																	//cargado hasta que sea destruido
-        music.play();														//Iniciamos la música
          
+         //Mantenemos la que se encuentre sonando
         
        
          //---------------------ELEMENTOS BÁSICOS DEL NIVEL------------------------//
         background= game.add.sprite(0,0,'background');						//Asignamos el background a su variable
-        nivel=this.add.tilemap('nivel0',16,16);								//   ""    el tilemap  ""
+        nivel=this.add.tilemap('nivel+2',16,16);								//   ""    el tilemap  ""
         nivel.addTilesetImage('tiles');										//   ""    el tileset  ""
         layer=nivel.createLayer(0);											//Creamos una capa del mapa en la que vamos a trabajar
         nivel.setCollisionBetween(1,5302);									//Asignamos las colisiones con los tiles del mapa
@@ -147,7 +141,8 @@ MagicAndRunes.level0State = function(game) {
     },
 
     update: function() {
-    	/*//Muerte por caida
+    	/*
+    	//Muerte por caida
     	if(game.global.player1.image.body.y>540){
     		game.global.player1.vida=0;
     		this.game.state.start('endingState')
@@ -155,22 +150,11 @@ MagicAndRunes.level0State = function(game) {
     	
     	if(game.global.player1.vida <= 0){
     		this.game.state.start('endingState')
-    	}*/
+    	}/*
     	
     	//*****Implementar aquí la funcionalidad de pasar de nivel y de pasar al endingState cuando se llegue al final de todos los niveles*****/
     	
-    	
-    	if(game.global.player1.id=0){		//Mago verde
-    		//Muerte por caida
-        	if(game.global.player1.image.body.y>540){
-        		game.global.player1.vida=0;
-        		this.game.state.start('level-1State')
-        	}
-        	
-        	if(game.global.player1.vida <= 0){
-        		this.game.state.start('level-1State')
-        	}
-    	}else{								//Mago naranja
+    	if(game.global.player1.id=0){
     		//Muerte por caida
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;
@@ -179,8 +163,19 @@ MagicAndRunes.level0State = function(game) {
         	
         	if(game.global.player1.vida <= 0){
         		this.game.state.start('level1State')
+        	}
+    	}else{
+    		//Muerte por caida
+        	if(game.global.player1.image.body.y>540){
+        		game.global.player1.vida=0;
+        		this.game.state.start('endingState')
+        	}
+        	
+        	if(game.global.player1.vida <= 0){
+        		this.game.state.start('endingState')
         	}
     	}
+    	
     	
     	
     	

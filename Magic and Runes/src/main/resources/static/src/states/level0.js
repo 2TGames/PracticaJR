@@ -147,7 +147,7 @@ MagicAndRunes.level0State = function(game) {
     },
 
     update: function() {
-    	//Muerte por caida
+    	/*//Muerte por caida
     	if(game.global.player1.image.body.y>540){
     		game.global.player1.vida=0;
     		this.game.state.start('endingState')
@@ -155,12 +155,32 @@ MagicAndRunes.level0State = function(game) {
     	
     	if(game.global.player1.vida <= 0){
     		this.game.state.start('endingState')
-    	}
+    	}*/
     	
     	//*****Implementar aquí la funcionalidad de pasar de nivel y de pasar al endingState cuando se llegue al final de todos los niveles*****/
     	
     	
-    	
+    	if(game.global.player1.id=0){		//Mago verde
+    		//Muerte por caida
+        	if(game.global.player1.image.body.y>540){
+        		game.global.player1.vida=0;
+        		this.game.state.start('level-1State')
+        	}
+        	
+        	if(game.global.player1.vida <= 0){
+        		this.game.state.start('level-1State')
+        	}
+    	}else{								//Mago naranja
+    		//Muerte por caida
+        	if(game.global.player1.image.body.y>540){
+        		game.global.player1.vida=0;
+        		this.game.state.start('level1State')
+        	}
+        	
+        	if(game.global.player1.vida <= 0){
+        		this.game.state.start('level1State')
+        	}
+    	}
     	
     	
     	
