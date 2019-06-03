@@ -8,6 +8,8 @@ MagicAndRunes.preloadState.prototype = {
         
         game.load.image('inicio','assets/images/pantalla_inicio.png');
         game.load.image('match','assets/images/fondo magico.png');
+        game.load.image('titulo','assets/images/titulo.png')
+        game.load.image('star','assets/images/star3.png')
         
       //----------------------------FONDO------------------------------------------//
         game.load.image('background','assets/images/background_dungeonv2.png');
@@ -19,6 +21,10 @@ MagicAndRunes.preloadState.prototype = {
         game.load.tilemap('nivel+2','assets/scenarios/prueba+2.csv');
         //----------------------------MEDIDOR DE NIVEL-------------------------------//
         game.load.image('nivAct','assets/medidores/medidor_0.png');
+        game.load.image('niv1','assets/medidores/medidor_1.png');
+        game.load.image('niv2','assets/medidores/medidor_2.png');
+        game.load.image('niv-1','assets/medidores/medidor_-1.png');
+        game.load.image('niv-2','assets/medidores/medidor_-2.png');
         //---------------------------TILESHEET----------------------------------------//
         game.load.image('tiles','Tiles/Tilesheet/medieval_tilesheet_2X.png');
         //----------------------------SPRITESHEETS MAGOS--------------------------------//

@@ -102,11 +102,8 @@ public class GameController {
 		return niebla;
 	}
 	
-	public void deletePlayer(long id) {
-		Player savedPlayer = players.get(id);
-		if(savedPlayer != null) {
-			players.remove(savedPlayer.getId());
-		}
+	public void deletePlayer(Player player) {
+		players.remove(player.getSession().getId());
 	}
 	
 	public void deleteHechizo(long id) {

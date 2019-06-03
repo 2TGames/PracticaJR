@@ -4,58 +4,14 @@ MagicAndRunes.matchmakingState = function (game) {
 
 
 var jugadores = 0;
+var distance = 300;
+var speed = 4;
+var stars;
 
-/*mensaje = {
-		valor: 1
-}
-ws.send(JSON.stringify(mensaje))
-
-mensaje = {
-		valor: 2
-}
-ws.send(JSON.stringify(mensaje))*/
-
-handlerMessage = function (message){
-	//console.log('entra a handlerMessage');
-	if(debug.ws){
-		//console.log('[DEBUG-WS] Se ha producido un mensaje: ' + message.data);
-	}
-	
-	var msg = JSON.parse(message.data);
-	
-	//console.log('INFO RECIBIDA ' + message.data);
-	switch(msg.type){
-	case "PLAYER_CREATED":
-		console.log("*****PLAYER CREATED*******");
-		game.player1 = msg.player
-		
-		/*console.log("id: "+msg.player.id);
-		console.log("pos("+msg.player.x+","+msg.player.y+")");*/
-		break;
-		
-	case "MAX PLAYERS":
-		console.log('El servidor esta lleno, vuelva a intentarlo mas tarde');
-		break;
-		
-	case "ENOUGH":
-		console.log('Empieza la partida');
-		game.state.start("level0State");
-		break;
-		
-	case "EXCEED":
-		console.log('El servidor esta lleno, vuelva a intentarlo mas tarde');
-		break;
-		
-	case "WAIT":
-		//console.log('Faltan jugadores');
-		//game.update();
-		
-		break;
-	}
-	
-}
-
-
+var max = 200;
+var xx = [];
+var yy = [];
+var zz = [];
 
 MagicAndRunes.matchmakingState.prototype = {
 	 
@@ -65,10 +21,7 @@ MagicAndRunes.matchmakingState.prototype = {
 		
     preload: function () {
     	
-    	var match=game.add.image(0,0,'match');
-        var text = "Esperando a otro jugador...";
-        var style = { font: "20px Arial", fill: "#FFBF00", align: "center" };
-        var t = game.add.text(game.world.centerX - 350, game.world.centerY+250, text, style);
+    	
     },
 
     // en CREATE, a pesar de estar bastante lejos de INIT, puede dar tiempo a que se cree el jugador
@@ -76,46 +29,32 @@ MagicAndRunes.matchmakingState.prototype = {
     // sigue con la ejecución de PRELOAD y de CREATE. ¡¡¡ Esa es una de las claves.!!!
     create: function () {
     	
-    	mensaje = {
-    			event:'JOIN'
-    	}
-    	ws.send(JSON.stringify(mensaje));
+    	var match=game.add.image(0,0,'match');
     	
-    	
-    	
-    	/*mensaje = {
-        		event:"UPDATE_PLAYER",
-        		id: game.global.player1.id,
-        		x: game.global.player1.x,
-        		y: game.global.player1.y,
-        		vida: game.global.player1.vida,
-        		mana: game.global.player1.mana
+    	if(game.renderType === Phaser.WEBGL){
+        	max == 2000
         }
         
-        ws.send(JSON.stringify(mensaje));*/
+        var sprites = game.add.spriteBatch();
+        stars = []
+        
+        for(var i = 0; i < max; i++){
+        	xx[i] = Math.floor(Math.random() * 800)-400
+        	yy[i] = Math.floor(Math.random()*600)-300
+        	zz[i] = Math.floor(Math.random()*1700) - 100
+        	
+        	var star = game.make.sprite(0,0,'star')
+        	star.anchor.setTo(0.5);
+        	
+        	sprites.addChild(star);
+        	
+        	stars.push(star);
+        }
+        
+        var text = "Esperando a otro jugador...";
+        var style = { font: "20px Arial", fill: "#FFBF00", align: "center" };
+        var t = game.add.text(game.world.centerX - 350, game.world.centerY+250, text, style);
     	
-    	/*ws.onmessage = function(message){
-    		console.log('entra a onmessage');
-    		if(debug.ws){
-    			console.log('[DEBUG-WS] Se ha producido un mensaje: ' + message.data);
-    		}
-    		
-    		var msg = JSON.parse(message.data);
-    		
-    		console.log('INFO RECIBIDA ' + message.data);
-    		switch(msg.type){
-    		case "PLAYER_CREATED":
-    			console.log("*****PLAYER CREATED*******");
-    			console.log("id: "+msg.player.id);
-    			console.log("pos("+msg.player.x+","+msg.player.y+")");
-    			jugadores++;
-    			break;
-    			
-    		case "MAX PLAYERS":
-    			console.log('El servidor esta lleno, vuelva a intentarlo mas tarde');
-    			break;
-    		}
-    	}*/
     	
     },
 
@@ -127,18 +66,23 @@ MagicAndRunes.matchmakingState.prototype = {
     
    
     update: function () {
-    	//ws = new WebSocket('ws://'+window.location.host+'/game');
-    	/*console.log('entra en update');
-    	ws.onopen = function(event){
-			if(debug.ws){
-				console.log('Se comprueba el numero de jugadores');
-			}
-			numPlayers = {
-					type:'NUM_PLAYERS'
-			}
-			this.send(JSON.stringify(numPlayers));
-			console.log('Se ha enviado el mensaje: '+numPlayers.type);
-    	}*/
+    	
+    	for(var i = 0; i < max; i++){
+    		stars[i].perspective = distance / (distance - zz[i])
+    		stars[i].x = game.world.centerX + xx[i] * stars[i].perspective;
+    		stars[i].y = game.world.centerY + yy[i] * stars[i].perspective;
+    		
+    		zz[i] += speed;
+    		
+    		if(zz[i] > 290){
+    			zz[i] -= 600
+    		}
+    		
+    		stars[i].alpha = Math.min(stars[i].perspective/2,1)
+    		stars[i].scale.set(stars[i].perspective/2)
+    		stars[i].rotation += 0.1
+    	}
+    	
     	mensaje = {
     			event:'PLAYERS'
     	}
@@ -148,40 +92,6 @@ MagicAndRunes.matchmakingState.prototype = {
     		this.state.start("level0State");
     	}
     	
-    	
-    	/*if(jugadores == 2){
-    		game.state.start("level0State");
-    	}*/
-    	
-    	
-    	
-    	
-    	
-    	
-    	/*console.log('entra en update');
-    	var conexion = new WebSocket('ws://'+window.location.host+'/game')
-    	conexion.onopen = function (event){
-    		numPlayers = {
-    				type:'NUM_PLAYERS'
-    		}
-    			this.send(JSON.stringify(numPlayers));
-    			console.log('Se ha enviado el mensaje ' + numPlayers.type);
-    	}
-    	
-    	conexion.onmessage = function(message){
-    		var msg = JSON.parse(message.data);
-    		
-    		console.log('INFO RECIBIDA '+ message.data);
-    		switch(msg.type){
-    		case "ENOUGH":
-    			console.log('Empieza el juego');
-    			this.state.start("level0State");
-    			break;
-    		case "EXCEED":
-    			console.log('El servidor esta lleno, vuelva a intentarlo mas tarde');
-    			this.state.start("menuState");
-    		}
-    	}*/
     }, 
     
     

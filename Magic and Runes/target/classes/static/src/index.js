@@ -19,7 +19,7 @@ debug={
 	ws:1
 }
 var ws = new WebSocket('ws://'+window.location.host+'/game')
-var vida2,mana2
+var facing_j2;
 
 //--------------------------AÑADIMOS AL JUEGO TODOS LOS ESTADOS----------------------------//
 game.state.add('bootState', MagicAndRunes.bootState)
@@ -29,10 +29,11 @@ game.state.add('menuState', MagicAndRunes.menuState)
 game.state.add('matchmakingState', MagicAndRunes.matchmakingState)
 game.state.add('level0State', MagicAndRunes.level0State)
 game.state.add('level1State', MagicAndRunes.level1State)
-game.state.add('level2State', MagicAndRunes.level1State)
-game.state.add('level-1State', MagicAndRunes.level1State)
-game.state.add('level-2State', MagicAndRunes.level1State)
-game.state.add('endingState', MagicAndRunes.endingState)
+game.state.add('level2State', MagicAndRunes.level2State)
+game.state.add('level_1State', MagicAndRunes.level_1State)
+game.state.add('level_2State', MagicAndRunes.level_2State)
+game.state.add('endingStateNaranja', MagicAndRunes.endingStateNaranja)
+game.state.add('endingStateVerde', MagicAndRunes.endingStateVerde)
 game.state.add('errorState', MagicAndRunes.errorState)
 game.state.add('ayudaState', MagicAndRunes.ayudaState)
 game.state.add('codex_menuState', MagicAndRunes.codex_menuState)
@@ -60,7 +61,6 @@ ws.onmessage = function(message){
 		game.global.player1.x = msg.x
 		game.global.player1.y = msg.y
 		game.global.player1.facing = msg.facing
-		game.global.player1.puntuacion = msg.puntuacion
 		break;
 	case "CREATED":
 		game.global.player1.id = msg.id
@@ -80,7 +80,19 @@ ws.onmessage = function(message){
 	case "WAIT":
 		console.log("Faltan jugadores");
 		break;
+	case "REMOVE PLAYER":
+		game.global.player2.image.destroy();
+		game.global.player2.vidaUI.destroy();
+		game.global.player2.manaUI.destroy();
+		delete game.global.player2;
+		if(game.global.player1.id == 0){
+			game.state.start('endingStateVerde')
+		}else if(game.global.player1 == 1){
+			game.state.start('endingStateNaranja')
+		}
+		break;
 	case "UPDATED":
+		console.log(msg.player.state)
 		if(typeof game.global.player1.image !== 'undefined'){
 			console.log(msg.player)
 			if(game.global.player1.id == msg.player.id){
@@ -94,11 +106,15 @@ ws.onmessage = function(message){
 					game.global.player2.id = msg.player.id
 					if(game.global.player1.image.key == 'mago_verde'){
 						game.global.player2.image = game.add.sprite(msg.player.x,msg.player.y,'mago_naranja')
+						facing_j2 = 'left'
 					}else if(game.global.player1.image.key == 'mago_naranja'){
 						game.global.player2.image = game.add.sprite(msg.player.x,msg.player.y,'mago_verde')
+						facing_j2 = 'right'
 					}
 					game.global.player2.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 			        game.global.player2.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+			        game.global.player2.facing = msg.player.facing
+			        game.global.player2.puntuacion = msg.player.puntuacion
 			        //Para asignar el frame correcto segun el id
 			        if(game.global.player2.id == 0){
 			        	game.global.player2.image.frame=9;
@@ -125,6 +141,7 @@ ws.onmessage = function(message){
 			        game.global.player2.image.body.bounce.y=0.1;
 					game.global.player2.vida = msg.player.vida
 					if(game.global.player2.vida <= 0){
+						game.global.player1.puntuacion += 1
 						if(game.global.player2.image.key == 'mago_naranja'){
 							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
@@ -136,7 +153,13 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							game.state.start('level1State')
+							if(msg.player.state === 'level1'){
+								game.state.start('level1State')
+							}else if(msg.player.state === 'level2'){
+								game.state.start('level2State')
+							}else if(msg.player.state === 'endingStateVerde'){
+								game.state.start('endingStateVerde')
+							}
 						}else if(game.global.player2.image.key == 'mago_verde'){
 							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
@@ -148,7 +171,13 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							game.state.start('level_1State')
+							if(msg.player.state === 'level-1'){
+								game.state.start('level_1State')
+							}else if(msg.player.state === 'level-2'){
+								game.state.start('level_2State')
+							}else if(msg.player.state === 'endingStateNaranja'){
+								game.state.start('endingStateNaranja')
+							}
 						}
 					}
 					
@@ -161,14 +190,16 @@ ws.onmessage = function(message){
 						game.global.player2.facing = -1
 						game.global.facing = -1
 						game.global.player2.image.animations.play('left');	
+						facing_j2 = 'left'
 					}else if(msg.player.facing == 1){
 						game.global.player2.facing = 1
 						game.global.facing = 1
 						game.global.player2.image.animations.play('right');
+						facing_j2 = 'right'
 					}else{
 						if(msg.player.facing == 0){
 							game.global.player2.image.animations.stop();
-							if(game.global.facing == 1){
+							if(facing_j2 == 'right'){
 								game.global.player2.image.frame = 9
 							}else{
 								game.global.player2.image.frame = 0
@@ -192,6 +223,7 @@ ws.onmessage = function(message){
 					}
 					game.global.player2.image.animations.add('left',[0,1,2,3,4,5,6,7,8],10,true);
 			        game.global.player2.image.animations.add('right',[9,10,11,12,13,14,15,16,17],10,true);
+			        game.global.player2.puntuacion = msg.player.puntuacion
 			        //Para asignar el frame correcto segun el id
 			        if(game.global.player2.id == 0){
 			        	game.global.player2.image.frame=9;
@@ -221,14 +253,16 @@ ws.onmessage = function(message){
 						game.global.player2.facing = -1
 						game.global.facing = -1
 						game.global.player2.image.animations.play('left');	
+						facing_j2 = 'left'
 					}else if(msg.player.facing == 1){
 						game.global.player2.facing = 1
 						game.global.facing = 1
 						game.global.player2.image.animations.play('right');
+						facing_j2 = 'right'
 					}else{
 						if(msg.player.facing == 0){
 							game.global.player2.image.animations.stop();
-							if(game.global.facing == 1){
+							if(facing_j2 == 'right'){
 								game.global.player2.image.frame = 9
 							}else{
 								game.global.player2.image.frame = 0
@@ -236,6 +270,7 @@ ws.onmessage = function(message){
 						}
 					}
 					if(game.global.player2.vida <= 0){
+						game.global.player1.puntuacion += 1
 						if(game.global.player2.image.key == 'mago_naranja'){
 							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
@@ -247,7 +282,13 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							game.state.start('level1State')
+							if(msg.player.state === 'level1'){
+								game.state.start('level1State')
+							}else if(msg.player.state === 'level2'){
+								game.state.start('level2State')
+							}else if(msg.player.state === 'endingStateVerde'){
+								game.state.start('endingStateVerde')
+							}
 						}else if(game.global.player2.image.key == 'mago_verde'){
 							//game.global.hechizo1 = new Object();
 							game.global.hechizo2 = new Object();
@@ -259,7 +300,13 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							game.state.start('level_1State')
+							if(msg.player.state === 'level-1'){
+								game.state.start('level_1State')
+							}else if(msg.player.state === 'level-2'){
+								game.state.start('level_2State')
+							}else if(msg.player.state === 'endingStateNaranja'){
+								game.state.start('endingStateNaranja')
+							}
 						}
 					}
 				}
@@ -321,22 +368,36 @@ ws.onmessage = function(message){
 				game.global.encantamiento2.image.x = msg.x
 				game.global.encantamiento2.image.y = msg.y
 				if(msg.isHitEnch){
-					game.global.player1.vida -= 20
+					game.global.player1.vida -= 60
 				}
 			}else{
+				if(game.global.player1.image.key == 'mago_verde'){
+					game.global.encantamiento2.image.destroy()
+					game.global.encantamiento2.image = game.add.sprite(msg.x+10,msg.y + 30, 'nubeNaranja')
+				}else if(game.global.player1.image.key == 'mago_naranja'){
+					game.global.encantamiento2.image.destroy()
+					game.global.encantamiento2.image = game.add.sprite(msg.x+10,msg.y + 30, 'nubeVerde')
+				}
+				game.physics.enable(game.global.encantamiento2.image,Phaser.Physics.ARCADE)
+				game.global.encantamiento2.image.body.allowGravity = false
 				game.global.encantamiento2.image.scale.setTo(0.5,0.5)
 				game.global.encantamiento2.image.anchor.setTo(0.5,0.5)
 				game.global.encantamiento2.image.x = msg.x
 				game.global.encantamiento2.image.y = msg.y
 				game.global.encantamiento2.image.visible = msg.visible
 				if(msg.isHitEnch){
-					game.global.player1.vida -= 20
+					game.global.player1.vida -= 60
 				}
 			}
 		}
 		break;
-	case "END":
-		game.state.start('endingState');
+	case "VARIABLES RESETED":
+		game.global.player1.vida = msg.vida
+		game.global.player1.mana = msg.mana
+		game.global.player1.x = msg.x
+		game.global.player1.y = msg.y
+		game.global.player1.facing = msg.facing
+		break;
 	}
 }
 

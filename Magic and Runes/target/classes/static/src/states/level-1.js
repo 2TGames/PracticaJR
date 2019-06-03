@@ -10,8 +10,9 @@ MagicAndRunes.level_1State = function(game) {
     var lanzamiento=false;											//Se pone a true para disparar un hechizo
     																//trabajar sin usar game.player1.vida
     var nivel;														//Almacena todo lo referente al nivel
-    var facing_j1='right',facing_j2='left';							//Almacena a dónde apinta el jugador 1 y el jugador 2
+    var facing_j1													//Almacena a dónde apinta el jugador 1 y el jugador 2
     var vida,mana;
+    var state = 'idle'
     var isHit = false;												//Para controlar si se ha golpeado al enemigo con el hechizo
     var isHitEnch = false;											//Para controlar si el enemigo colisiona con el encantamiento
     var play = false;												//Variable para controllar la animacion del encantamiento
@@ -65,14 +66,15 @@ MagicAndRunes.level_1State = function(game) {
 
         layer.resizeWorld();												//Redefinimos el tamaño de la escena
 
-        medidor=game.add.sprite(292,20,'nivAct');							//Le asignamos la imagn al medidor
+        medidor=game.add.sprite(292,20,'niv-1');							//Le asignamos la imagn al medidor
         
         //Añadimos el personaje del jugador 1
         if(game.global.player1.id==0){
         	game.global.player1.image = game.add.sprite(game.global.player1.x,game.global.player1.y,'mago_verde');
+        	facing_j1 = 'right'
         }else if(game.global.player1.id==1){
         	game.global.player1.image =game.add.sprite(game.global.player1.x,game.global.player1.y,'mago_naranja');
-        	//mago.scale.x=-1;
+        	facing_j1 = 'left'
         }
         
         
@@ -90,6 +92,9 @@ MagicAndRunes.level_1State = function(game) {
        	 manaUI = game.add.text(game.world.centerX+300,50,'Mana: '+game.global.player1.mana,{font:"20px Arial",fill:"#00F3FF",align:"center"})
        	 manaUI.anchor.setTo(0.5,0.5)
         }
+        
+        game.global.player1.vida = 100;
+        game.global.player1.mana = 100;
         
         vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
         
@@ -154,39 +159,38 @@ MagicAndRunes.level_1State = function(game) {
     	
     	//*****Implementar aquí la funcionalidad de pasar de nivel y de pasar al endingState cuando se llegue al final de todos los niveles*****/
     	
-    	if(game.global.player1.id=0){
+    	if(game.global.player1.id==0){
     		//Muerte por caida
+    		game.global.player1.x = 50
+    		game.global.player1.y = 300
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;
+        		state = 'level-2'
         		this.game.state.start('level-2State')
-        	}
-        	
-        	if(game.global.player1.vida <= 0){
+        	}else if(game.global.player1.vida <= 0){
+        		state = 'level-2'
         		this.game.state.start('level-2State')
         	}
     	}else{
     		//Muerte por caida
+    		game.global.player1.x = 750
+    		game.global.player1.y = 400
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;
+        		state = 'level0'
         		this.game.state.start('level0State')
-        	}
-        	
-        	if(game.global.player1.vida <= 0){
+        	}else if(game.global.player1.vida <= 0){
+        		state = 'level0'
         		this.game.state.start('level0State')
         	}
     	}
-    	
-    	
-    	
-    	
-    	
     	
 
         //funcion de disparo para el mago verde
     	function fireHechizo(){
     		//Aquí comprobamos hacia dónde mira el jugador a la hora de asignarle una dirección al hechizo
     		//Después, lo hacemos visible y le asignamos velocidad en x y en y.
-    		if(direccionIzq==true){
+    		if(facing_j1 == 'left'){
     			lanzamiento=true;
     			if(game.global.player1.id == 0){
     				game.global.hechizo1.image=game.add.sprite(game.global.player1.image.x,game.global.player1.image.y+10,'hechizoverde');
@@ -197,7 +201,7 @@ MagicAndRunes.level_1State = function(game) {
     			game.global.hechizo1.image.visible=true;
     			game.global.hechizo1.image.body.velocity.x=-400;
     			game.global.hechizo1.image.body.velocity.y=-50;
-    		}else if(direccionIzq==false){
+    		}else if(facing_j1 == 'right'){
     			lanzamiento=true;
     			console.log("Direccion derecha");
     			if(game.global.player1.id == 0){
@@ -341,7 +345,8 @@ MagicAndRunes.level_1State = function(game) {
         		velocityY:game.global.player1.image.body.velocity.y,
         		vida: game.global.player1.vida,
         		mana: game.global.player1.mana,
-        		facing:game.global.player1.facing
+        		facing:game.global.player1.facing,
+        		state:state
         }
         
         	ws.send(JSON.stringify(mensaje))
