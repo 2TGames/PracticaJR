@@ -26,7 +26,7 @@ MagicAndRunes.level_1State = function(game) {
     var direccionIzq =false;										//Variable que almacena la dirección del 
     																//hechizo en función de si mira a la izquierda
     var spellCost=2;												//Coste en maná de disparar un hechizo
-   
+    var enchCost = 4
 
 //-------------------------------------Si el mago entra en contacto con el mapa, este actúa 
 //-------------------------------------como suelo sobre el que se puede saltar.
@@ -302,7 +302,7 @@ MagicAndRunes.level_1State = function(game) {
         	if(game.global.player1.mana > 0){
         		fireEncantamiento();
         		play = true
-        		game.global.player1.mana -= spellCost;
+        		game.global.player1.mana -= enchCost;
         	}
         }
         
