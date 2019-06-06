@@ -166,10 +166,10 @@ MagicAndRunes.level_1State = function(game) {
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;
         		state = 'level-2'
-        		this.game.state.start('level-2State')
+        		this.game.state.start('level_2State')
         	}else if(game.global.player1.vida <= 0){
         		state = 'level-2'
-        		this.game.state.start('level-2State')
+        		this.game.state.start('level_2State')
         	}
     	}else{
     		//Muerte por caida

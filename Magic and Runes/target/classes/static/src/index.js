@@ -153,7 +153,9 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							if(msg.player.state === 'level1'){
+							if(msg.player.state === 'level0'){
+								game.state.start('level0State')
+							}else if(msg.player.state === 'level1'){
 								game.state.start('level1State')
 							}else if(msg.player.state === 'level2'){
 								game.state.start('level2State')
@@ -171,7 +173,9 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							if(msg.player.state === 'level-1'){
+							if(msg.player.state === 'level0'){
+								game.state.start('level0State')
+							}else if(msg.player.state === 'level-1'){
 								game.state.start('level_1State')
 							}else if(msg.player.state === 'level-2'){
 								game.state.start('level_2State')
@@ -282,7 +286,9 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							if(msg.player.state === 'level1'){
+							if(msg.player.state === 'level0'){
+								game.state.start('level0State')
+							}else if(msg.player.state === 'level1'){
 								game.state.start('level1State')
 							}else if(msg.player.state === 'level2'){
 								game.state.start('level2State')
@@ -300,7 +306,9 @@ ws.onmessage = function(message){
 							game.global.player2.manaUI.destroy()
 							game.global.player1.vidaUI.destroy()
 							game.global.player1.manaUI.destroy()*/
-							if(msg.player.state === 'level-1'){
+							if(msg.player.state === 'level0'){
+								game.state.start('level0State')
+							}else if(msg.player.state === 'level-1'){
 								game.state.start('level_1State')
 							}else if(msg.player.state === 'level-2'){
 								game.state.start('level_2State')

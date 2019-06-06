@@ -100,6 +100,8 @@ MagicAndRunes.level0State = function(game) {
        	 game.global.player1.manaUI.anchor.setTo(0.5,0.5)
         }
         
+        game.global.player1.vida = 100
+        game.global.player1.mana = 100
         vidaLocal = game.global.player1.vida;										//Igualamos la vidaLocal a la vida de player1
         
         game.physics.enable(game.global.player1.image,Phaser.Physics.ARCADE);					//Asignamos las físicas arcade al juego
@@ -165,7 +167,7 @@ MagicAndRunes.level0State = function(game) {
     	
     	if(game.global.player1.id==0){		//Mago verde
     		//Muerte por caida
-    		game.global.player1.x = 50
+    		game.global.player1.x = 45
     		game.global.player1.y = 350
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;

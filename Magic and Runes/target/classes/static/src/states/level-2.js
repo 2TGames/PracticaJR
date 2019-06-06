@@ -160,10 +160,10 @@ MagicAndRunes.level_2State = function(game) {
         	if(game.global.player1.image.body.y>540){
         		game.global.player1.vida=0;
         		state = 'level-1'
-        		this.game.state.start('level-1State')
+        		this.game.state.start('level_1State')
         	}else if(game.global.player1.vida <= 0){
         		state = 'level-1'
-        		this.game.state.start('level-1State')
+        		this.game.state.start('level_1State')
         	}
     	}
     	
